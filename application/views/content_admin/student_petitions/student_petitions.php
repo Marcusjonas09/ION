@@ -22,7 +22,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="petitionTable" class="table table-striped text-center">
+                <table class="table table-striped text-center">
                     <thead>
                         <th>Course</th>
                         <th>Course Title</th>
@@ -68,6 +68,7 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <div class="col-md-6"><?= $this->pagination->create_links(); ?></div>
             </div>
             <!-- /.box-body -->
         </div>

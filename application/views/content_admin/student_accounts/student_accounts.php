@@ -64,6 +64,7 @@
                   </tr>
                 <?php endforeach ?>
               </table>
+              <div class="col-md-6"><?= $this->pagination->create_links(); ?></div>
             </div>
             <!-- /.box-body -->
           </div>

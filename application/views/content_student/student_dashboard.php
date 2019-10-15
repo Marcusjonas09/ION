@@ -21,7 +21,6 @@ $labpassed = 0.0;
 }
 $totalunits = $course_units + $lab_units;
 $totalunitspassed = $coursepassed + $labpassed;
-
 ?>
 
 <script src="https://rawgit.com/kimmobrunfeldt/progressbar.js/1.0.0/dist/progressbar.js"></script>

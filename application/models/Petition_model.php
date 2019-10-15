@@ -8,10 +8,17 @@ class Petition_model extends CI_Model
     // ADMIN FUNCTIONS
     // =======================================================================================
 
-    public function fetchPetitionsAdmin()
+    public function fetchPetitionsAdmin($per_page, $end_page)
     {
+        $this->db->limit($per_page, $end_page);
         $query = $this->db->get('petitions_tbl');
         return $query->result();
+    }
+
+    public function fetchPetitionsAdmin_num_rows()
+    {
+        $query = $this->db->get('petitions_tbl');
+        return $query->num_rows();
     }
 
     public function approve_petition($petition_ID, $date_processed)
@@ -39,10 +46,17 @@ class Petition_model extends CI_Model
     // STUDENT FUNCTIONS
     // =======================================================================================
 
-    public function fetchPetitions()
+    public function fetchPetitions($per_page, $end_page)
     {
+        $this->db->limit($per_page, $end_page);
         $query = $this->db->get_where('petitions_tbl', array('stud_number' => $this->session->acc_number));
         return $query->result();
+    }
+
+    public function fetchPetitions_num_rows()
+    {
+        $query = $this->db->get_where('petitions_tbl', array('stud_number' => $this->session->acc_number));
+        return $query->num_rows();
     }
 
     public function fetchPetition($petitionID)
@@ -84,7 +98,6 @@ class Petition_model extends CI_Model
         );
 
         $this->db->insert('petitions_tbl', $petition);
-
         $this->db->insert('petitioners_tbl', $petitioners);
     }
 
@@ -106,19 +119,6 @@ class Petition_model extends CI_Model
         $query = $this->db->get();
         return $query->num_rows();
     }
-
-
-
-
-    public function inputDebug($users)
-    {
-        echo '<pre>';
-        print_r($users);
-        die();
-        echo '</pre>';
-    }
-
-
 
     public function fetchCourses()
     {

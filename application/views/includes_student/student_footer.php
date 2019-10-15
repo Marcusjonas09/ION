@@ -5,7 +5,7 @@
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 3 -->
-<script src="<?= base_url() ?>bower_components/jquery/dist/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="<?= base_url() ?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- SlimScroll -->
@@ -19,7 +19,6 @@
 <!-- page script -->
 <script src="https://rawgit.com/kimmobrunfeldt/progressbar.js/1.0.0/dist/progressbar.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 
 <!-- <script>
     $(document).ready(function() {
@@ -32,20 +31,6 @@
 
 <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
 
-<script>
-    // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
-
-    var pusher = new Pusher('8a5cfc7f91e3ec8112f4', {
-        cluster: 'ap1',
-        forceTLS: true
-    });
-
-    var channel = pusher.subscribe('my-channel');
-    channel.bind('my-event', function(data) {
-        alert(JSON.stringify(data));
-    });
-</script>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#petitionTable').dataTable({
@@ -56,6 +41,17 @@
     });
 </script>
 
+<script>
+    var pusher = new Pusher('8a5cfc7f91e3ec8112f4', {
+        cluster: 'ap1',
+        forceTLS: true
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+        alert(JSON.stringify(data))
+    });
+</script>
 
 <script type="text/javascript">
     var progress = "<?php echo $totalunitspassed / $totalunits; ?>";

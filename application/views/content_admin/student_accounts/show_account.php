@@ -39,9 +39,9 @@
                               </li>
                           </ul> -->
                           <?php if ($account->acc_status) {
-                                echo '<a href="' . base_url() . 'Admin/blockUser/' . $account->acc_number . '" class="btn btn-danger btn-sm rounded col-md-12"><span class="fa fa-ban"></span> Block </a>';
+                                echo '<a href="' . base_url() . 'Admin/block_user/' . $account->acc_number . '" class="btn btn-danger btn-sm rounded col-md-12"><span class="fa fa-ban"></span> Block </a>';
                             } else {
-                                echo '<a href="' . base_url() . 'Admin/blockUser/' . $account->acc_number . '" class="btn btn-success btn-sm rounded col-md-12"><span class="fa fa-check"></span> Unblock </a>';
+                                echo '<a href="' . base_url() . 'Admin/block_user/' . $account->acc_number . '" class="btn btn-success btn-sm rounded col-md-12"><span class="fa fa-check"></span> Unblock </a>';
                             }; ?>
                           <!-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
                       </div>

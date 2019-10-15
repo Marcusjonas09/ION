@@ -21,7 +21,7 @@ class UserAuth extends CI_Controller
     {
         $data = array(
             'acc_number' => strip_tags($this->input->post('acc_number')), //$_POST['username]
-            'acc_password' => hash('sha256', strip_tags($this->input->post('acc_password')))
+            'acc_password' => sha1(strip_tags($this->input->post('acc_password')))
         );
 
         $this->User_model->login($data);
@@ -31,7 +31,7 @@ class UserAuth extends CI_Controller
             if ($this->session->acc_status) {
                 if ($this->session->access == 'admin') {
                     redirect('Admin');
-                } else {
+                } else {    
                     redirect('Student');
                 }
             } else {

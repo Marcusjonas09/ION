@@ -13,6 +13,7 @@ class Admin extends CI_Controller
 		$this->load->model('Dashboard_model');
 		$this->load->model('Revision_model');
 		$this->load->model('Post_model');
+		$this->load->model('Notification_model');
 		$this->load->model('Overload_underload_model');
 		$this->load->library('form_validation');
 		$this->load->helper('date');
@@ -51,7 +52,35 @@ class Admin extends CI_Controller
 
 	public function student_accounts() // | Display Student Accounts |
 	{
-		$data['students'] = $this->Account_model->fetchStudentAccounts();
+		$per_page = 10;
+		$end_page = $this->uri->segment(3);
+		$this->load->library('pagination');
+		$config = [
+			'base_url' => base_url('Admin/student_accounts'),
+			'per_page' => $per_page,
+			'total_rows' => $this->Account_model->account_num_rows(),
+		];
+
+		$config['full_tag_open'] = '<ul class="pagination">';
+		$config['full_tag_close'] = '</ul>';
+		$config['num_tag_open'] = '<li class="page-item">';
+		$config['num_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+		$config['cur_tag_close'] = '</a></li>';
+		$config['next_tag_open'] = '<li class="page-item">';
+		$config['next_tagl_close'] = '</a></li>';
+		$config['prev_tag_open'] = '<li class="page-item">';
+		$config['prev_tagl_close'] = '</li>';
+		$config['first_tag_open'] = '<li class="page-item">';
+		$config['first_tagl_close'] = '</li>';
+		$config['last_tag_open'] = '<li class="page-item">';
+		$config['last_tagl_close'] = '</a></li>';
+		$config['attributes'] = array('class' => 'page-link');
+
+		$this->pagination->initialize($config); // model function
+
+		$data['students'] = $this->Account_model->fetchStudentAccounts($per_page, $end_page);
+
 		$this->load->view('includes_admin/admin_header');
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
@@ -65,7 +94,34 @@ class Admin extends CI_Controller
 
 	public function course_petitions() // | Display Course Petitions |
 	{
-		$data['petitions'] = $this->Petition_model->fetchPetitionsAdmin();
+		$per_page = 10;
+		$end_page = $this->uri->segment(3);
+		$this->load->library('pagination');
+		$config = [
+			'base_url' => base_url('Admin/course_petitions'),
+			'per_page' => $per_page,
+			'total_rows' => $this->Petition_model->fetchPetitionsAdmin_num_rows(),
+		];
+
+		$config['full_tag_open'] = '<ul class="pagination">';
+		$config['full_tag_close'] = '</ul>';
+		$config['num_tag_open'] = '<li class="page-item">';
+		$config['num_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+		$config['cur_tag_close'] = '</a></li>';
+		$config['next_tag_open'] = '<li class="page-item">';
+		$config['next_tagl_close'] = '</a></li>';
+		$config['prev_tag_open'] = '<li class="page-item">';
+		$config['prev_tagl_close'] = '</li>';
+		$config['first_tag_open'] = '<li class="page-item">';
+		$config['first_tagl_close'] = '</li>';
+		$config['last_tag_open'] = '<li class="page-item">';
+		$config['last_tagl_close'] = '</a></li>';
+		$config['attributes'] = array('class' => 'page-link');
+
+		$this->pagination->initialize($config); // model function
+
+		$data['petitions'] = $this->Petition_model->fetchPetitionsAdmin($per_page, $end_page);
 		$data['petitioners'] = $this->Petition_model->fetchAllPetitioners();
 		$data['courses'] = $this->Petition_model->fetchCoursesAdmin();
 		$this->load->view('includes_admin/admin_header');
@@ -176,6 +232,7 @@ class Admin extends CI_Controller
 
 	public function cor() // | Display all COR revision requests |
 	{
+
 		$this->load->view('includes_admin/admin_header');
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
@@ -602,6 +659,13 @@ class Admin extends CI_Controller
 		$this->Overload_underload_model->decline_underload($id);
 		redirect('Admin/underload');
 	}
+
+	// =======================================================================================
+	// Notification Module
+	// =======================================================================================
+
+	public function notifications()
+	{ }
 
 	// =======================================================================================
 	// OTHER Module

@@ -51,26 +51,31 @@ class Courseflow_model extends CI_Model
 
     public function fetch_curriculum()
     {
-        $this->db->select('*');
+        $this->db->distinct();
+        $this->db->select('course_code,course_title,cc_stud_number');
         $this->db->where(array(
-            'courses_tbl.curriculum_code' => $this->session->Curriculum_code
+            'courses_tbl.curriculum_code' => $this->session->Curriculum_code,
+            'offering_year' => $this->session->curr_year,
+            'offering_term' => $this->session->curr_term,
+            'offering_course_slot >= ' => 1,
+            'cc_status' => null
         ));
         $this->db->from('courses_tbl');
-        $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = courses_tbl.laboratory_code', 'LEFT');
+        // $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = courses_tbl.laboratory_code', 'LEFT');
         $this->db->join('course_card_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'LEFT');
-        // $this->db->join('offering_tbl', 'offering_tbl.offering_course_code = courses_tbl.course_code');
+        $this->db->join('offering_tbl', 'offering_tbl.offering_course_code = courses_tbl.course_code', 'LEFT');
         $this->db->order_by('courses_tbl.course_code', 'ASC');
         $query = $this->db->get();
         return $query->result();
     }
 
-    public function fetchOffering()
+    public function fetchOffering($course_code)
     {
-        // $this->db->distinct();
         $this->db->select('offering_course_code, offering_course_slot');
         $this->db->where(array(
             'offering_year' => $this->session->curr_year,
-            'offering_term' => $this->session->curr_term
+            'offering_term' => $this->session->curr_term,
+            'offering_course_code' => $course_code
         ));
         $this->db->from('offering_tbl');
         $query = $this->db->get();

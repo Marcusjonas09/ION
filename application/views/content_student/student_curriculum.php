@@ -15,6 +15,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+
                 <table class="table table-bordered table-responsive">
                     <thead class=" bg-success" style="background-color:#00a65a; color:white;">
                         <th class="text-center">COURSE</th>

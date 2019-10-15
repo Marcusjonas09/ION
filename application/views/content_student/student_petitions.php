@@ -29,13 +29,10 @@
             <label class="col-md-2 control-label">Course Code</label>
             <div class="form-group col-md-6">
               <select name="course_code" class="form-control js-example-basic-single">
-                <!-- <?php foreach ($offerings as $offer) : ?> -->
                 <?php foreach ($curr as $cur) : ?>
-                  <!-- <?php if ($cur->cc_status == null && $offer->offering_course_code == $cur->course_code && $offer->offering_course_slot > 0) : ?> -->
-                  <option value="<?= $cur->course_code ?>"><?= $cur->course_code . ' - ' . $cur->course_title ?></option>
-                  <!-- <?php endif; ?> -->
+                  <option value="<?= $cur->course_code ?>"><?= $cur->course_code . " - " . $cur->course_title ?></option>
                 <?php endforeach; ?>
-                <!-- <?php endforeach; ?> -->
+
               </select>
             </div>
             <input type="hidden" name="stud_number" value="<?= $this->session->acc_number ?>" class="form-control">
@@ -57,7 +54,7 @@
       </div>
       <!-- /.box-header -->
       <div class="box-body">
-        <table id="petitionTable" class="table table-striped">
+        <table class="table table-striped">
           <thead>
             <th class="text-center">#</th>
             <th>Course</th>
@@ -96,6 +93,7 @@
             <?php endforeach; ?>
           </tbody>
         </table>
+        <div class="col-md-6"><?= $this->pagination->create_links(); ?></div>
       </div>
       <!-- /.box-body -->
     </div>

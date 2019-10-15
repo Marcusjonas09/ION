@@ -26,12 +26,14 @@ class Student extends CI_Controller
 		$this->load->model('Overload_underload_model');
 		$this->load->helper('text');
 		date_default_timezone_set("Asia/Singapore");
+		require 'vendor/autoload.php';
 	}
 
 	public function notifications()
 	{
-		$data = $this->Notification_model->getNotifications();
-		echo json_encode($data);
+		// $data = $this->Notification_model->getNotifications();
+		// echo json_encode($data);
+		echo "sample";
 	}
 
 	public function user_data_submit()
@@ -54,6 +56,7 @@ class Student extends CI_Controller
 	//DASHBOARD LINK
 	public function index()
 	{
+		$data['notifications'] = $this->Notification_model->getNotifications();
 		$data['grades'] = $this->Dashboard_model->fetchProgress();
 		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
 		$data['cor'] = $this->CourseCard_model->fetch_current_COR();
@@ -307,11 +310,37 @@ class Student extends CI_Controller
 	//COURSE PETITIONING SYSTEM LINK
 	public function petitions()
 	{
-		$data['petitions'] = $this->Petition_model->fetchPetitions();
+
+		$per_page = 10;
+		$end_page = $this->uri->segment(3);
+		$this->load->library('pagination');
+		$config = [
+			'base_url' => base_url('Student/petitions'),
+			'per_page' => $per_page,
+			'total_rows' => $this->Petition_model->fetchPetitions_num_rows(),
+		];
+
+		$config['full_tag_open'] = '<ul class="pagination">';
+		$config['full_tag_close'] = '</ul>';
+		$config['num_tag_open'] = '<li class="page-item">';
+		$config['num_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+		$config['cur_tag_close'] = '</a></li>';
+		$config['next_tag_open'] = '<li class="page-item">';
+		$config['next_tagl_close'] = '</a></li>';
+		$config['prev_tag_open'] = '<li class="page-item">';
+		$config['prev_tagl_close'] = '</li>';
+		$config['first_tag_open'] = '<li class="page-item">';
+		$config['first_tagl_close'] = '</li>';
+		$config['last_tag_open'] = '<li class="page-item">';
+		$config['last_tagl_close'] = '</a></li>';
+		$config['attributes'] = array('class' => 'page-link');
+
+		$this->pagination->initialize($config); // model function
+
+		$data['petitions'] = $this->Petition_model->fetchPetitions($per_page, $end_page);
 		$data['courses'] = $this->Petition_model->fetchCourses();
 		$data['curr'] = $this->Courseflow_model->fetch_curriculum();
-		$data['offerings'] = $this->Courseflow_model->fetchOffering();
-
 
 		// echo json_encode($data);
 
@@ -444,15 +473,8 @@ class Student extends CI_Controller
 
 	public function submitPetition()
 	{
-		//here are the validation entry
-		$this->form_validation->set_rules('course_code', 'Course Code', 'is_unique[petitions_tbl.course_code]|strip_tags|required');
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->petitions();
-		} else {
-			$this->Petition_model->submitPetition($_POST);
-			redirect('Student/petitions');
-		}
+		$this->Petition_model->submitPetition($_POST);
+		redirect('Student/petitions');
 	}
 
 	public function petitionView($petitionID, $course_code)
