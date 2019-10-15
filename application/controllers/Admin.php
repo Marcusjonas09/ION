@@ -18,13 +18,12 @@ class Admin extends CI_Controller
 		$this->load->helper('date');
 		$this->load->helper('text');
 		date_default_timezone_set("Asia/Singapore");
+		require 'vendor/autoload.php';
 	}
 
 	// =======================================================================================
+	// SIDEBAR LINKS
 	// =======================================================================================
-	// =======================================================================================
-
-	// | SIDEBAR LINKS |
 
 	public function user_data_submit()
 	{
@@ -137,7 +136,6 @@ class Admin extends CI_Controller
 
 		$data['my_calendar'] = $this->calendar->generate($year, $month);
 
-		$data['posts'] = $this->Post_model->fetchPosts();
 		$this->load->view('includes_admin/admin_header');
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
@@ -149,7 +147,21 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_footer');
 	}
 
-	public function curricula() // | Display Academic Calendar |
+	public function school_announcements() // | Display school announcement |
+	{
+		$data['posts'] = $this->Post_model->fetch_posts();
+		$this->load->view('includes_admin/admin_header');
+		$this->load->view('includes_admin/admin_topnav');
+		$this->load->view('includes_admin/admin_sidebar');
+
+		$this->load->view('content_admin/school_announcements/school_announcements', $data);
+
+		$this->load->view('includes_admin/admin_contentFooter');
+		$this->load->view('includes_admin/admin_rightnav');
+		$this->load->view('includes_admin/admin_footer');
+	}
+
+	public function curricula()
 	{
 		$this->load->view('includes_admin/admin_header');
 		$this->load->view('includes_admin/admin_topnav');
@@ -162,7 +174,7 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_footer');
 	}
 
-	public function cor() // | Display Academic Calendar |
+	public function cor() // | Display all COR revision requests |
 	{
 		$this->load->view('includes_admin/admin_header');
 		$this->load->view('includes_admin/admin_topnav');
@@ -175,7 +187,7 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_footer');
 	}
 
-	public function underload() // | Display Academic Calendar |
+	public function underload() // | Display all underload requests |
 	{
 		$data['underloads'] = $this->Overload_underload_model->fetch_all_revisions();
 
@@ -190,9 +202,8 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_footer');
 	}
 
-	public function underload_view($stud_number, $term, $year) // | Display Academic Calendar |
+	public function underload_view($stud_number, $term, $year) // | Display underload request view |
 	{
-		// $data['revisions'] = $this->Revision_model->fetch_all_revisions();
 		$data['cor'] = $this->Overload_underload_model->fetch_course_card_admin($stud_number, $term, $year);
 		$data['student'] = $this->Overload_underload_model->fetch_user($stud_number);
 		$data['courses'] = $this->Overload_underload_model->fetch_courses();
@@ -210,19 +221,7 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_footer');
 	}
 
-	public function approve_underload($id)
-	{
-		$this->Overload_underload_model->approve_underload($id);
-		redirect('Admin/underload');
-	}
-
-	public function decline_underload($id)
-	{
-		$this->Overload_underload_model->decline_underload($id);
-		redirect('Admin/underload');
-	}
-
-	public function overload() // | Display Academic Calendar |
+	public function overload() // | Display all overload request |
 	{
 		$this->load->view('includes_admin/admin_header');
 		$this->load->view('includes_admin/admin_topnav');
@@ -235,7 +234,27 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_footer');
 	}
 
-	public function simul() // | Display Academic Calendar |
+	public function overload_view($stud_number, $term, $year) // | Display overload request view |
+	{
+
+		$data['cor'] = $this->Overload_underload_model->fetch_course_card_admin($stud_number, $term, $year);
+		$data['student'] = $this->Overload_underload_model->fetch_user($stud_number);
+		$data['courses'] = $this->Overload_underload_model->fetch_courses();
+		$data['offerings'] = $this->Overload_underload_model->fetchOffering();
+		$data['underload'] = $this->Overload_underload_model->fetch_revision($stud_number, $term, $year);
+
+		$this->load->view('includes_admin/admin_header');
+		$this->load->view('includes_admin/admin_topnav');
+		$this->load->view('includes_admin/admin_sidebar');
+
+		$this->load->view('content_admin/overload/overload', $data);
+
+		$this->load->view('includes_admin/admin_contentFooter');
+		$this->load->view('includes_admin/admin_rightnav');
+		$this->load->view('includes_admin/admin_footer');
+	}
+
+	public function simul() // | Display all simul request |
 	{
 		$this->load->view('includes_admin/admin_header');
 		$this->load->view('includes_admin/admin_topnav');
@@ -248,19 +267,7 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_footer');
 	}
 
-	public function admin_accounts() // | Display Dashboard |
-	{
-		$data['admins'] = $this->Account_model->fetchAdminAccounts();
-		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/admin_topnav');
-		$this->load->view('includes_admin/admin_sidebar');
 
-		$this->load->view('content_admin/admin_accounts', $data);
-
-		$this->load->view('includes_admin/admin_contentFooter');
-		$this->load->view('includes_admin/admin_rightnav');
-		$this->load->view('includes_admin/admin_footer');
-	}
 
 	public function admin_curriculum() // | Display All Curricula |
 	{
@@ -276,25 +283,24 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_footer');
 	}
 
-	// | END OF ADMIN FUNCTIONALITIES |
-
 	// =======================================================================================
-	// =======================================================================================
+	// END OF SIDEBAR LINKS
 	// =======================================================================================
 
-	// | ADMIN FUNCTIONALITIES |
 
-	// | STUDENT ACCOUNT MANAGEMENT FUNCTIONALITIES |
+	// =======================================================================================
+	// Account Management Module
+	// =======================================================================================
 
-	public function blockUser($studnumber)
+	public function block_user($studnumber)
 	{
-		$this->Account_model->blockUser($studnumber);
+		$this->Account_model->block_user($studnumber);
 		redirect('Admin/student_accounts');
 	}
 
 	public function show_account($studNumber) // | Display Specific Student Account |
 	{
-		$data['account'] = $this->Account_model->viewUser($studNumber);
+		$data['account'] = $this->Account_model->view_user($studNumber);
 		$this->load->view('includes_admin/admin_header');
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
@@ -306,7 +312,7 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_footer');
 	}
 
-	public function Profile($acc_number) // | Display Admin Profile |
+	public function profile($acc_number) // | Display Admin Profile |
 	{
 		$data['account'] = $this->Account_model->viewUser($acc_number);
 		$this->load->view('includes_admin/admin_header');
@@ -320,11 +326,15 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_footer');
 	}
 
-	// | END OF STUDENT ACCOUNT MANAGEMENT FUNCTIONALITIES |
+	// =======================================================================================
+	// END OF ACCOUNT MANAGEMENT MODULE
+	// =======================================================================================
 
-	// | CURRICULUM FUNCTIONALITIES |
+	// =======================================================================================
+	// Curriculum Module
+	// =======================================================================================
 
-	public function showCurriculum()
+	public function show_curriculum()
 	{
 
 		$this->form_validation->set_rules('CurriculumCode', 'Curriculum Code', 'required|strip_tags');
@@ -347,9 +357,13 @@ class Admin extends CI_Controller
 		}
 	}
 
-	// | END OF CURRICULUM FUNCTIONALITIES |
+	// =======================================================================================
+	// END OF CURRICULUM MODULE
+	// =======================================================================================
 
-	// | COURSE PETITION FUNCTIONALITIES |
+	// =======================================================================================
+	// COURSE PETITIONING MODULE
+	// =======================================================================================
 
 	public function process_petition()
 	{
@@ -402,11 +416,208 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_footer');
 	}
 
-	// | END OF COURSE PETITION FUNCTIONALITIES |
+	// =======================================================================================
+	// END OF COURSE PETITIONING MODULE
+	// =======================================================================================
 
-	// | END OF ADMIN FUNCTIONALITIES |
+	// =======================================================================================
+	// SCHOOL ANNOUNCEMENT MODULE
+	// =======================================================================================
+
+	public function fetch_post($post_id)
+	{
+		$data = $this->Post_model->fetch_post($post_id);
+		$this->load->view('includes_admin/admin_header');
+		$this->load->view('includes_admin/admin_topnav');
+		$this->load->view('includes_admin/admin_sidebar');
+
+		$this->load->view('content_admin/school_announcements/view', $data);
+
+		$this->load->view('includes_admin/admin_contentFooter');
+		$this->load->view('includes_admin/admin_rightnav');
+		$this->load->view('includes_admin/admin_footer');
+	}
+
+	public function delete_post($post_id)
+	{
+		$this->Post_model->delete_post($post_id);
+		redirect('Admin/school_announcements');
+	}
+
+	public function announce()
+	{
+		$options = array(
+			'cluster' => 'ap1',
+			'useTLS' => true
+		);
+		$pusher = new Pusher\Pusher(
+			'8a5cfc7f91e3ec8112f4',
+			'e5e5c5534c2aa13bb349',
+			'880418',
+			$options
+		);
+
+		$config['upload_path']          = './images/posts/';
+		$config['allowed_types']        = 'gif|jpg|png|JPG';
+		$config['max_size']             = 512;
+		$config['max_width']            = 2048;
+		$config['max_height']           = 2048;
+
+		$this->load->library('upload', $config);
+
+		$this->form_validation->set_rules('caption', 'Caption', 'strip_tags');
+		if (empty($this->input->post('caption')) && !$this->upload->do_upload('attachment')) {
+			redirect('Admin/school_announcements');
+		} else {
+
+			if ($this->form_validation->run() == FALSE) {
+				redirect('Admin/school_announcements');
+			} else {
+				if (!$this->upload->do_upload('attachment')) {
+					$data['msg'] = array('success' => 'Image successfully uploaded');
+
+					$data1 = array(
+						'post_account_id' => $this->session->acc_number,
+						'post_caption' => $this->input->post('caption'),
+						'post_created' => time()
+					);
+					$this->Post_model->create_post($data1);
+				} else {
+					$data['msg'] = array('success' => 'Image successfully uploaded');
+					$data = array('upload_data' => $this->upload->data());
+					$filename = $data['upload_data']['file_name'];
+
+					$data1 = array(
+						'post_account_id' => $this->session->acc_number,
+						'post_caption' => $this->input->post('caption'),
+						'post_image' => $filename,
+						'post_created' => time()
+					);
+
+					$this->Post_model->create_post($data1);
+					$this->load->library('image_lib');
+
+					$config1['image_library'] =  'gd2';
+					$config1['source_image'] = './images/posts/' . $filename;
+					$config1['new_image'] = './images/posts/processed/';
+					$config1['maintain_ratio'] = TRUE;
+					$config1['width']         = 500;
+					$config1['height']       = 500;
+
+					$this->image_lib->initialize($config1);
+					$this->image_lib->resize();
+					$this->image_lib->clear();
+				}
+				$notification['message'] = $this->session->Firstname . ' ' . $this->session->Lastname . ' posted an announcement';
+				$pusher->trigger('my-channel', 'my-event', $notification);
+
+				redirect('Admin/school_announcements');
+			}
+		}
+	}
+
+	public function update_post($post_id)
+	{
+		$config['upload_path']          = './images/posts/';
+		$config['allowed_types']        = 'gif|jpg|png|JPG';
+		$config['max_size']             = 512;
+		$config['max_width']            = 2048;
+		$config['max_height']           = 2048;
+
+		$this->load->library('upload', $config);
+
+		$this->form_validation->set_rules('caption', 'Caption', 'strip_tags');
+
+		if ($this->form_validation->run() == FALSE) {
+			redirect('Admin/school_announcements');
+		} else {
+			if (!$this->upload->do_upload('attachment')) {
+				$data['msg'] = array('success' => 'Image successfully uploaded');
+				$fullname = $this->session->Firstname . ' ' . $this->session->Lastname;
+				$data = array(
+					'post_caption' => $this->input->post('caption'),
+					'post_edited' => time()
+				);
+				$this->Post_model->update_post($post_id, $data);
+			} else {
+				$data['msg'] = array('success' => 'Image successfully uploaded');
+				$data = array('upload_data' => $this->upload->data());
+				$filename = $data['upload_data']['file_name'];
+				$data = array(
+					'post_account_id' => $this->session->acc_number,
+					'post_caption' => $this->input->post('caption'),
+					'post_image' => $filename,
+					'post_edited' => time()
+				);
+
+				$this->Post_model->update_post($post_id, $data);
+
+				$this->load->library('image_lib');
+
+				$config1['image_library'] =  'gd2';
+				$config1['source_image'] = './images/posts/' . $filename;
+				$config1['new_image'] = './images/posts/processed/';
+				$config1['maintain_ratio'] = TRUE;
+				$config1['width']         = 500;
+				$config1['height']       = 500;
+
+				$this->image_lib->initialize($config1);
+				$this->image_lib->resize();
+				$this->image_lib->clear();
+			}
+			redirect('Admin/school_announcements');
+		}
+	}
+
+	public function edit_post($post_id)
+	{
+		$data = $this->Post_model->fetch_post($post_id);
+		$this->load->view('includes_admin/admin_header');
+		$this->load->view('includes_admin/admin_topnav');
+		$this->load->view('includes_admin/admin_sidebar');
+
+		$this->load->view('content_admin/school_announcements/edit', $data);
+
+		$this->load->view('includes_admin/admin_contentFooter');
+		$this->load->view('includes_admin/admin_rightnav');
+		$this->load->view('includes_admin/admin_footer');
+	}
 
 	// =======================================================================================
+	// END OF SCHOOL ANNOUNCEMENT MODULE
 	// =======================================================================================
+
 	// =======================================================================================
+	// OVERLOAD UNDERLOAD MODULE
+	// =======================================================================================
+
+	public function approve_underload($id)
+	{
+		$this->Overload_underload_model->approve_underload($id);
+		redirect('Admin/underload');
+	}
+
+	public function decline_underload($id)
+	{
+		$this->Overload_underload_model->decline_underload($id);
+		redirect('Admin/underload');
+	}
+
+	// =======================================================================================
+	// OTHER Module
+	// =======================================================================================
+
+	public function admin_accounts() // | Display all admin accounts |
+	{
+		$data['admins'] = $this->Account_model->fetchAdminAccounts();
+		$this->load->view('includes_admin/admin_header');
+		$this->load->view('includes_admin/admin_topnav');
+		$this->load->view('includes_admin/admin_sidebar');
+
+		$this->load->view('content_admin/admin_accounts', $data);
+
+		$this->load->view('includes_admin/admin_contentFooter');
+		$this->load->view('includes_admin/admin_rightnav');
+		$this->load->view('includes_admin/admin_footer');
+	}
 }

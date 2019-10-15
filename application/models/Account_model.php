@@ -28,13 +28,13 @@ class Account_model extends CI_Model
         echo '</pre>';
     }
 
-    public function blockUser($studNumber)
+    public function block_user($studNumber)
     {
         $query = $this->db->get_where('accounts_tbl', array('acc_number' => $studNumber));
         $students = $query->row();
-        if($students->acc_status){
+        if ($students->acc_status) {
             $new = 0;
-        }else{
+        } else {
             $new = 1;
         }
 
@@ -43,7 +43,7 @@ class Account_model extends CI_Model
         $this->db->update('Accounts_tbl');
     }
 
-    public function viewUser($studNumber)
+    public function view_user($studNumber)
     {
         $query = $this->db->get_where('accounts_tbl', array('acc_number' => $studNumber));
         return $query->row();

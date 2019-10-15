@@ -48,17 +48,17 @@
                     <td>
                       <!-- <a href="<?= base_url() ?>Admin/show_account/<?= $student->acc_number ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
                       <?php if ($student->acc_status) {
-                          echo '<a href="' . base_url() . 'Admin/blockUser/' . $student->acc_number . '" class="btn btn-danger btn-sm rounded"><i class="fa fa-ban"></i></a>';
+                          echo '<a href="' . base_url() . 'Admin/block_user/' . $student->acc_number . '" class="btn btn-danger btn-sm rounded"><i class="fa fa-ban"></i></a>';
                         } else {
-                          echo '<a href="' . base_url() . 'Admin/blockUser/' . $student->acc_number . '" class="btn btn-success btn-sm rounded"><i class="fa fa-check"></i></a>';
+                          echo '<a href="' . base_url() . 'Admin/block_user/' . $student->acc_number . '" class="btn btn-success btn-sm rounded"><i class="fa fa-check"></i></a>';
                         }; ?> -->
 
 
                       <a href="<?= base_url() ?>Admin/show_account/<?= $student->acc_number ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
                       <?php if ($student->acc_status) {
-                          echo '<a href="' . base_url() . 'Admin/blockUser/' . $student->acc_number . '" class="btn btn-danger btn-sm rounded"><i class="fa fa-ban"></i></a>';
+                          echo '<a href="' . base_url() . 'Admin/block_user/' . $student->acc_number . '" class="btn btn-danger btn-sm rounded"><i class="fa fa-ban"></i></a>';
                         } else {
-                          echo '<a href="' . base_url() . 'Admin/blockUser/' . $student->acc_number . '" class="btn btn-success btn-sm rounded"><i class="fa fa-check"></i></a>';
+                          echo '<a href="' . base_url() . 'Admin/block_user/' . $student->acc_number . '" class="btn btn-success btn-sm rounded"><i class="fa fa-check"></i></a>';
                         }; ?>
                     </td>
                   </tr>

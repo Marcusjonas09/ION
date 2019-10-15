@@ -22,7 +22,8 @@
        <!-- Optionally, you can add icons to the links -->
        <li class="active"><a href="<?= base_url() ?>Admin/"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
        <li><a href="<?= base_url() ?>Admin/student_accounts"><i class="fa fa-user"></i> <span>Student Accounts</span></a></li>
-       <li><a href="<?= base_url() ?>Admin/academic_calendar"><i class="fa fa-bullhorn"></i><span>School Announcements</span></a></li>
+       <li><a href="<?= base_url() ?>Admin/school_announcements"><i class="fa fa-bullhorn"></i><span>School Announcements</span>
+       <li><a href="<?= base_url() ?>Admin/academic_calendar"><i class="fa fa-bullhorn"></i><span>School Calendar</span></a></li>
        <li><a href="<?= base_url() ?>Admin/curricula"><i class="fa fa-file-text-o"></i><span>All Curricula</span></a></li>
        <li><a href="<?= base_url() ?>Admin/course_petitions"><i class="fa fa-file-text-o"></i><span>Course Petitions</span></a></li>
        <li><a href="<?= base_url() ?>Admin/cor"><i class="fa fa-file-text-o"></i><span>COR Revision</span></a></li>

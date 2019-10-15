@@ -14,9 +14,22 @@
     <!-- Main content -->
     <section class="content container-fluid">
 
-      <!--------------------------
-        | Your Page Content Here |
-        -------------------------->
+      <?php
+      require 'vendor/autoload.php';
+      $options = array(
+        'cluster' => 'ap1',
+        'useTLS' => true
+      );
+      $pusher = new Pusher\Pusher(
+        '8a5cfc7f91e3ec8112f4',
+        'e5e5c5534c2aa13bb349',
+        '880418',
+        $options
+      );
+
+      $data['message'] = 'hello world';
+      $pusher->trigger('my-channel', 'my-event', $data);
+      ?>
 
     </section>
     <!-- /.content -->

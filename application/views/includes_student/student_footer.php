@@ -29,6 +29,23 @@
         });
     });
 </script> -->
+
+<script src="https://js.pusher.com/5.0/pusher.min.js"></script>
+
+<script>
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('8a5cfc7f91e3ec8112f4', {
+        cluster: 'ap1',
+        forceTLS: true
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+        alert(JSON.stringify(data));
+    });
+</script>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#petitionTable').dataTable({

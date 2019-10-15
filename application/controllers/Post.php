@@ -139,7 +139,7 @@ class Post extends CI_Controller
         $this->load->view('includes_admin/admin_topnav');
         $this->load->view('includes_admin/admin_sidebar');
 
-        $this->load->view('content_admin/academic_calendar/view', $data);
+        $this->load->view('content_admin/school_announcements/view', $data);
 
         $this->load->view('includes_admin/admin_contentFooter');
         $this->load->view('includes_admin/admin_rightnav');
@@ -173,7 +173,7 @@ class Post extends CI_Controller
         $this->load->view('includes_admin/admin_topnav');
         $this->load->view('includes_admin/admin_sidebar');
 
-        $this->load->view('content_admin/academic_calendar/edit', $data);
+        $this->load->view('content_admin/school_announcements/edit', $data);
 
         $this->load->view('includes_admin/admin_contentFooter');
         $this->load->view('includes_admin/admin_rightnav');
