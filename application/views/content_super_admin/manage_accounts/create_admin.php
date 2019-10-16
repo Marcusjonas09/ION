@@ -9,6 +9,12 @@
 
     <!-- Main content -->
     <section class="content container-fluid">
+        <?php if (validation_errors()) : ?>
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <?php echo validation_errors(); ?>
+            </div>
+        <?php endif; ?>
         <div class="row">
             <div class="col-md-12">
                 <div class="box">
@@ -21,35 +27,34 @@
                             <img class="col-md-12" src="<?= base_url() ?>dist/img/default_avatar.png">
                         </div>
                         <div class="col-md-8">
-                            <form role="form">
+                            <form action="<?= base_url() ?>SuperAdmin/create_admin_function" method="post">
                                 <div class="box-body">
-                                    <div class="form-group">
+                                    <div class="form-group col-md-12">
+                                        <label for="emp_fname">First Name</label>
+                                        <input type="text" class="form-control" placeholder="Enter firstname">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="emp_mname">Middle Name</label>
+                                        <input type="text" class="form-control" placeholder="Enter firstname">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="emp_lname">Last Name</label>
+                                        <input type="text" class="form-control" placeholder="Enter firstname">
+                                    </div>
+                                    <div class="form-group col-md-6">
                                         <label for="emp_no">Employee No.</label>
                                         <input type="email" class="form-control" placeholder="Enter employee number">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="emp_fname">Firstname</label>
+                                    <div class="form-group col-md-6">
+                                        <label for="emp_dept">Department</label>
                                         <input type="text" class="form-control" placeholder="Enter firstname">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="emp_fname">Middle Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter firstname">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="emp_fname">Lastname</label>
-                                        <input type="text" class="form-control" placeholder="Enter firstname">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="emp_fname">Department</label>
-                                        <input type="text" class="form-control" placeholder="Enter firstname">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="emp_fname">Designation</label>
+                                    <div class="form-group col-md-12">
+                                        <label for="emp_desig">Designation</label>
                                         <input type="text" class="form-control" placeholder="Enter firstname">
                                     </div>
                                 </div>
                                 <!-- /.box-body -->
-
                                 <div class="box-footer">
                                     <button type="submit" class="btn btn-success pull-right">Submit</button>
                                 </div>

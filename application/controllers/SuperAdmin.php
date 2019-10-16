@@ -117,6 +117,25 @@ class SuperAdmin extends CI_Controller
         $this->load->view('includes_super_admin/superadmin_footer');
     }
 
+    //INSERT FUNCTION
+    public function create_admin_function()
+    {
+        //here are the validation entry
+        $this->form_validation->set_rules('emp_fname', 'First Name', 'required|max_length[50]|strip_tags');
+        $this->form_validation->set_rules('emp_lname', 'Last Name', 'required|max_length[50]|strip_tags');
+        $this->form_validation->set_rules('emp_mname', 'Middle Name', 'required|max_length[50]|strip_tags');
+        $this->form_validation->set_rules('emp_dept', 'Department', 'required|max_length[50]|strip_tags');
+        $this->form_validation->set_rules('emp_no', 'Employee Number', 'required|max_length[50]|strip_tags');
+        $this->form_validation->set_rules('emp_desig', 'Employee Designation', 'required|max_length[50]|strip_tags');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->create_admin();
+        } else {
+            $this->SuperAdmin_model->create_admin($_POST);
+            redirect('SuperAdmin');
+        }
+    }
+
     public function block_admin($id)
     {
         $this->load->view('includes_super_admin/superadmin_header');
