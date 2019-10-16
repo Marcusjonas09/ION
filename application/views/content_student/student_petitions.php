@@ -9,7 +9,7 @@
 
   <!-- Main content -->
   <section class="content container-fluid">
-    <div class="box box-success">
+    <div class="box box-success col-md-12">
       <div class="box-header with-border">
         <h3 class="box-title">Submit Petition</h3>
       </div>
@@ -47,57 +47,128 @@
     <!-- /.box -->
 
     <!-- Table showing all petitions related to this student account -->
+    <div class="container-fluid col-md-6">
+      <div class="box box-success">
+        <div class="box-header">
+          <h3 class="box-title">My Petitions</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table class="table table-striped">
+            <thead>
+              <th class="text-center">#</th>
+              <th>Course</th>
+              <th>Slots</th>
+              <th>Status</th>
+              <th>Action</th>
+            </thead>
+            <tbody>
+              <?php $i = 1; ?>
+              <?php foreach ($petitions as $petition) : ?>
+                <tr>
+                  <td class="text-center"><?= $i ?></td>
+                  <?php $i++; ?>
+                  <td>
+                    <strong><?= $petition->course_code ?></strong>
+                    <?php foreach ($courses as $course) : ?>
+                      <?php if ($petition->course_code == $course->course_code) : ?>
+                        </p><small><?= $course->course_title ?></small></p>
+                      <?php endif; ?>
+                    <?php endforeach; ?>
+                  </td>
 
-    <div class="box box-success">
-      <div class="box-header">
-        <h3 class="box-title">My Petitions</h3>
-      </div>
-      <!-- /.box-header -->
-      <div class="box-body">
-        <table class="table table-striped">
-          <thead>
-            <th class="text-center">#</th>
-            <th>Course</th>
-            <th>Course Title</th>
-            <th>Status</th>
-            <th>Action</th>
-          </thead>
-          <tbody>
-            <?php $i = 1; ?>
-            <?php foreach ($petitions as $petition) : ?>
-              <tr>
-                <td class="text-center"><?= $i ?></td>
-                <?php $i++; ?>
+                  <td>
+                    <?php $i = 0; ?>
+                    <?php foreach ($petitioners as $petitioner) {
+                        if ($petitioner->petition_code == $petition->course_code) {
+                          $i++;
+                        }
+                      } ?>
+                    <?= $i . '/40' ?>
+                  </td>
 
-                <td><?= $petition->course_code ?></td>
-                <td>
-                  <?php foreach ($courses as $course) : ?>
-                    <?php if ($petition->course_code == $course->course_code) : ?>
-                      <?= $course->course_title ?>
-                    <?php endif; ?>
-                  <?php endforeach; ?>
-                </td>
-                <td>
-                  <?php if ($petition->petition_status == 1) {
-                      echo "<span class='label label-success'>Approved</span>";
-                    } elseif ($petition->petition_status == 2) {
-                      echo "<span class='label label-warning'>Pending</span>";
-                    } else {
-                      echo "<span class='label label-danger'>Denied</span>";
-                    } ?>
-                </td>
-                <td>
-                  <a href="<?= base_url() ?>Student/petitionView/<?= $petition->petition_ID ?>/<?= $petition->course_code ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i> View</a>
-                </td>
-              </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
-        <div class="col-md-6"><?= $this->pagination->create_links(); ?></div>
+                  <td>
+                    <?php if ($petition->petition_status == 1) {
+                        echo "<span class='label label-success col-md-12'>Approved</span>";
+                      } elseif ($petition->petition_status == 2) {
+                        echo "<span class='label label-warning col-md-12'>Pending</span>";
+                      } else {
+                        echo "<span class='label label-danger col-md-12'>Denied</span>";
+                      } ?>
+                  </td>
+                  <td>
+                    <a href="<?= base_url() ?>Student/petitionView/<?= $petition->petition_ID ?>/<?= $petition->course_code ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+          <div class="col-md-6"><?= $this->pagination->create_links(); ?></div>
+        </div>
+        <!-- /.box-body -->
       </div>
-      <!-- /.box-body -->
+      <!-- /.box -->
     </div>
-    <!-- /.box -->
+    <div class="container-fluid col-md-6">
+      <div class="box box-success">
+        <div class="box-header">
+          <h3 class="box-title">Suggested Petitions</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table class="table table-striped">
+            <thead>
+              <th class="text-center">#</th>
+              <th>Course</th>
+              <th>Slots</th>
+              <th>Status</th>
+              <th>Action</th>
+            </thead>
+            <tbody>
+              <?php $i = 1; ?>
+              <?php foreach ($petitions as $petition) : ?>
+                <tr>
+                  <td class="text-center"><?= $i ?></td>
+                  <?php $i++; ?>
+                  <td>
+                    <strong><?= $petition->course_code ?></strong>
+                    <?php foreach ($courses as $course) : ?>
+                      <?php if ($petition->course_code == $course->course_code) : ?>
+                        </p><small><?= $course->course_title ?></small></p>
+                      <?php endif; ?>
+                    <?php endforeach; ?>
+                  </td>
+                  <td>
+                    <?php $i = 0; ?>
+                    <?php foreach ($petitioners as $petitioner) {
+                        if ($petitioner->petition_code == $petition->course_code) {
+                          $i++;
+                        }
+                      } ?>
+                    <?= $i . '/40' ?>
+                  </td>
+                  <td>
+                    <?php if ($petition->petition_status == 1) {
+                        echo "<span class='label label-success col-md-12'>Approved</span>";
+                      } elseif ($petition->petition_status == 2) {
+                        echo "<span class='label label-warning col-md-12'>Pending</span>";
+                      } else {
+                        echo "<span class='label label-danger col-md-12'>Denied</span>";
+                      } ?>
+                  </td>
+                  <td>
+                    <a href="<?= base_url() ?>Student/petitionView/<?= $petition->petition_ID ?>/<?= $petition->course_code ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+          <div class="col-md-6"><?= $this->pagination->create_links(); ?></div>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
 
   </section>
   <!-- /.content -->

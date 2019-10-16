@@ -27,23 +27,36 @@
                 <div class="box-body">
                     <div class="container-fluid col-md-12">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Course Code: </label>
                                     <input readonly type="text" class="form-control" value="<?= $petition->course_code ?>">
                                 </div>
                             </div>
-                            <div class="col-md-4">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Date submitted: </label>
+                                    <input type="text" class="form-control" readonly value="<?= date("F j, Y, g:i a", $petition->date_submitted) ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Section</label>
                                     <input readonly type="text" class="form-control" placeholder="Course section">
                                 </div>
                             </div>
-                            <div class="col-md-4">
+
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Date: </label>
-                                    <input name="date_submitted" type="text" class="form-control" readonly value="<?= date("F j, Y, g:i a", $petition->date_submitted) ?>">
-                                    <input name="date_processed" type="hidden" class="form-control" readonly value="<?= time() ?>">
+                                    <label>Date processed: </label>
+                                    <input type="text" class="form-control" readonly value="<?php if ($petition->date_processed) {
+                                                                                                date("F j, Y, g:i a", $petition->date_processed);
+                                                                                            } else {
+                                                                                                echo "Pending";
+                                                                                            } ?>">
                                 </div>
                             </div>
                         </div>
@@ -72,26 +85,21 @@
                     <h3 class="box-title"><strong>Schedule</strong></h3>
                 </div>
                 <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Time</label>
-                                <input readonly type="text" class="form-control" placeholder="Time">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Day</label>
-                                <input readonly type="text" class="form-control" placeholder="Day">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Room</label>
-                                <input readonly type="text" class="form-control" placeholder="Room">
-                            </div>
-                        </div>
-                    </div>
+                    <table class="table">
+                        <thead style="background-color:#00a65a; color:white;">
+                            <th class="text-center">Day</th>
+                            <th>Time</th>
+                            <th>Room</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-md-2 text-center">T</td>
+                                <td class="col-md-7">7:00 - 9:00</td>
+                                <td class="col-md-3">F1201</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
                     <div class="row">
                         <div class="col">
                             <div class="col-md-12">

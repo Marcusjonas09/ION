@@ -32,15 +32,33 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Course Code: </label>
-                                    <input name="course_code" type="text" class="form-control" readonly value="<?= $petition->course_code ?>">
+                                    <input readonly type="text" class="form-control" value="<?= $petition->course_code ?>">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Date: </label>
-                                    <input name="date_submitted" type="text" class="form-control" readonly value="<?= date("F j, Y, g:i a", $petition->date_submitted) ?>">
-                                    <input name="date_processed" type="hidden" class="form-control" readonly value="<?= time() ?>">
+                                    <label>Date submitted: </label>
+                                    <input type="text" class="form-control" readonly value="<?= date("F j, Y, g:i a", $petition->date_submitted) ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Section</label>
+                                    <input readonly type="text" class="form-control" placeholder="Course section">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Date processed: </label>
+                                    <input type="text" class="form-control" readonly value="<?php if ($petition->date_processed) {
+                                                                                                date("F j, Y, g:i a", $petition->date_processed);
+                                                                                            } else {
+                                                                                                echo "Pending";
+                                                                                            } ?>">
                                 </div>
                             </div>
                         </div>
@@ -109,40 +127,29 @@
                 </div>
 
                 <div class="container-fluid">
-
-                    <!-- <div class="col-md-12">
-                        <div class="form-group">
-                            <label>Section</label>
-                            <input name="course_section" type="text" class="form-control" placeholder="Course section">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Faculty</label>
+                                <input type="text" class="form-control" placeholder="Faculty" value="TBA">
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label>Faculty</label>
-                            <input type="text" class="form-control" placeholder="Faculty">
-                        </div>
-                    </div> -->
-
-                    <table class="table">
+                    <table class="table table-striped table-bordered">
                         <thead style="background-color:#00a65a; color:white;">
-                            <th class="text-center">Day</th>
-                            <th>Time</th>
-                            <th></th>
+                            <th class="text-center col-md-2">Day</th>
+                            <th class="col-md-7">Time</th>
+                            <th class="col-md-3">Room</th>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td class="col-md-4 text-center">T</td>
-                                <td class="col-md-7">7:00 - 9:00</td>
-                                <td class="col-md-1"><button class="btn btn-xs btn-danger"><span class="fa fa-minus"></span></button></td>
-                            </tr>
+                        <tbody id="sched_table_body">
                         </tbody>
                     </table>
 
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Day</label>
-                                <select name="sched_day" id="" class="form-control">
+                                <select id="sched_day" id="" class="form-control">
                                     <option value="M">Monday</option>
                                     <option value="T">Tuesday</option>
                                     <option value="W">Wednesday</option>
@@ -152,27 +159,49 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label>Time</label>
+                                <label>Start Time</label>
                                 <div class="input-group">
-                                    <input type="text" value="" class="form-control timepicker">
+                                    <input id="start_time" type="text" value="" class="form-control timepicker">
                                     <div class="input-group-addon">
                                         <i class="fa fa-clock-o"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Room</label>
-                                <input type="text" class="form-control" placeholder="Room">
+                                <input id="room" type="text" class="form-control" placeholder="Room" value="TBA">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>End Time</label>
+                                <div class="input-group">
+                                    <input id="end_time" type="text" value="" class="form-control timepicker">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-clock-o"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group pull-right">
+                                <button id="add_sched" class="btn btn-success">Add Schedule</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </section>
     <!-- /.content -->
 </div>

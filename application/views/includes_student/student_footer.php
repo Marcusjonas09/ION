@@ -36,12 +36,17 @@
             $.ajax({
                 url: "http://192.168.43.111/ION/Student",
                 success: function(result) {
+                    s
                     $("#notif").html(result);
                 }
             });
         });
 
         $('.js-example-basic-single').select2();
+
+
+
+
     });
 </script>
 

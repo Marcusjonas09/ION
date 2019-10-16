@@ -11,6 +11,7 @@ class Petition_model extends CI_Model
     public function fetchPetitionsAdmin($per_page, $end_page)
     {
         $this->db->limit($per_page, $end_page);
+        $this->db->order_by('date_submitted', 'DESC');
         $query = $this->db->get('petitions_tbl');
         return $query->result();
     }
@@ -49,6 +50,7 @@ class Petition_model extends CI_Model
     public function fetchPetitions($per_page, $end_page)
     {
         $this->db->limit($per_page, $end_page);
+        $this->db->order_by('date_submitted', 'DESC');
         $query = $this->db->get_where('petitions_tbl', array('stud_number' => $this->session->acc_number));
         return $query->result();
     }

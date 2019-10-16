@@ -21,9 +21,38 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#petitionTable').dataTable({
-            "bSort": false
+        // Initialize variables
+        var schedule_entry, sched_table = [],
+            inner_sched = [];
+
+        $("#add_sched").click(function() {
+            var day = $("#sched_day").val();
+            var start_time = $("#start_time").val();
+            var end_time = $("#end_time").val();
+            var room = $("#room").val();
+            schedule_entry = {
+                day: day,
+                start_time: start_time,
+                end_time: end_time,
+                room: room,
+            };
+
+            if (start_time < end_time && start_time != end_time) {
+                sched_table.push(schedule_entry);
+                var tr = '<tr><td class="col-md-2 text-center">' + day + '</td><td class="col-md-7">' + start_time + ' - ' + end_time + '</td><td class="col-md-3">' + room + '</td></tr>';
+                $("#sched_table_body").append(tr); // Append new elements
+            }
+
+
+            for (var k in sched_table) {
+                inner_sched = sched_table[k];
+            }
+            for (var k in inner_sched) {
+                console.log(inner_sched[k]);
+            }
         });
+        // Create a new object
+
         $('.timepicker').timepicker({
             showInputs: false
         })
