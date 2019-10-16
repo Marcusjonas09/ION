@@ -19,7 +19,7 @@
                   <div class="box-body">
                       <div class="row">
                           <div class="col-md-4">
-                              <img class="profile-user-img img-responsive" src="<?= base_url() ?>dist/img/user1-128x128.jpg" style="width:200px; height:200px;" alt="User profile picture">
+                              <img class="col-md-12" src="<?= base_url() ?>dist/img/default_avatar.png" alt="User profile picture">
                           </div>
                           <div class="col-md-4">
                               <table class="table">

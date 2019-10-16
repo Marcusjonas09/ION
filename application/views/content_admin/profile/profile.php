@@ -18,7 +18,7 @@
               <!-- Profile Image -->
               <div class="box box-success">
                   <div class="box-body box-profile">
-                      <img class="profile-user-img img-responsive img-circle" src="<?= base_url() ?>dist/img/user1-128x128.jpg" style="width:200px; height:200px;" alt="User profile picture">
+                      <img class="profile-user-img img-responsive img-circle" src="<?= base_url() ?>dist/img/default_avatar.png" style="width:200px; height:200px;" alt="User profile picture">
                       <h3 class="profile-username text-center"><?= $account->acc_fname . ' ' . $account->acc_mname . ' ' . $account->acc_lname ?></h3>
 
                       <p class="text-muted text-center">Program Director</p>

@@ -371,7 +371,7 @@ class Admin extends CI_Controller
 
 	public function profile($acc_number) // | Display Admin Profile |
 	{
-		$data['account'] = $this->Account_model->viewUser($acc_number);
+		$data['account'] = $this->Account_model->view_user($acc_number);
 		$this->load->view('includes_admin/admin_header');
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');

@@ -31,6 +31,8 @@ class UserAuth extends CI_Controller
             if ($this->session->acc_status) {
                 if ($this->session->access == 'admin') {
                     redirect('Admin');
+                } else if ($this->session->access == 'superadmin') {
+                    redirect('SuperAdmin');
                 } else {
                     redirect('Student');
                 }

@@ -2,14 +2,14 @@
           <!-- Menu Toggle Button -->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 
-            <img src="<?= base_url() ?>dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+            <img src="<?= base_url() ?>dist/img/default_avatar.png" class="user-image" alt="User Image">
 
             <span class="hidden-xs"><?= $this->session->Firstname . ' ' . $this->session->Lastname ?></span>
           </a>
           <ul class="dropdown-menu">
             <!-- The user image in the menu -->
             <li class="user-header">
-              <img src="<?= base_url() ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+              <img src="<?= base_url() ?>dist/img/default_avatar.png" class="img-circle" alt="User Image">
 
               <p>
                 <?= $this->session->Firstname . ' ' . $this->session->Lastname ?>
