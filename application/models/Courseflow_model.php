@@ -57,6 +57,7 @@ class Courseflow_model extends CI_Model
             'courses_tbl.curriculum_code' => $this->session->Curriculum_code,
             'offering_year' => $this->session->curr_year,
             'offering_term' => $this->session->curr_term,
+            // 'cc_stud_number' => $this->session->acc_number,
             'offering_course_slot >= ' => 1,
             'cc_status' => null
         ));
@@ -68,6 +69,36 @@ class Courseflow_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+
+    public function fetch_petition_suggestion()
+    {
+        $this->db->select('cc_course');
+        $this->db->where(array(
+            'curriculum_code' => $this->session->Curriculum_code,
+            'cc_stud_number' => $this->session->acc_number,
+            'cc_status' => 'finished',
+        ));
+        $this->db->or_where(array(
+            'cc_status' => 'credited'
+        ));
+
+        $this->db->from('course_card_tbl');
+        $this->db->join('courses_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'RIGHT OUTER');
+        $query = $this->db->get();
+        return $query->result();
+
+        // $this->db->select('*');
+        // $this->db->where(array(
+        //     'curriculum_code' => $this->session->Curriculum_code,
+        // ));
+
+        // $this->db->where_in('course_code', $sample);
+        // $this->db->from('courses_tbl');
+        // $query = $this->db->get();
+        // return $query->result();
+    }
+
+
 
     public function fetchOffering($course_code)
     {

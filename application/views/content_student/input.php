@@ -9,6 +9,7 @@
 
     <!-- Main content -->
     <section class="content container-fluid">
+        <div id='div1'></div>
         <div class="col-md-6">
             <form action="<?= base_url() ?>/Student/entergrade" method="post">
                 <div class="form-group">

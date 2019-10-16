@@ -15,43 +15,36 @@
 
 <!-- AdminLTE App -->
 <script src="<?= base_url() ?>dist/js/adminlte.min.js"></script>
-<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <!-- page script -->
 <script src="https://rawgit.com/kimmobrunfeldt/progressbar.js/1.0.0/dist/progressbar.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
-
-<!-- <script>
-    $(document).ready(function() {
-        $.get("http://192.168.43.111/ION/Services/fetchAnnouncements", function(data, status) {
-            var sample = data['post_caption'];
-            alert("Data: " + sample + "\nStatus: " + status).delay(100);
-        });
-    });
-</script> -->
-
 <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#petitionTable').dataTable({
-            "bSort": false
+        var pusher = new Pusher('8a5cfc7f91e3ec8112f4', {
+            cluster: 'ap1',
+            forceTLS: true,
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            var obj = JSON.parse(JSON.stringify(data));
+            $("#dash").fadeIn(1000).html(
+                "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + obj.message
+            );
+            $.ajax({
+                url: "http://192.168.43.111/ION/Student",
+                success: function(result) {
+                    $("#notif").html(result);
+                }
+            });
         });
 
         $('.js-example-basic-single').select2();
     });
 </script>
 
-<script>
-    var pusher = new Pusher('8a5cfc7f91e3ec8112f4', {
-        cluster: 'ap1',
-        forceTLS: true
-    });
-
-    var channel = pusher.subscribe('my-channel');
-    channel.bind('my-event', function(data) {
-        alert(JSON.stringify(data))
-    });
-</script>
 
 <script type="text/javascript">
     var progress = "<?php echo $totalunitspassed / $totalunits; ?>";
@@ -97,3 +90,13 @@
 </body>
 
 </html>
+
+<!-- <script>
+    $(document).ready(function() {
+        $.get("http://192.168.43.111/ION/Services/fetchAnnouncements", function(data, status) {
+            var sample = data['post_caption'];
+            alert("Data: " + sample + "\nStatus: " + status).delay(100);
+        });
+    });
+
+</script> -->

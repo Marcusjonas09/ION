@@ -9,6 +9,7 @@
 
       <!-- Main content -->
       <section class="content container-fluid">
+
           <div class="col-md-6">
               <?php if ($announcements) : ?>
                   <?php foreach ($announcements as $announcement) : ?>
@@ -51,4 +52,3 @@
       <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-

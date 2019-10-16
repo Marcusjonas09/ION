@@ -36,6 +36,7 @@ $totalunitspassed = $coursepassed + $labpassed;
 
     <!-- Main content -->
     <section class="content container-fluid">
+        <div id="dash" class="alert alert-warning alert-dismissible" style="display:none;" role="alert"></div>
         <div class="box box-success">
             <div class="box-header">
                 <h3 class="box-title"><b>Student Progress</b></h3>

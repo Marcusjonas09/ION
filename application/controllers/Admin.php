@@ -565,7 +565,16 @@ class Admin extends CI_Controller
 					$this->image_lib->resize();
 					$this->image_lib->clear();
 				}
-				$notification['message'] = $this->session->Firstname . ' ' . $this->session->Lastname . ' posted an announcement';
+
+				$notif_details = array(
+					'notif_sender' => $this->session->acc_number,
+					'notif_content' => $this->input->post('caption'),
+					'notif_created_at' => time()
+				);
+
+				$this->Notification_model->notify($notif_details);
+
+				$notification['message'] = $this->input->post('caption');
 				$pusher->trigger('my-channel', 'my-event', $notification);
 
 				redirect('Admin/school_announcements');
