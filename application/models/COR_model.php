@@ -51,8 +51,8 @@ class COR_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->where(array(
-            'year' => $year,
-            'term' => $term,
+            'offering_year' => $year,
+            'offering_term' => $term,
         ));
         $this->db->from('offering_tbl');
         $query = $this->db->get();
