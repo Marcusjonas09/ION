@@ -14,7 +14,7 @@ class Mobile_model extends CI_Model
 
     public function mobilelogin($user, $pass)
     {
-        $this->db->where(array('acc_username' => $user, 'acc_password' => hash('sha256', $pass)));
+        $this->db->where(array('acc_username' => $user, 'acc_password' => sha1($pass)));
         $query = $this->db->get('accounts_tbl');
         $user = $query->row();
         if ($query->num_rows() > 0) {
