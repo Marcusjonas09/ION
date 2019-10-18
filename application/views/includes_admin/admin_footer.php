@@ -21,36 +21,71 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+
+
+        setInterval(() => {
+            $.get("http://localhost/ION/Admin/petitions_number", function(data) {
+                $("#petition_number").text(data)
+            });
+            $.get("http://localhost/ION/Admin/underload_number", function(data) {
+                $("#underload_number").text(data)
+            });
+            $.get("http://localhost/ION/Admin/overload_number", function(data) {
+                $("#overload_number").text(data)
+            });
+            $.get("http://localhost/ION/Admin/simul_number", function(data) {
+                $("#simul_number").text(data)
+            });
+        }, 1000);
+
         // Initialize variables
         var schedule_entry, sched_table = [],
-            inner_sched = [];
+            petition_details = [];
 
+        // fetch Petition Details
+
+        var course_code = $("#offering_course_code").val();
+        var course_section = $("#offering_course_section").val();
+
+        offering_entry = {
+            offering_course_code: course_code,
+            offering_course_section: course_section
+        };
+        petition_details.push(offering_entry);
+
+        // create subject sched
         $("#add_sched").click(function() {
             var day = $("#sched_day").val();
             var start_time = $("#start_time").val();
             var end_time = $("#end_time").val();
             var room = $("#room").val();
+
             schedule_entry = {
                 day: day,
                 start_time: start_time,
                 end_time: end_time,
-                room: room,
+                room: room
             };
 
             if (start_time < end_time && start_time != end_time) {
                 sched_table.push(schedule_entry);
-                var tr = '<tr><td class="col-md-2 text-center">' + day + '</td><td class="col-md-7">' + start_time + ' - ' + end_time + '</td><td class="col-md-3">' + room + '</td></tr>';
+                var tr = '<tr><td>' + sched_table.indexOf(schedule_entry) + '</td><td class="col-md-2 text-center">' + day + '</td><td class="col-md-7">' + start_time + ' - ' + end_time + '</td><td class="col-md-3">' + room + '</td></tr>';
                 $("#sched_table_body").append(tr); // Append new elements
             }
-
-
-            for (var k in sched_table) {
-                inner_sched = sched_table[k];
-            }
-            for (var k in inner_sched) {
-                console.log(inner_sched[k]);
-            }
         });
+        // var sched = 
+        $("#save_sched").click(function() {
+            $.post("http://localhost/ION/Admin/save_sched", {
+                    course_details: petition_details,
+                    course_sched: sched_table
+                }).done(function(data) {
+                    alert("success " + data);
+                })
+                .fail(function() {
+                    alert("error");
+                });
+        });
+
         // Create a new object
 
         $('.timepicker').timepicker({

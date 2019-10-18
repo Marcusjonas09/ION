@@ -32,7 +32,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Course Code: </label>
-                                    <input readonly type="text" class="form-control" value="<?= $petition->course_code ?>">
+                                    <input id="offering_course_code" readonly type="text" class="form-control" value="<?= $petition->course_code ?>">
                                 </div>
                             </div>
 
@@ -47,7 +47,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Section</label>
-                                    <input readonly type="text" class="form-control" placeholder="Course section">
+                                    <input id="offering_course_section" readonly type="text" class="form-control" placeholder="Course section">
                                 </div>
                             </div>
 
@@ -55,7 +55,7 @@
                                 <div class="form-group">
                                     <label>Date processed: </label>
                                     <input type="text" class="form-control" readonly value="<?php if ($petition->date_processed) {
-                                                                                                date("F j, Y, g:i a", $petition->date_processed);
+                                                                                                echo date("F j, Y, g:i a", $petition->date_processed);
                                                                                             } else {
                                                                                                 echo "Pending";
                                                                                             } ?>">
@@ -82,8 +82,9 @@
                             <a href="#" class="btn btn-success btn-sm rounded pull-right disabled" style="margin-right:10px;"><span class="fa fa-check"></span>&nbsp Approve</a>
                             <a href="#" class="btn btn-danger btn-sm rounded pull-right disabled" style="margin-right:10px;"><span class="fa fa-ban"></span>&nbsp Decline</a>
                         <?php else : ?>
-                            <button class="btn btn-success btn-sm rounded pull-right " type="submit" value="submit"><span class="fa fa-check"></span>&nbsp Approve</button>
-                            <a href="<?= base_url() ?>Admin/decline_petition/<?= $petition->petition_ID ?>" class="btn btn-danger btn-sm rounded pull-right" style="margin-right:10px;"><span class="fa fa-ban"></span>&nbsp Decline</a>
+                            <!-- <button class="btn btn-success btn-sm rounded pull-right " type="submit" value="submit"><span class="fa fa-check"></span>&nbsp Approve</button> -->
+                            <a href="<?= base_url() ?>Admin/approve_petition/<?= $petition->petition_ID ?>/<?= time() ?>" class="btn btn-success btn-sm rounded pull-right" style="margin-right:10px;"><span class="fa fa-check"></span>&nbsp Approve</a>
+                            <a href="<?= base_url() ?>Admin/decline_petition/<?= $petition->petition_ID ?>/<?= time() ?>" class="btn btn-danger btn-sm rounded pull-right" style="margin-right:10px;"><span class="fa fa-ban"></span>&nbsp Decline</a>
                         <?php endif ?>
                     </div>
                 </div>
@@ -137,6 +138,7 @@
                     </div>
                     <table class="table table-striped table-bordered">
                         <thead style="background-color:#00a65a; color:white;">
+                            <th class="text-center col-md-2">index</th>
                             <th class="text-center col-md-2">Day</th>
                             <th class="col-md-7">Time</th>
                             <th class="col-md-3">Room</th>
@@ -194,7 +196,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group pull-right">
-                                <button id="add_sched" class="btn btn-success">Add Schedule</button>
+                                <button id="save_sched" class="btn btn-success">Save Schedule</button>
+                            </div>
+                            <div class="form-group pull-right">
+                                <button id="add_sched" class="btn btn-primary">Add Schedule</button>
                             </div>
                         </div>
                     </div>

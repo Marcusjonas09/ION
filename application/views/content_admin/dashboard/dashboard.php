@@ -1,85 +1,88 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      <strong>Dashboard</strong>
+    </h1>
+  </section>
 
+  <!-- Main content -->
+  <section class="content container-fluid">
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        <strong>Dashboard</strong>
-      </h1>
-    </section>
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3 id="petition_number">0</h3>
 
-    <!-- Main content -->
-    <section class="content container-fluid">
-      <!-- <div class="col-md-3">
-        <div class="small-box bg-green">
-          <div class="inner">
-            <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-            <p>Bounce Rate</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-stats-bars"></i>
-          </div>
-          <a href="#" class="small-box-footer">
-            More info <i class="fa fa-arrow-circle-right"></i>
-          </a>
+          <p>Pending Petitions</p>
         </div>
-      </div> -->
-
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-green"><i class="fa fa-envelope-o"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Course Petitions</span>
-            <span class="info-box-number">1,410</span>
-          </div>
-          <!-- /.info-box-content -->
+        <div class="icon">
+          <!-- <i class="fa fa-envelope-o"></i> -->
         </div>
-        <!-- /.info-box -->
+        <a href="<?= base_url() ?>Admin/course_petitions" class="small-box-footer">
+          More info <i class="fa fa-arrow-circle-right"></i>
+        </a>
       </div>
+    </div>
+    <!-- ./col -->
 
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-green"><i class="fa fa-envelope-o"></i></span>
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3 id="underload_number">0</h3>
 
-          <div class="info-box-content">
-            <span class="info-box-text">Underload Requests</span>
-            <span class="info-box-number">1,410</span>
-          </div>
-          <!-- /.info-box-content -->
+          <p>Pending Underload Request/s</p>
         </div>
-        <!-- /.info-box -->
-      </div>
-
-
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-green"><i class="fa fa-envelope-o"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Overload Requests</span>
-            <span class="info-box-number">1,410</span>
-          </div>
-          <!-- /.info-box-content -->
+        <div class="icon">
+          <!-- <i class="fa fa-shopping-cart"></i> -->
         </div>
-        <!-- /.info-box -->
+        <a href="<?= base_url() ?>Admin/underload" class="small-box-footer">
+          More info <i class="fa fa-arrow-circle-right"></i>
+        </a>
       </div>
+    </div>
+    <!-- ./col -->
 
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-green"><i class="fa fa-envelope-o"></i></span>
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3 id="overload_number">0</h3>
 
-          <div class="info-box-content">
-            <span class="info-box-text">Simul Requests</span>
-            <span class="info-box-number">1,410</span>
-          </div>
-          <!-- /.info-box-content -->
+          <p>Pending Overload Request/s</p>
         </div>
-        <!-- /.info-box -->
+        <div class="icon">
+          <!-- <i class="fa fa-shopping-cart"></i> -->
+        </div>
+        <a href="<?= base_url() ?>Admin/overload" class="small-box-footer">
+          More info <i class="fa fa-arrow-circle-right"></i>
+        </a>
       </div>
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+    </div>
+    <!-- ./col -->
+
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3 id="simul_number">0</h3>
+
+          <p>Pending Simul Request/s</p>
+        </div>
+        <div class="icon">
+          <!-- <i class="fa fa-shopping-cart"></i> -->
+        </div>
+        <a href="<?= base_url() ?>Admin/simul" class="small-box-footer">
+          More info <i class="fa fa-arrow-circle-right"></i>
+        </a>
+      </div>
+    </div>
+    <!-- ./col -->
+
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

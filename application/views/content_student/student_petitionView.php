@@ -53,7 +53,7 @@
                                 <div class="form-group">
                                     <label>Date processed: </label>
                                     <input type="text" class="form-control" readonly value="<?php if ($petition->date_processed) {
-                                                                                                date("F j, Y, g:i a", $petition->date_processed);
+                                                                                                echo date("F j, Y, g:i a", $petition->date_processed);
                                                                                             } else {
                                                                                                 echo "Pending";
                                                                                             } ?>">

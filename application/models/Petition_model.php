@@ -30,9 +30,10 @@ class Petition_model extends CI_Model
         $this->db->update('petitions_tbl');
     }
 
-    public function decline_petition($petition_ID)
+    public function decline_petition($petition_ID, $date_processed)
     {
         $this->db->set('petition_status', 0);
+        $this->db->set('date_processed', $date_processed);
         $this->db->where('petition_ID', $petition_ID);
         $this->db->update('petitions_tbl');
     }

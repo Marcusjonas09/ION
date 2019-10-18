@@ -15,6 +15,7 @@ class Admin extends CI_Controller
 		$this->load->model('Post_model');
 		$this->load->model('Notification_model');
 		$this->load->model('Overload_underload_model');
+		$this->load->model('Real_time_model');
 		$this->load->library('form_validation');
 		$this->load->helper('date');
 		$this->load->helper('text');
@@ -445,15 +446,15 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function approve_petition($petition_ID)
+	public function approve_petition($petition_ID, $date_processed)
 	{
-		$this->Petition_model->approve_petition($petition_ID);
+		$this->Petition_model->approve_petition($petition_ID, $date_processed);
 		redirect('Admin/course_petitions');
 	}
 
-	public function decline_petition($petition_ID)
+	public function decline_petition($petition_ID, $date_processed)
 	{
-		$this->Petition_model->decline_petition($petition_ID);
+		$this->Petition_model->decline_petition($petition_ID, $date_processed);
 		redirect('Admin/course_petitions');
 	}
 
@@ -471,6 +472,12 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_contentFooter');
 		$this->load->view('includes_admin/admin_rightnav');
 		$this->load->view('includes_admin/admin_footer');
+	}
+
+	public function save_sched()
+	{
+		echo json_encode($_POST['course_details']);
+		echo json_encode($_POST['course_sched']);
 	}
 
 	// =======================================================================================
@@ -652,6 +659,30 @@ class Admin extends CI_Controller
 	// =======================================================================================
 	// END OF SCHOOL ANNOUNCEMENT MODULE
 	// =======================================================================================
+
+	// =======================================================================================
+	// DASHBOARD FUNCTIONS MODULE
+	// =======================================================================================
+
+	public function petitions_number()
+	{
+		echo json_encode($this->Real_time_model->fetchPetitions_num_rows());
+	}
+
+	public function underload_number()
+	{
+		echo json_encode($this->Real_time_model->fetchUnderload_num_rows());
+	}
+
+	public function overload_number()
+	{
+		echo json_encode($this->Real_time_model->fetchOverload_num_rows());
+	}
+
+	public function simul_number()
+	{
+		echo json_encode($this->Real_time_model->fetchSimul_num_rows());
+	}
 
 	// =======================================================================================
 	// OVERLOAD UNDERLOAD MODULE
