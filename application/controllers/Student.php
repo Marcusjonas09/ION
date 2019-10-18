@@ -216,9 +216,6 @@ class Student extends CI_Controller
 		$data['courses'] = $this->COR_model->fetch_courses();
 		$data['offerings'] = $this->COR_model->fetchOffering($year, $term);
 
-		// echo json_encode($data);
-		// echo json_encode($cor);
-
 		$this->load->view('content_student/student_COR', $data);
 
 		$this->load->view('includes_student/student_contentFooter');

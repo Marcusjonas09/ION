@@ -78,14 +78,13 @@
 
                         </div>
 
-                        <?php if ($petition->petition_status == 1 || $petition->petition_status == 0) : ?>
-                            <a href="#" class="btn btn-success btn-sm rounded pull-right disabled" style="margin-right:10px;"><span class="fa fa-check"></span>&nbsp Approve</a>
-                            <a href="#" class="btn btn-danger btn-sm rounded pull-right disabled" style="margin-right:10px;"><span class="fa fa-ban"></span>&nbsp Decline</a>
-                        <?php else : ?>
-                            <!-- <button class="btn btn-success btn-sm rounded pull-right " type="submit" value="submit"><span class="fa fa-check"></span>&nbsp Approve</button> -->
-                            <a href="<?= base_url() ?>Admin/approve_petition/<?= $petition->petition_ID ?>/<?= time() ?>" class="btn btn-success btn-sm rounded pull-right" style="margin-right:10px;"><span class="fa fa-check"></span>&nbsp Approve</a>
-                            <a href="<?= base_url() ?>Admin/decline_petition/<?= $petition->petition_ID ?>/<?= time() ?>" class="btn btn-danger btn-sm rounded pull-right" style="margin-right:10px;"><span class="fa fa-ban"></span>&nbsp Decline</a>
-                        <?php endif ?>
+
+                        <a href="<?= base_url() ?>Admin/approve_petition/<?= $petition->petition_ID ?>/<?= time() ?>" class="btn btn-success btn-sm rounded pull-right col-md-3 <?php if ($petition->petition_status != 2) {
+                                                                                                                                                                                    echo "disabled";
+                                                                                                                                                                                } ?>"><span class="fa fa-check"></span>&nbsp Approve</a>
+                        <a href="<?= base_url() ?>Admin/decline_petition/<?= $petition->petition_ID ?>/<?= time() ?>" class="btn btn-danger btn-sm rounded pull-right col-md-3 <?php if ($petition->petition_status != 2) {
+                                                                                                                                                                                    echo "disabled";
+                                                                                                                                                                                } ?>" style="margin-right:10px;"><span class="fa fa-ban"></span>&nbsp Decline</a>
                     </div>
                 </div>
             </div>
@@ -132,7 +131,9 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Faculty</label>
-                                <input type="text" class="form-control" placeholder="Faculty" value="TBA">
+                                <input <?php if ($petition->petition_status == 1 || $petition->petition_status == 0) {
+                                            echo "readonly";
+                                        } ?> type="text" class="form-control" placeholder="Faculty" value="TBA">
                             </div>
                         </div>
                     </div>
@@ -146,63 +147,66 @@
                         <tbody id="sched_table_body">
                         </tbody>
                     </table>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Day</label>
-                                <select id="sched_day" id="" class="form-control">
-                                    <option value="M">Monday</option>
-                                    <option value="T">Tuesday</option>
-                                    <option value="W">Wednesday</option>
-                                    <option value="TH">Thursday</option>
-                                    <option value="F">Friday</option>
-                                    <option value="S">Saturday</option>
-                                </select>
+                    <?php if ($petition->petition_status == 2) : ?>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Day</label>
+                                    <select id="sched_day" id="" class="form-control">
+                                        <option value="M">Monday</option>
+                                        <option value="T">Tuesday</option>
+                                        <option value="W">Wednesday</option>
+                                        <option value="TH">Thursday</option>
+                                        <option value="F">Friday</option>
+                                        <option value="S">Saturday</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Start Time</label>
-                                <div class="input-group">
-                                    <input id="start_time" type="text" value="" class="form-control timepicker">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-clock-o"></i>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Start Time</label>
+                                    <div class="input-group">
+                                        <input id="start_time" type="text" value="" class="form-control timepicker">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock-o"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Room</label>
-                                <input id="room" type="text" class="form-control" placeholder="Room" value="TBA">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Room</label>
+                                    <input id="room" type="text" class="form-control" placeholder="Room" value="TBA">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>End Time</label>
-                                <div class="input-group">
-                                    <input id="end_time" type="text" value="" class="form-control timepicker">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-clock-o"></i>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>End Time</label>
+                                    <div class="input-group">
+                                        <input id="end_time" type="text" value="" class="form-control timepicker">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock-o"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group pull-right">
-                                <button id="save_sched" class="btn btn-success">Save Schedule</button>
-                            </div>
-                            <div class="form-group pull-right">
-                                <button id="add_sched" class="btn btn-primary">Add Schedule</button>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group pull-right">
+                                    <button id="save_sched" class="btn btn-success">Save Schedule</button>
+                                </div>
+                                <div class="form-group pull-right">
+                                    <button id="add_sched" style="margin-right:10px;" class="btn btn-primary">Add Schedule</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

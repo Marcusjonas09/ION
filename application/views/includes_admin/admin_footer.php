@@ -22,6 +22,12 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
+        // Initialize variables
+
+        var schedule_entry, sched_table = [],
+            petition_details = [];
+
+        // fetch data using ajax
 
         setInterval(() => {
             $.get("http://localhost/ION/Admin/petitions_number", function(data) {
@@ -38,10 +44,6 @@
             });
         }, 1000);
 
-        // Initialize variables
-        var schedule_entry, sched_table = [],
-            petition_details = [];
-
         // fetch Petition Details
 
         var course_code = $("#offering_course_code").val();
@@ -53,7 +55,8 @@
         };
         petition_details.push(offering_entry);
 
-        // create subject sched
+        // add schedule
+
         $("#add_sched").click(function() {
             var day = $("#sched_day").val();
             var start_time = $("#start_time").val();
@@ -70,10 +73,12 @@
             if (start_time < end_time && start_time != end_time) {
                 sched_table.push(schedule_entry);
                 var tr = '<tr><td>' + sched_table.indexOf(schedule_entry) + '</td><td class="col-md-2 text-center">' + day + '</td><td class="col-md-7">' + start_time + ' - ' + end_time + '</td><td class="col-md-3">' + room + '</td></tr>';
-                $("#sched_table_body").append(tr); // Append new elements
+                $("#sched_table_body").append(tr);
             }
         });
-        // var sched = 
+
+        //save schedule
+
         $("#save_sched").click(function() {
             $.post("http://localhost/ION/Admin/save_sched", {
                     course_details: petition_details,
@@ -82,11 +87,9 @@
                     alert("success " + data);
                 })
                 .fail(function() {
-                    alert("error");
+                    alert("Petition approval failed!");
                 });
         });
-
-        // Create a new object
 
         $('.timepicker').timepicker({
             showInputs: false
@@ -94,9 +97,6 @@
     });
 </script>
 
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. -->
 </body>
 
 </html>

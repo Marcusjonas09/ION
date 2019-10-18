@@ -36,7 +36,7 @@
               </select>
             </div>
             <input type="hidden" name="stud_number" value="<?= $this->session->acc_number ?>" class="form-control">
-            <input type="hidden" name="date_submitted" value="<?= time() ?>" class="form-control">
+            <input type="hidden" name="date_submitted" value="<?= time() ?>" class="form-control">>
             <button type="submit" class="btn btn-success" style="margin-left:10px;">Submit</button>
             <!-- </div> -->
           </div>
