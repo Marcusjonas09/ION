@@ -77,7 +77,7 @@
                   <td>
                     <?php $j = 0; ?>
                     <?php foreach ($petitioners as $petitioner) {
-                        if ($petitioner->petition_code == $petition->course_code) {
+                        if ($petitioner->petition_unique == $petition->petition_unique) {
                           $j++;
                         }
                       } ?>
@@ -94,7 +94,7 @@
                       } ?>
                   </td>
                   <td>
-                    <a href="<?= base_url() ?>Student/petitionView/<?= $petition->petition_ID ?>/<?= $petition->course_code ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
+                    <a href="<?= base_url() ?>Student/petitionView/<?= $petition->petition_ID ?>/<?= $petition->petition_unique ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
                   </td>
                 </tr>
               <?php endforeach; ?>

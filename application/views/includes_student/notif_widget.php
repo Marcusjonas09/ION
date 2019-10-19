@@ -13,7 +13,7 @@
                     <li>
                         <a href="#">
                             <div class="pull-left">
-                                <img src="<?= base_url() ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                <img src="<?= base_url() ?>dist/img/default_avatar.png" class="img-circle" alt="User Image">
                             </div>
                             <h4>
                                 Support Team

@@ -421,19 +421,19 @@ class Student extends CI_Controller
 
 	public function submitPetition()
 	{
-		$this->form_validation->set_rules('course_code', 'Course Code', 'is_unique[petitions_tbl.course_code]|strip_tags');
-		if ($this->form_validation->run() == FALSE) {
-			$this->petitions();
-		} else {
-			$this->Petition_model->submitPetition($_POST);
-			redirect('Student/petitions');
-		}
+		// $this->form_validation->set_rules('course_code', 'Course Code', 'is_unique[petitions_tbl.course_code]|strip_tags');
+		// if ($this->form_validation->run() == FALSE) {
+		// $this->petitions();
+		// } else {
+		$this->Petition_model->submitPetition($_POST);
+		redirect('Student/petitions');
+		// }
 	}
 
-	public function petitionView($petitionID, $course_code)
+	public function petitionView($petitionID, $petition_unique)
 	{
 		$data['petition'] = $this->Petition_model->fetchPetition($petitionID);
-		$data['petitioners'] = $this->Petition_model->fetchPetitioners($course_code);
+		$data['petitioners'] = $this->Petition_model->fetchPetitioners($petition_unique);
 		$data['courses'] = $this->Petition_model->fetchCourses();
 
 		$this->load->view('content_student/student_petitionView', $data);

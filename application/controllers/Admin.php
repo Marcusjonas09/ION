@@ -446,22 +446,22 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function approve_petition($petition_ID, $date_processed)
+	public function approve_petition($petition_unique)
 	{
-		$this->Petition_model->approve_petition($petition_ID, $date_processed);
+		$this->Petition_model->approve_petition($petition_unique);
 		redirect('Admin/course_petitions');
 	}
 
-	public function decline_petition($petition_ID, $date_processed)
+	public function decline_petition($petition_unique)
 	{
-		$this->Petition_model->decline_petition($petition_ID, $date_processed);
+		$this->Petition_model->decline_petition($petition_unique);
 		redirect('Admin/course_petitions');
 	}
 
-	public function show_petition($petition_ID, $course_code) // | Display Specific Student Account |
+	public function show_petition($petition_ID, $petition_unique) // | Display Specific Student Account |
 	{
 		$data['petition'] = $this->Petition_model->fetchPetition($petition_ID);
-		$data['petitioners'] = $this->Petition_model->fetchPetitioners($course_code);
+		$data['petitioners'] = $this->Petition_model->fetchPetitioners($petition_unique);
 		$data['courses'] = $this->Curriculum_model->fetchCoursesAdmin();
 		$this->load->view('includes_admin/admin_header');
 		$this->load->view('includes_admin/admin_topnav');

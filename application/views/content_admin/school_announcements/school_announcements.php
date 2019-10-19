@@ -25,7 +25,7 @@
                           <div class="box-body">
                               <div class="user-block">
                                   <div class="col">
-                                      <img class="img-circle" src="<?= base_url() ?>dist/img/user1-128x128.jpg" alt="User Image">
+                                      <img class="img-circle" src="<?= base_url() ?>dist/img/default_avatar.png" alt="User Image">
                                   </div>
                                   <div class="col-md-11">
                                       <form action="<?= base_url() ?>Admin/announce" method="post" enctype="multipart/form-data">
@@ -55,7 +55,7 @@
                           <div class="box box-widget">
                               <div class="box-header with-border">
                                   <div class="user-block">
-                                      <img class="img-circle" src="<?= base_url() ?>dist/img/user1-128x128.jpg" alt="User Image">
+                                      <img class="img-circle" src="<?= base_url() ?>dist/img/default_avatar.png" alt="User Image">
                                       <span class="username"><a href="#"><?= $post->acc_fname . " " . $post->acc_lname ?></a></span>
                                       <?php if (!$post->post_edited) : ?>
                                           <span class="description">Shared publicly - <?= date('F j, Y - g:i:a', $post->post_created) ?></span>

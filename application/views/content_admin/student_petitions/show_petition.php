@@ -27,7 +27,6 @@
                 </div>
                 <div class="box-body">
                     <div class="container-fluid col-md-12">
-                        <input name="petition_id" type="hidden" class="form-control" value="<?= $petition->petition_ID ?>">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -75,16 +74,15 @@
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-
                         </div>
 
 
-                        <a href="<?= base_url() ?>Admin/approve_petition/<?= $petition->petition_ID ?>/<?= time() ?>" class="btn btn-success btn-sm rounded pull-right col-md-3 <?php if ($petition->petition_status != 2) {
-                                                                                                                                                                                    echo "disabled";
-                                                                                                                                                                                } ?>"><span class="fa fa-check"></span>&nbsp Approve</a>
-                        <a href="<?= base_url() ?>Admin/decline_petition/<?= $petition->petition_ID ?>/<?= time() ?>" class="btn btn-danger btn-sm rounded pull-right col-md-3 <?php if ($petition->petition_status != 2) {
-                                                                                                                                                                                    echo "disabled";
-                                                                                                                                                                                } ?>" style="margin-right:10px;"><span class="fa fa-ban"></span>&nbsp Decline</a>
+                        <a href="<?= base_url() ?>Admin/approve_petition/<?= $petition->petition_unique ?>" class="btn btn-success btn-sm rounded pull-right col-md-3 <?php if ($petition->petition_status != 2) {
+                                                                                                                                                                            echo "disabled";
+                                                                                                                                                                        } ?>"><span class="fa fa-check"></span>&nbsp Approve</a>
+                        <a href="<?= base_url() ?>Admin/decline_petition/<?= $petition->petition_unique ?>" class="btn btn-danger btn-sm rounded pull-right col-md-3 <?php if ($petition->petition_status != 2) {
+                                                                                                                                                                            echo "disabled";
+                                                                                                                                                                        } ?>" style="margin-right:10px;"><span class="fa fa-ban"></span>&nbsp Decline</a>
                     </div>
                 </div>
             </div>

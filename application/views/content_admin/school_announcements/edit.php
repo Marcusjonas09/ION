@@ -17,7 +17,7 @@
                       <div class="box box-widget">
                           <div class="box-header with-border">
                               <div class="user-block">
-                                  <img class="img-circle" src="<?= base_url() ?>dist/img/user1-128x128.jpg" alt="User Image">
+                                  <img class="img-circle" src="<?= base_url() ?>dist/img/default_avatar.png" alt="User Image">
                                   <span class="username"><a href="#"><?= $acc_fname . " " . $acc_lname ?></a></span>
                                   <span class="description">Shared publicly - <?= date('F j, Y - g:i:a', $post_created) ?></span>
                               </div>
@@ -48,7 +48,7 @@
 
                           <div class="box-footer">
                               <button class="btn btn-success pull-right col-md-2" type="submit" value="submit"><strong>Save</strong></button>
-                              <a href="<?= base_url() ?>Admin/academic_calendar" class="btn btn-default pull-right col-md-2" style="margin-right:10px;" type="submit" value="submit"><strong>Cancel</strong></a>
+                              <a href="<?= base_url() ?>Admin/school_announcements" class="btn btn-default pull-right col-md-2" style="margin-right:10px;" type="submit" value="submit"><strong>Cancel</strong></a>
                           </div>
                           </form>
                       </div>

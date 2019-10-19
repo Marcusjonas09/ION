@@ -19,7 +19,7 @@
                               <div class="box box-widget">
                                   <div class="box-header with-border">
                                       <div class="user-block">
-                                          <img class="img-circle" src="<?= base_url() ?>dist/img/user1-128x128.jpg" alt="User Image">
+                                          <img class="img-circle" src="<?= base_url() ?>dist/img/default_avatar.png" alt="User Image">
                                           <span class="username"><a href="#"><?= $announcement->acc_fname . ' ' . $announcement->acc_lname ?></a></span>
                                           <span class="description">Shared publicly - <?= date('F j, Y - g:i:a', $announcement->post_created) ?></span>
                                       </div>

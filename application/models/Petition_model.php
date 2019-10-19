@@ -22,19 +22,19 @@ class Petition_model extends CI_Model
         return $query->num_rows();
     }
 
-    public function approve_petition($petition_ID, $date_processed)
+    public function approve_petition($petition_unique)
     {
         $this->db->set('petition_status', 1);
-        $this->db->set('date_processed', $date_processed);
-        $this->db->where('petition_ID', $petition_ID);
+        $this->db->set('date_processed', time());
+        $this->db->where('petition_unique', $petition_unique);
         $this->db->update('petitions_tbl');
     }
 
-    public function decline_petition($petition_ID, $date_processed)
+    public function decline_petition($petition_unique)
     {
         $this->db->set('petition_status', 0);
-        $this->db->set('date_processed', $date_processed);
-        $this->db->where('petition_ID', $petition_ID);
+        $this->db->set('date_processed', time());
+        $this->db->where('petition_unique', $petition_unique);
         $this->db->update('petitions_tbl');
     }
 
@@ -68,12 +68,28 @@ class Petition_model extends CI_Model
         return $query->row();
     }
 
-    public function fetchPetitioners($course_code)
+    public function fetch_petition_course_code($petition_unique)
+    {
+        $this->db->select('stud_number');
+        $query = $this->db->get_where('petitions_tbl', array('petition_unique' => $petition_unique));
+        return $query->row();
+    }
+
+    public function fetchPetitioners($petition_unique)
     {
         $this->db->select('*');
-        $this->db->where(array('petition_code' => $course_code));
+        $this->db->where(array('petition_unique' => $petition_unique));
         $this->db->from('petitioners_tbl');
         $this->db->join('accounts_tbl', 'accounts_tbl.acc_number = petitioners_tbl.stud_number');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function fetch_recipients($petition_unique)
+    {
+        $this->db->select('stud_number');
+        $this->db->where(array('petition_unique' => $petition_unique));
+        $this->db->from('petitioners_tbl');
         $query = $this->db->get();
         return $query->result();
     }
@@ -89,9 +105,6 @@ class Petition_model extends CI_Model
 
     public function submitPetition()
     {
-
-
-
         $petition = array(
             'course_code' => $this->input->post('course_code'),
             'stud_number' => $this->session->acc_number,

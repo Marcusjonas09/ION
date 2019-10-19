@@ -21,7 +21,7 @@
                   <!-- Profile Image -->
                   <div class="box box-success">
                       <div class="box-body box-profile">
-                          <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
+                          <img class="profile-user-img img-responsive img-circle" src="<?= base_url() ?>dist/img/default_avatar.png" alt="User profile picture">
 
                           <h3 class="profile-username text-center"><?= $account->acc_fname . ' ' . $account->acc_mname . ' ' . $account->acc_lname ?></h3>
 

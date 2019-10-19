@@ -17,7 +17,7 @@
                       <div class="box box-widget">
                           <div class="box-header with-border">
                               <div class="user-block">
-                                  <img class="img-circle" src="<?= base_url() ?>dist/img/user1-128x128.jpg" alt="User Image">
+                                  <img class="img-circle" src="<?= base_url() ?>dist/img/default_avatar.png" alt="User Image">
                                   <span class="username"><a href="#"><?= $acc_fname . " " . $acc_lname ?></a></span>
                                   <?php if (!$post_edited) : ?>
                                       <span class="description">Shared publicly - <?= date('F j, Y - g:i:a', $post_created) ?></span>
