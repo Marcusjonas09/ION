@@ -29,16 +29,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Theme style -->
       <link rel="stylesheet" href="<?= base_url() ?>dist/css/AdminLTE.min.css">
       <!-- CSS -->
-      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/css/alertify.min.css" />
-      <!-- Default theme -->
-      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/css/themes/default.min.css" />
-      <!-- Semantic UI theme -->
-      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/css/themes/semantic.min.css" />
-      <!-- Bootstrap theme -->
-      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/css/themes/bootstrap.min.css" />
-      <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/alertify.min.js"></script>
-      <!-- data table css -->
-      <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
       <!-- Bootstrap time Picker -->
       <link rel="stylesheet" href="<?= base_url() ?>plugins/timepicker/bootstrap-timepicker.min.css">
 

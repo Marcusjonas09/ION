@@ -121,8 +121,8 @@
                     </table>
                 <?php endif; ?>
                 <div class="container-fluid">
-                    <a href="<?= base_url() ?>/Admin/approve_underload/<?= $underload->ou_id ?>" type="submit" class="btn btn-success pull-right col-md-1">Approve</a>
-                    <a href="<?= base_url() ?>/Admin/decline_underload/<?= $underload->ou_id ?>" class="btn btn-danger pull-right col-md-1" style="margin-right:10px;">Decline</a>
+                    <a href="<?= base_url() ?>/Admin/approve_underload/<?= $underload->ou_id ?>/<?= $student->acc_number ?>" type="submit" class="btn btn-success pull-right col-md-1">Approve</a>
+                    <a href="<?= base_url() ?>/Admin/decline_underload/<?= $underload->ou_id ?>/<?= $student->acc_number ?>" class="btn btn-danger pull-right col-md-1" style="margin-right:10px;">Decline</a>
                 </div>
             </div>
             <!-- /.box-body -->

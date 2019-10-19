@@ -32,11 +32,8 @@
                 <?php foreach ($curr as $cur) : ?>
                   <option value="<?= $cur->course_code ?>"><?= $cur->course_code . " - " . $cur->course_title ?></option>
                 <?php endforeach; ?>
-
               </select>
             </div>
-            <input type="hidden" name="stud_number" value="<?= $this->session->acc_number ?>" class="form-control">
-            <input type="hidden" name="date_submitted" value="<?= time() ?>" class="form-control">>
             <button type="submit" class="btn btn-success" style="margin-left:10px;">Submit</button>
             <!-- </div> -->
           </div>
@@ -78,13 +75,13 @@
                   </td>
 
                   <td>
-                    <?php $i = 0; ?>
+                    <?php $j = 0; ?>
                     <?php foreach ($petitioners as $petitioner) {
                         if ($petitioner->petition_code == $petition->course_code) {
-                          $i++;
+                          $j++;
                         }
                       } ?>
-                    <?= $i . '/40' ?>
+                    <?= $j . '/40' ?>
                   </td>
 
                   <td>

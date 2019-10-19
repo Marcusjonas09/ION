@@ -139,7 +139,6 @@
                     </div>
                     <table class="table table-striped table-bordered">
                         <thead style="background-color:#00a65a; color:white;">
-                            <th class="text-center col-md-2">index</th>
                             <th class="text-center col-md-2">Day</th>
                             <th class="col-md-7">Time</th>
                             <th class="col-md-3">Room</th>

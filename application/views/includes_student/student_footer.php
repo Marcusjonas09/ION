@@ -28,19 +28,44 @@
         });
 
         var channel = pusher.subscribe('my-channel');
-        channel.bind('my-event', function(data) {
+        var student_number = <?= $this->session->acc_number ?>;
+        channel.bind('school_announcement', function(data) {
             var obj = JSON.parse(JSON.stringify(data));
             $("#dash").fadeIn(1000).html(
                 "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + obj.message
             );
-            $.ajax({
-                url: "http://192.168.43.111/ION/Student",
-                success: function(result) {
-                    s
-                    $("#notif").html(result);
-                }
-            });
+            // $.ajax({
+            //     url: "http://192.168.43.111/ION/Student",
+            //     success: function(result) {
+            //         $("#notif").html(result);
+            //     }
+            // });
         });
+
+        channel.bind('client_specific', function(data) {
+            var obj = JSON.parse(JSON.stringify(data));
+            for (var i = 0; i < obj.recipient.length; i++) {
+                if (student_number == obj.recipient[i]) {
+                    $("#client").fadeIn(1000).html(
+                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + obj.message
+                    );
+                }
+            }
+            // $.ajax({
+            //     url: "http://192.168.43.111/ION/Student",
+            //     success: function(result) {
+            //         $("#notif").html(result);
+            //     }
+            // });
+        });
+
+        //fetch specific notification
+
+        setInterval(() => {
+            $.get("http://localhost/ION/Student/get_notifications", function(data) {
+                $("#petition_number").text(data);
+            });
+        }, 1000);
 
         $('.js-example-basic-single').select2();
 

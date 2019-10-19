@@ -89,15 +89,20 @@ class Petition_model extends CI_Model
 
     public function submitPetition()
     {
+
+
+
         $petition = array(
             'course_code' => $this->input->post('course_code'),
-            'stud_number' => $this->input->post('stud_number'),
-            'date_submitted' => $this->input->post('date_submitted')
+            'stud_number' => $this->session->acc_number,
+            'petition_unique' => $this->input->post('course_code') . time(),
+            'date_submitted' => time()
         );
 
         $petitioners = array(
             'petition_code' => $this->input->post('course_code'),
-            'stud_number' => $this->input->post('stud_number')
+            'petition_unique' => $this->input->post('course_code') . time(),
+            'stud_number' => $this->session->acc_number
         );
 
         $this->db->insert('petitions_tbl', $petition);

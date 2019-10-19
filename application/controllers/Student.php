@@ -421,8 +421,13 @@ class Student extends CI_Controller
 
 	public function submitPetition()
 	{
-		$this->Petition_model->submitPetition($_POST);
-		redirect('Student/petitions');
+		$this->form_validation->set_rules('course_code', 'Course Code', 'is_unique[petitions_tbl.course_code]|strip_tags');
+		if ($this->form_validation->run() == FALSE) {
+			$this->petitions();
+		} else {
+			$this->Petition_model->submitPetition($_POST);
+			redirect('Student/petitions');
+		}
 	}
 
 	public function petitionView($petitionID, $course_code)

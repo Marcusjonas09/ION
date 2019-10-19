@@ -520,7 +520,6 @@ class Admin extends CI_Controller
 			'880418',
 			$options
 		);
-
 		$config['upload_path']          = './images/posts/';
 		$config['allowed_types']        = 'gif|jpg|png|JPG';
 		$config['max_size']             = 512;
@@ -581,8 +580,8 @@ class Admin extends CI_Controller
 
 				$this->Notification_model->notify($notif_details);
 
-				$notification['message'] = $this->input->post('caption');
-				$pusher->trigger('my-channel', 'my-event', $notification);
+				$announcement['message'] = $this->input->post('caption');
+				$pusher->trigger('my-channel', 'school_announcement', $announcement);
 
 				redirect('Admin/school_announcements');
 			}
@@ -688,15 +687,63 @@ class Admin extends CI_Controller
 	// OVERLOAD UNDERLOAD MODULE
 	// =======================================================================================
 
-	public function approve_underload($id)
+	public function approve_underload($id, $stud_number)
 	{
+		$options = array(
+			'cluster' => 'ap1',
+			'useTLS' => true
+		);
+		$pusher = new Pusher\Pusher(
+			'8a5cfc7f91e3ec8112f4',
+			'e5e5c5534c2aa13bb349',
+			'880418',
+			$options
+		);
+
+		$notif_details = array(
+			'notif_sender' => $this->session->acc_number,
+			'notif_recipient' => $stud_number,
+			'notif_content' => 'Your Underload Request was approved',
+			'notif_created_at' => time()
+		);
+
+		$specific['message'] = 'Your Underload Request was approved';
+		$specific['recipient'] = [$stud_number];
+		$pusher->trigger('my-channel', 'client_specific', $specific);
+
+		$this->Notification_model->notify($notif_details);
 		$this->Overload_underload_model->approve_underload($id);
+
 		redirect('Admin/underload');
 	}
 
-	public function decline_underload($id)
+	public function decline_underload($id, $stud_number)
 	{
+		$options = array(
+			'cluster' => 'ap1',
+			'useTLS' => true
+		);
+		$pusher = new Pusher\Pusher(
+			'8a5cfc7f91e3ec8112f4',
+			'e5e5c5534c2aa13bb349',
+			'880418',
+			$options
+		);
+
+		$notif_details = array(
+			'notif_sender' => $this->session->acc_number,
+			'notif_recipient' => $stud_number,
+			'notif_content' => 'Your Underload Request was declined',
+			'notif_created_at' => time()
+		);
+
+		$specific['message'] = 'Your Underload Request was declined';
+		$specific['recipient'] = [$stud_number];
+		$pusher->trigger('my-channel', 'client_specific', $specific);
+
+		$this->Notification_model->notify($notif_details);
 		$this->Overload_underload_model->decline_underload($id);
+
 		redirect('Admin/underload');
 	}
 
