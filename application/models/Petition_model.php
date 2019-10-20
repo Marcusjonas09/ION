@@ -68,7 +68,7 @@ class Petition_model extends CI_Model
         return $query->row();
     }
 
-    public function fetch_petition_course_code($petition_unique)
+    public function fetch_petition_recipients($petition_unique)
     {
         $this->db->select('stud_number');
         $query = $this->db->get_where('petitioners_tbl', array('petition_unique' => $petition_unique));

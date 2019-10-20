@@ -452,36 +452,10 @@ class Admin extends CI_Controller
 
 	public function approve_petition($petition_unique)
 	{
+		$recipients = $this->Petition_model->fetch_petition_recipients($petition_unique);
+		$message = 'Petition approved!';
 
-		$options = array(
-			'cluster' => 'ap1',
-			'useTLS' => true
-		);
-		$pusher = new Pusher\Pusher(
-			'8a5cfc7f91e3ec8112f4',
-			'e5e5c5534c2aa13bb349',
-			'880418',
-			$options
-		);
-
-		$data = $this->Petition_model->fetch_petition_course_code($petition_unique);
-
-		$recipients = array();
-		foreach ($data as $petitioner) {
-			$notif_details = array(
-				'notif_sender' => $this->session->acc_number,
-				'notif_recipient' => $petitioner->stud_number,
-				'notif_content' => 'Petition approved!',
-				'notif_created_at' => time()
-			);
-
-			$this->Notification_model->notify($notif_details);
-			array_push($recipients, $petitioner->stud_number);
-		}
-
-		$announcement['message'] = 'Petition approved!';
-		$announcement['recipient'] = $recipients;
-		$pusher->trigger('my-channel', 'client_specific', $announcement);
+		$this->send_notifications($recipients, $message);
 
 		$this->Petition_model->approve_petition($petition_unique);
 		redirect('Admin/course_petitions');
@@ -489,6 +463,11 @@ class Admin extends CI_Controller
 
 	public function decline_petition($petition_unique)
 	{
+		$recipients = $this->Petition_model->fetch_petition_recipients($petition_unique);
+		$message = 'Petition declined!';
+
+		$this->send_notifications($recipients, $message);
+
 		$this->Petition_model->decline_petition($petition_unique);
 		redirect('Admin/course_petitions');
 	}
@@ -786,11 +765,36 @@ class Admin extends CI_Controller
 	// Notification Module
 	// =======================================================================================
 
-	public function notifications()
-	{ }
+	public function send_notifications($recipients, $message)
+	{
+		$options = array(
+			'cluster' => 'ap1',
+			'useTLS' => true
+		);
+		$pusher = new Pusher\Pusher(
+			'8a5cfc7f91e3ec8112f4',
+			'e5e5c5534c2aa13bb349',
+			'880418',
+			$options
+		);
 
-	public function send_notifications()
-	{ }
+		$clients = array();
+		foreach ($recipients as $recipient) {
+			$notif_details = array(
+				'notif_sender' => $this->session->acc_number,
+				'notif_recipient' => $recipient->stud_number,
+				'notif_content' => $message,
+				'notif_created_at' => time()
+			);
+
+			$this->Notification_model->notify($notif_details);
+			array_push($clients, $recipient->stud_number);
+		}
+
+		$announcement['message'] = $message;
+		$announcement['recipient'] = $clients;
+		$pusher->trigger('my-channel', 'client_specific', $announcement);
+	}
 
 	// =======================================================================================
 	// OTHER Module

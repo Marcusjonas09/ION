@@ -27,7 +27,6 @@ class UserAuth extends CI_Controller
         $this->User_model->login($data);
         $data['error'] = "";
         if ($this->session->login) {
-
             if ($this->session->acc_status) {
                 if ($this->session->access == 'admin') {
                     redirect('Admin');
@@ -48,6 +47,12 @@ class UserAuth extends CI_Controller
 
     public function logout()
     {
+        $log_details = array(
+            'log_user' => $this->session->acc_number,
+            'log_type' => 'logout',
+            'log_time' => time()
+        );
+        $this->db->insert('account_logs', $log_details);
         session_destroy();
         $this->index();
     }
