@@ -28,6 +28,7 @@ class Student extends CI_Controller
 		$this->load->model('Assessment_model');
 		$this->load->model('Overload_underload_model');
 
+		$this->load->helper('date');
 		$this->load->helper('text');
 
 		$notif['notifications'] = $this->Notification_model->getNotifications();

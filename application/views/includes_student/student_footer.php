@@ -3,9 +3,6 @@
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
-
-<!-- jQuery 3 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="<?= base_url() ?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- SlimScroll -->
@@ -34,12 +31,6 @@
             $("#dash").fadeIn(1000).html(
                 "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + obj.message
             );
-            // $.ajax({
-            //     url: "http://192.168.43.111/ION/Student",
-            //     success: function(result) {
-            //         $("#notif").html(result);
-            //     }
-            // });
         });
 
         channel.bind('client_specific', function(data) {
@@ -51,12 +42,6 @@
                     );
                 }
             }
-            // $.ajax({
-            //     url: "http://192.168.43.111/ION/Student",
-            //     success: function(result) {
-            //         $("#notif").html(result);
-            //     }
-            // });
         });
 
         //fetch specific notification
@@ -77,8 +62,6 @@
     var progress = "<?php echo $totalunitspassed / $totalunits; ?>";
     var bar = new ProgressBar.Circle(container, {
         color: '#1f5',
-        // This has to be the same size as the maximum width to
-        // prevent clipping
         strokeWidth: 10,
         trailWidth: 7,
         easing: 'easeInOut',
@@ -117,13 +100,3 @@
 </body>
 
 </html>
-
-<!-- <script>
-    $(document).ready(function() {
-        $.get("http://192.168.43.111/ION/Services/fetchAnnouncements", function(data, status) {
-            var sample = data['post_caption'];
-            alert("Data: " + sample + "\nStatus: " + status).delay(100);
-        });
-    });
-
-</script> -->

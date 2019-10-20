@@ -6,6 +6,12 @@ class Admin extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+
+		require 'vendor/autoload.php';
+		date_default_timezone_set("Asia/Singapore");
+
+		$this->load->library('form_validation');
+
 		$this->load->model('Account_model');
 		$this->load->model('Petition_model');
 		$this->load->model('Curriculum_model');
@@ -16,11 +22,9 @@ class Admin extends CI_Controller
 		$this->load->model('Notification_model');
 		$this->load->model('Overload_underload_model');
 		$this->load->model('Real_time_model');
-		$this->load->library('form_validation');
+
 		$this->load->helper('date');
 		$this->load->helper('text');
-		date_default_timezone_set("Asia/Singapore");
-		require 'vendor/autoload.php';
 	}
 
 	// =======================================================================================
@@ -448,6 +452,37 @@ class Admin extends CI_Controller
 
 	public function approve_petition($petition_unique)
 	{
+
+		$options = array(
+			'cluster' => 'ap1',
+			'useTLS' => true
+		);
+		$pusher = new Pusher\Pusher(
+			'8a5cfc7f91e3ec8112f4',
+			'e5e5c5534c2aa13bb349',
+			'880418',
+			$options
+		);
+
+		$data = $this->Petition_model->fetch_petition_course_code($petition_unique);
+
+		$recipients = array();
+		foreach ($data as $petitioner) {
+			$notif_details = array(
+				'notif_sender' => $this->session->acc_number,
+				'notif_recipient' => $petitioner->stud_number,
+				'notif_content' => 'Petition approved!',
+				'notif_created_at' => time()
+			);
+
+			$this->Notification_model->notify($notif_details);
+			array_push($recipients, $petitioner->stud_number);
+		}
+
+		$announcement['message'] = 'Petition approved!';
+		$announcement['recipient'] = $recipients;
+		$pusher->trigger('my-channel', 'client_specific', $announcement);
+
 		$this->Petition_model->approve_petition($petition_unique);
 		redirect('Admin/course_petitions');
 	}
@@ -752,6 +787,9 @@ class Admin extends CI_Controller
 	// =======================================================================================
 
 	public function notifications()
+	{ }
+
+	public function send_notifications()
 	{ }
 
 	// =======================================================================================
