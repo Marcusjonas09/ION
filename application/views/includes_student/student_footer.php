@@ -16,6 +16,7 @@
 <script src="https://rawgit.com/kimmobrunfeldt/progressbar.js/1.0.0/dist/progressbar.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
+<script src="<?= base_url() ?>dist/js/timestamp-tag.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -28,9 +29,12 @@
         var student_number = <?= $this->session->acc_number ?>;
         channel.bind('school_announcement', function(data) {
             var obj = JSON.parse(JSON.stringify(data));
-            $("#dash").fadeIn(1000).html(
-                "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + obj.message
-            );
+            // $("#dash").fadeIn(1000).html(
+            //     "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + obj.message
+            // );
+            // $.get("<?= base_url() ?>Student/get_notifications", function(data) {
+            //         $("#notif_badge").text(data));
+            // });
         });
 
         channel.bind('client_specific', function(data) {
@@ -44,11 +48,43 @@
             }
         });
 
-        //fetch specific notification
+        $('#notif_active').click(function() {
+            $.get("<?= base_url() ?>Notification/get_notifications", function(data) {
+                var obj = JSON.parse(data);
+                obj.notifications.forEach(get_notif);
+            });
+        });
 
+        function get_notif(notif, index) {
+            var content = notif.notif_content;
+            var time_posted = notif.notif_created_at;
+            var element = "<li><a href='#'><div class='pull-left'><img src='<?= base_url() ?>dist/img/default_avatar.png' class='img-circle' alt='User Image'></div><h4>Support Team<small class='timestamp' timeago='true' format='l dS /o/f F Y h:i:s A' title-format='d:m:Y h:i:s'>" + time_posted + "</small></h4><p>" + content + "</p></a><li>"
+            $("#notif_container").append(
+                element
+            );
+            // var txt2 = $("<p></p>").text("Text.");
+            // var li = '<tr><td class="col-md-2 text-center">' + day + '</td><td class="col-md-7">' + start_time + ' - ' + end_time + '</td><td class="col-md-3">' + room + '</td></tr>';
+            // $("#notif_container").append(li);
+        }
+
+        // function load_notification() {
+        //     $.get("<?= base_url() ?>Notification/get_notifications", function(data) {
+        //         alert(data.notifications.length);
+        //         // for (var i = 0; i < data.notifications.length; i++) {}
+        //         // for (var i = 0;)
+        //         //     var li = '<tr><td class="col-md-2 text-center">' + day + '</td><td class="col-md-7">' + start_time + ' - ' + end_time + '</td><td class="col-md-3">' + room + '</td></tr>';
+        //         // $("#notif_container").append(li);
+        //     });
+        // }
+
+        // 
+
+
+
+        //fetch specific notification
         setInterval(() => {
-            $.get("http://localhost/ION/Student/get_notifications", function(data) {
-                $("#petition_number").text(data);
+            $.get("<?= base_url() ?>Notification/get_notif_badge", function(data) {
+                $('#notif_badge').text(data);
             });
         }, 1000);
 

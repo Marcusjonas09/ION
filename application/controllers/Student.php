@@ -31,17 +31,13 @@ class Student extends CI_Controller
 		$this->load->helper('date');
 		$this->load->helper('text');
 
-		$notif['notifications'] = $this->Notification_model->getNotifications();
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget', $notif);
+		$this->load->view('includes_student/notif_widget');
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 	}
 
-	public function notifications()
-	{
-		$data['notifications'] = $this->Notification_model->getNotifications();
-	}
+	
 
 	public function user_data_submit()
 	{
