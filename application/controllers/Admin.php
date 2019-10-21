@@ -150,7 +150,7 @@ class Admin extends CI_Controller
 			'month_type'   => 'long',
 			'day_type'     => 'short',
 			'show_next_prev'  => TRUE,
-			'next_prev_url'   => base_url() . '/Admin/academic_calendar/'
+			'next_prev_url'   => base_url() . 'Admin/academic_calendar/'
 		);
 
 
