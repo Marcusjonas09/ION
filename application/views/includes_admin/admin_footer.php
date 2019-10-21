@@ -67,7 +67,7 @@
         });
 
         $("#save_sched").click(function() {
-            $.post("http://localhost/ION/Admin/save_sched", {
+            $.post("<?= base_url() ?>Admin/save_sched", {
                     course_details: petition_details,
                     course_sched: sched_table
                 }).done(function(data) {
@@ -79,16 +79,16 @@
         });
 
         setInterval(() => {
-            $.get("http://localhost/ION/Admin/petitions_number", function(data) {
+            $.get("<?= base_url() ?>Admin/petitions_number", function(data) {
                 $("#petition_number").text(data);
             });
-            $.get("http://localhost/ION/Admin/underload_number", function(data) {
+            $.get("<?= base_url() ?>Admin/underload_number", function(data) {
                 $("#underload_number").text(data);
             });
-            $.get("http://localhost/ION/Admin/overload_number", function(data) {
+            $.get("<?= base_url() ?>Admin/overload_number", function(data) {
                 $("#overload_number").text(data);
             });
-            $.get("http://localhost/ION/Admin/simul_number", function(data) {
+            $.get("<?= base_url() ?>Admin/simul_number", function(data) {
                 $("#simul_number").text(data);
             });
         }, 1000);
