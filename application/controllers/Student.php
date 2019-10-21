@@ -37,7 +37,7 @@ class Student extends CI_Controller
 		$this->load->view('includes_student/student_sidebar');
 	}
 
-	
+
 
 	public function user_data_submit()
 	{

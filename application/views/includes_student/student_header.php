@@ -1,12 +1,16 @@
-<!-- <?php
-      if (!$this->session->login) {
-        redirect('UserAuth');
-      }
-      if ($this->session->access != 'student') {
-        session_destroy();
-        redirect('UserAuth');
-      }
-      ?> -->
+<?php
+if (!$this->session->login) {
+  session_destroy();
+  redirect('UserAuth');
+}
+if ($this->session->access == 'admin') {
+  redirect('Admin');
+} else if ($this->session->access == 'student') { } else if ($this->session->access == 'superadmin') {
+  redirect('SuperAdmin');
+} else {
+  redirect('UserAuth');
+}
+?>
 
 <!DOCTYPE html>
 <html>
@@ -19,6 +23,7 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- jQuery 3 -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- <script src="<?= base_url() ?>dist/js/timestamp-tag.js"></script> -->
   <link rel="stylesheet" href="<?= base_url() ?>bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?= base_url() ?>bower_components/font-awesome/css/font-awesome.min.css">
@@ -94,7 +99,7 @@ desired effect
 -->
 
 <body class="hold-transition skin-green fixed sidebar-mini">
-  
+
   <div class="wrapper">
     <!-- Main Header -->
     <header class="main-header">

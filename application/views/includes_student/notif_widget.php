@@ -4,12 +4,12 @@
         <span id="notif_badge" class="label label-warning"></span>
     </a>
     <ul class="dropdown-menu">
-        <li class="header">You have 4 messages</li>
+        <!-- <li class="header"></li> -->
         <li>
             <!-- inner menu: contains the actual data -->
             <ul id="notif_container" class="menu">
             </ul>
         </li>
-        <li class="footer"><a href="#">See All Messages</a></li>
+        <li class="footer"><a href="#">See All Notifications</a></li>
     </ul>
 </li>

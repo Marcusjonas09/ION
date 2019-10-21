@@ -1,9 +1,13 @@
 <?php
 if (!$this->session->login) {
+      session_destroy();
       redirect('UserAuth');
 }
-if ($this->session->access != 'admin') {
-      session_destroy();
+if ($this->session->access == 'admin') { } else if ($this->session->access == 'student') {
+      redirect('Student');
+} else if ($this->session->access == 'superadmin') {
+      redirect('SuperAdmin');
+} else {
       redirect('UserAuth');
 }
 ?>

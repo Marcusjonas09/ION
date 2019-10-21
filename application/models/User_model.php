@@ -59,14 +59,15 @@ class User_model extends CI_Model
                 'log_time' => time()
             );
             $this->db->insert('account_logs', $log_details);
-        } else {
-            $log_details = array(
-                'log_user' => $user->acc_number,
-                'log_type' => 'logout',
-                'log_time' => time()
-            );
-            $this->db->insert('account_logs', $log_details);
-            session_destroy();
         }
+        // else {
+        //     // $log_details = array(
+        //     //     'log_user' => $user->acc_number,
+        //     //     'log_type' => 'logout',
+        //     //     'log_time' => time()
+        //     // );
+        //     // $this->db->insert('account_logs', $log_details);
+        //     session_destroy();
+        // }
     }
 }

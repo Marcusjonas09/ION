@@ -16,10 +16,21 @@
 <script src="https://rawgit.com/kimmobrunfeldt/progressbar.js/1.0.0/dist/progressbar.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
-<script src="<?= base_url() ?>dist/js/timestamp-tag.js"></script>
+
 
 <script type="text/javascript">
     $(document).ready(function() {
+
+
+        // get last login
+        var last_checked;
+        $.get("<?= base_url() ?>Notification/get_last_login", function(data) {
+            var obj = JSON.parse(data);
+            last_checked = obj.log_time;
+        });
+
+
+        //pusher config
         var pusher = new Pusher('8a5cfc7f91e3ec8112f4', {
             cluster: 'ap1',
             forceTLS: true,
@@ -27,16 +38,16 @@
 
         var channel = pusher.subscribe('my-channel');
         var student_number = <?= $this->session->acc_number ?>;
+
+        //pusher broadcast notifications
         channel.bind('school_announcement', function(data) {
             var obj = JSON.parse(JSON.stringify(data));
-            // $("#dash").fadeIn(1000).html(
-            //     "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + obj.message
-            // );
-            // $.get("<?= base_url() ?>Student/get_notifications", function(data) {
-            //         $("#notif_badge").text(data));
-            // });
+            $("#dash").fadeIn(1000).html(
+                "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + obj.message
+            );
         });
 
+        //pusher client-specific notifications
         channel.bind('client_specific', function(data) {
             var obj = JSON.parse(JSON.stringify(data));
             for (var i = 0; i < obj.recipient.length; i++) {
@@ -48,47 +59,74 @@
             }
         });
 
+        // click notifications shortcut
         $('#notif_active').click(function() {
             $.get("<?= base_url() ?>Notification/get_notifications", function(data) {
                 var obj = JSON.parse(data);
                 obj.notifications.forEach(get_notif);
             });
+            last_checked = Math.round((new Date()).getTime() / 1000);
         });
 
+        // fetch notifications
         function get_notif(notif, index) {
             var content = notif.notif_content;
             var time_posted = notif.notif_created_at;
-            var element = "<li><a href='#'><div class='pull-left'><img src='<?= base_url() ?>dist/img/default_avatar.png' class='img-circle' alt='User Image'></div><h4>Support Team<small class='timestamp' timeago='true' format='l dS /o/f F Y h:i:s A' title-format='d:m:Y h:i:s'>" + time_posted + "</small></h4><p>" + content + "</p></a><li>"
+
+            var formattedDate = convert_unix(time_posted);
+
             $("#notif_container").append(
-                element
+                "<li>" +
+                "<a href='#'>" +
+                "<div class='pull-left'>" +
+                "<img src='<?= base_url() ?>dist/img/default_avatar.png' class='img-circle' alt='User Image'>" +
+                "</div>" +
+                "<h4>Support Team</h4>" +
+                "<p>" + content + "</p>" +
+                "<small>" + formattedDate + "</small>" +
+                "</a>" +
+                "<li>"
             );
-            // var txt2 = $("<p></p>").text("Text.");
-            // var li = '<tr><td class="col-md-2 text-center">' + day + '</td><td class="col-md-7">' + start_time + ' - ' + end_time + '</td><td class="col-md-3">' + room + '</td></tr>';
-            // $("#notif_container").append(li);
         }
 
-        // function load_notification() {
-        //     $.get("<?= base_url() ?>Notification/get_notifications", function(data) {
-        //         alert(data.notifications.length);
-        //         // for (var i = 0; i < data.notifications.length; i++) {}
-        //         // for (var i = 0;)
-        //         //     var li = '<tr><td class="col-md-2 text-center">' + day + '</td><td class="col-md-7">' + start_time + ' - ' + end_time + '</td><td class="col-md-3">' + room + '</td></tr>';
-        //         // $("#notif_container").append(li);
-        //     });
-        // }
-
-        // 
-
-
-
-        //fetch specific notification
+        // fetch new notif count
         setInterval(() => {
-            $.get("<?= base_url() ?>Notification/get_notif_badge", function(data) {
-                $('#notif_badge').text(data);
-            });
+            $.post("<?= base_url() ?>Notification/get_latest_notifications", {
+                    time: last_checked
+                }).done(function(data) {
+                    var obj = JSON.parse(data);
+                    if (obj) {
+                        $('#notif_badge').text(obj);
+                    } else {
+                        $('#notif_badge').hide();
+                    }
+                })
+                .fail(function() {
+                    alert("Error fetching notifications!");
+                });
         }, 1000);
 
         $('.js-example-basic-single').select2();
+
+        //convert unix to humar readable
+        function convert_unix(timeinunix) {
+            var timestampInMilliSeconds = timeinunix * 1000;
+            var date = new Date(timestampInMilliSeconds);
+
+            var day = (date.getDate() < 10 ? '0' : '') + date.getDate();
+            var month = (date.getMonth() < 9 ? '0' : '') + (date.getMonth());
+            var year = date.getFullYear();
+
+            var hours = ((date.getHours() % 12 || 12) < 10 ? '0' : '') + (date.getHours() % 12 || 12);
+            var minutes = (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
+            var meridiem = (date.getHours() >= 12) ? 'pm' : 'am';
+            var wordmonth = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+
+            var formattedDate = wordmonth[month] + '-' + day + '-' + year + ' at ' + hours + ':' + minutes + ' ' + meridiem;
+            return formattedDate;
+
+        }
 
     });
 </script>

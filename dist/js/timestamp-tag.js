@@ -207,5 +207,5 @@
 	}
 })(jQuery);
 window.onload = function(e) {
-	$('.timestamp').convertTime();
+	$('timestamp').convertTime();
 };
