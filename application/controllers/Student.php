@@ -280,7 +280,7 @@ class Student extends CI_Controller
 	public function petitions()
 	{
 
-		$per_page = 10;
+		$per_page = 5;
 		$end_page = $this->uri->segment(3);
 		$this->load->library('pagination');
 		$config = [
@@ -326,7 +326,7 @@ class Student extends CI_Controller
 	public function revisions()
 	{
 
-		$this->load->view('content_student/student_Revision');
+		$this->load->view('content_student/student_revision');
 
 		$this->load->view('includes_student/student_contentFooter');
 		$this->load->view('includes_student/student_rightnav');

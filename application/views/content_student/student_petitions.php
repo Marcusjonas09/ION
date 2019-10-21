@@ -53,18 +53,14 @@
         <div class="box-body">
           <table class="table table-striped">
             <thead>
-              <th class="text-center">#</th>
               <th>Course</th>
               <th>Slots</th>
               <th>Status</th>
               <th>Action</th>
             </thead>
             <tbody>
-              <?php $i = 1; ?>
               <?php foreach ($petitions as $petition) : ?>
                 <tr>
-                  <td class="text-center"><?= $i ?></td>
-                  <?php $i++; ?>
                   <td>
                     <strong><?= $petition->course_code ?></strong>
                     <?php foreach ($courses as $course) : ?>
@@ -115,18 +111,14 @@
         <div class="box-body">
           <table class="table table-striped">
             <thead>
-              <th class="text-center">#</th>
               <th>Course</th>
               <th>Slots</th>
               <th>Status</th>
               <th>Action</th>
             </thead>
             <tbody>
-              <?php $i = 1; ?>
               <?php foreach ($petitions as $petition) : ?>
                 <tr>
-                  <td class="text-center"><?= $i ?></td>
-                  <?php $i++; ?>
                   <td>
                     <strong><?= $petition->course_code ?></strong>
                     <?php foreach ($courses as $course) : ?>
@@ -135,15 +127,17 @@
                       <?php endif; ?>
                     <?php endforeach; ?>
                   </td>
+
                   <td>
-                    <?php $i = 0; ?>
+                    <?php $j = 0; ?>
                     <?php foreach ($petitioners as $petitioner) {
-                        if ($petitioner->petition_code == $petition->course_code) {
-                          $i++;
+                        if ($petitioner->petition_unique == $petition->petition_unique) {
+                          $j++;
                         }
                       } ?>
-                    <?= $i . '/40' ?>
+                    <?= $j . '/40' ?>
                   </td>
+
                   <td>
                     <?php if ($petition->petition_status == 1) {
                         echo "<span class='label label-success col-md-12'>Approved</span>";
@@ -154,7 +148,7 @@
                       } ?>
                   </td>
                   <td>
-                    <a href="<?= base_url() ?>Student/petitionView/<?= $petition->petition_ID ?>/<?= $petition->course_code ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
+                    <a href="<?= base_url() ?>Student/petitionView/<?= $petition->petition_ID ?>/<?= $petition->petition_unique ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
                   </td>
                 </tr>
               <?php endforeach; ?>

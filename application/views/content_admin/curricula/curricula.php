@@ -22,7 +22,7 @@
               </div>
               <!-- /.box-header -->
               <!-- form start -->
-              <form method="post" action="<?= base_url() ?>Admin/showCurriculum" class="form-horizontal">
+              <form method="post" action="<?= base_url() ?>Admin/show_curriculum" class="form-horizontal">
                   <div class="box-body">
                       <div class="form-group">
                           <div class="col-sm-12 col-md-4">

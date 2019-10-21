@@ -49,7 +49,7 @@ class Account_model extends CI_Model
 
         $this->db->set('acc_status', $new);
         $this->db->where('acc_number', $studNumber);
-        $this->db->update('Accounts_tbl');
+        $this->db->update('accounts_tbl');
     }
 
     public function view_user($studNumber)
