@@ -44,6 +44,58 @@ class SuperAdmin extends CI_Controller
         $this->load->view('includes_super_admin/superadmin_footer');
     }
 
+    public function manage_students()
+    {
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_students/manage_students');
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function add_students()
+    {
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_students/add_students');
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function course_card()
+    {
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_students/course_card');
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function balance()
+    {
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_students/balance');
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
     // =======================================================================================
     // ACCOUNT MANAGEMENT FUNCTIONS
     // =======================================================================================

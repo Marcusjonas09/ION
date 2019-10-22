@@ -51,8 +51,12 @@ class Courseflow_model extends CI_Model
 
     public function suggest_what_to_petition()
     {
+        //fetch untaken courses
         $this->db->select('course_code');
-        $this->db->where(array('courses_tbl.curriculum_code' => $this->session->Curriculum_code, 'course_card_tbl.cc_status' => null));
+        $this->db->where(array(
+            'courses_tbl.curriculum_code' => $this->session->Curriculum_code,
+            'course_card_tbl.cc_status' => null
+        ));
         $this->db->from('courses_tbl');
         $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = courses_tbl.laboratory_code', 'LEFT');
         $this->db->join('course_card_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'LEFT');
@@ -65,6 +69,7 @@ class Courseflow_model extends CI_Model
             array_push($untaken_in_offering, $untaken_course->course_code);
         }
 
+        //fetch untaken courses in offering table
         $this->db->distinct();
         $this->db->select('offering_course_code');
         $this->db->where(array(
@@ -75,7 +80,6 @@ class Courseflow_model extends CI_Model
         $this->db->where_in('offering_course_code', $untaken_in_offering);
         $this->db->from('offering_tbl');
         $query = $this->db->get();
-        // return $query->result();
         $available_courses =  $query->result();
 
         $available_in_offering = array();
@@ -83,6 +87,7 @@ class Courseflow_model extends CI_Model
             array_push($available_in_offering, $available_course->offering_course_code);
         }
 
+        // fetch courses not available in the course offering or with no more slots
         $this->db->select('course_code,course_title');
         $this->db->where(array('courses_tbl.curriculum_code' => $this->session->Curriculum_code, 'course_card_tbl.cc_status' => null));
         $this->db->where_not_in('course_code', $available_in_offering);
@@ -94,32 +99,62 @@ class Courseflow_model extends CI_Model
         return $query->result();
     }
 
-    public function fetch_petition_suggestion()
+    public function suggested_petitions_available()
     {
-        $this->db->select('cc_course');
-        $this->db->where(array(
-            'curriculum_code' => $this->session->Curriculum_code,
-            'cc_stud_number' => $this->session->acc_number,
-            'cc_status' => 'finished',
-        ));
-        $this->db->or_where(array(
-            'cc_status' => 'credited'
-        ));
 
-        $this->db->from('course_card_tbl');
-        $this->db->join('courses_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'RIGHT OUTER');
+        //fetch untaken courses
+        $this->db->select('course_code');
+        $this->db->where(array(
+            'courses_tbl.curriculum_code' => $this->session->Curriculum_code,
+            'course_card_tbl.cc_status' => null
+        ));
+        $this->db->from('courses_tbl');
+        $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = courses_tbl.laboratory_code', 'LEFT');
+        $this->db->join('course_card_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'LEFT');
+        $this->db->order_by('courses_tbl.course_code', 'ASC');
+        $query = $this->db->get();
+        $untaken_courses = $query->result();
+
+        $untaken_in_offering = array();
+        foreach ($untaken_courses as $untaken_course) {
+            array_push($untaken_in_offering, $untaken_course->course_code);
+        }
+
+        //fetch untaken courses in offering table
+        $this->db->distinct();
+        $this->db->select('offering_course_code');
+        $this->db->where(array(
+            'offering_year' => $this->session->curr_year,
+            'offering_term' => $this->session->curr_term,
+            'offering_course_slot >' => 0
+        ));
+        $this->db->where_in('offering_course_code', $untaken_in_offering);
+        $this->db->from('offering_tbl');
+        $query = $this->db->get();
+        $available_courses =  $query->result();
+
+        $available_in_offering = array();
+        foreach ($available_courses as $available_course) {
+            array_push($available_in_offering, $available_course->offering_course_code);
+        }
+
+        // fetch courses not available in the course offering or with no more slots
+        $this->db->select('courses_tbl.course_code,courses_tbl.course_title,petitions_tbl.petition_status');
+        $this->db->where(array(
+            'courses_tbl.curriculum_code' => $this->session->Curriculum_code,
+            'petitioners_tbl.stud_number !=' => $this->session->acc_number,
+            'course_card_tbl.cc_status' => null
+        ));
+        $this->db->where_not_in('courses_tbl.course_code', $available_in_offering);
+        $this->db->where_not_in('petitions_tbl.course_code', $available_in_offering);
+        $this->db->from('courses_tbl');
+        $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = courses_tbl.laboratory_code', 'LEFT');
+        $this->db->join('course_card_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'LEFT');
+        $this->db->join('petitions_tbl', 'petitions_tbl.course_code = courses_tbl.course_code', 'LEFT');
+        $this->db->join('petitioners_tbl', 'petitioners_tbl.petition_code = courses_tbl.course_code', 'LEFT');
+        $this->db->order_by('courses_tbl.course_code', 'ASC');
         $query = $this->db->get();
         return $query->result();
-
-        // $this->db->select('*');
-        // $this->db->where(array(
-        //     'curriculum_code' => $this->session->Curriculum_code,
-        // ));
-
-        // $this->db->where_in('course_code', $sample);
-        // $this->db->from('courses_tbl');
-        // $query = $this->db->get();
-        // return $query->result();
     }
 
     public function fetchOffering($course_code)

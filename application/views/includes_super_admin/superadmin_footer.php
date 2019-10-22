@@ -13,10 +13,10 @@
 <script src="<?= base_url() ?>bower_components/fastclick/lib/fastclick.js"></script>
 <!-- bootstrap time picker -->
 <script src="<?= base_url() ?>plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 
 <!-- AdminLTE App -->
 <script src="<?= base_url() ?>dist/js/adminlte.min.js"></script>
-<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <!-- Pusher JS -->
 
 <script type="text/javascript">
@@ -52,10 +52,7 @@
             }
         });
         // Create a new object
-
-        $('.timepicker').timepicker({
-            showInputs: false
-        })
+        $('.js-example-basic-single').select2();
     });
 </script>
 
