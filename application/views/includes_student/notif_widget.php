@@ -10,6 +10,7 @@
             <ul id="notif_container" class="menu">
             </ul>
         </li>
-        <li class="footer"><a href="#">See All Notifications</a></li>
+        <li class="footer"><a id="total_notif_count" href="#">
+            </a></li>
     </ul>
 </li>

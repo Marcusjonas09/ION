@@ -21,14 +21,13 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
-
         // get last login
         var last_checked;
+
         $.get("<?= base_url() ?>Notification/get_last_login", function(data) {
             var obj = JSON.parse(data);
             last_checked = obj.log_time;
         });
-
 
         //pusher config
         var pusher = new Pusher('8a5cfc7f91e3ec8112f4', {
@@ -45,6 +44,10 @@
             $("#dash").fadeIn(1000).html(
                 "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + obj.message
             );
+            $.get("<?= base_url() ?>Notification/get_notif", function(data) {
+                var obj = JSON.parse(data);
+                obj.notifications.forEach(get_notif);
+            });
         });
 
         //pusher client-specific notifications
@@ -55,13 +58,18 @@
                     $("#client").fadeIn(1000).html(
                         "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + obj.message
                     );
+                    $.get("<?= base_url() ?>Notification/get_notif", function(data) {
+                        var obj = JSON.parse(data);
+                        obj.notifications.forEach(get_notif);
+                    });
                 }
             }
         });
 
         // click notifications shortcut
         $('#notif_active').click(function() {
-            $.get("<?= base_url() ?>Notification/get_notifications", function(data) {
+            $('#notif_container').text('');
+            $.get("<?= base_url() ?>Notification/get_notif", function(data) {
                 var obj = JSON.parse(data);
                 obj.notifications.forEach(get_notif);
             });
@@ -72,9 +80,7 @@
         function get_notif(notif, index) {
             var content = notif.notif_content;
             var time_posted = notif.notif_created_at;
-
             var formattedDate = convert_unix(time_posted);
-
             $("#notif_container").append(
                 "<li>" +
                 "<a href='#'>" +
@@ -92,18 +98,19 @@
         // fetch new notif count
         setInterval(() => {
             $.post("<?= base_url() ?>Notification/get_latest_notifications", {
-                    time: last_checked
-                }).done(function(data) {
-                    var obj = JSON.parse(data);
-                    if (obj) {
-                        $('#notif_badge').text(obj);
-                    } else {
-                        $('#notif_badge').hide();
-                    }
-                })
-                .fail(function() {
-                    alert("Error fetching notifications!");
-                });
+                time: last_checked
+            }).done(function(data) {
+                var obj = JSON.parse(data);
+                if (obj) {
+                    $('#notif_badge').text(obj);
+                } else {
+                    $('#notif_badge').hide();
+                }
+            });
+            $.get("<?= base_url() ?>Notification/get_all_notif_count", function(data) {
+                var obj = JSON.parse(data);
+                $('#total_notif_count').text('(' + obj + ') See All Notifications');
+            });
         }, 1000);
 
         $('.js-example-basic-single').select2();

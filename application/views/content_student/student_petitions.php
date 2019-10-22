@@ -29,8 +29,8 @@
             <label class="col-md-2 control-label">Course Code</label>
             <div class="form-group col-md-6">
               <select name="course_code" class="form-control js-example-basic-single">
-                <?php foreach ($curr as $cur) : ?>
-                  <option value="<?= $cur->course_code ?>"><?= $cur->course_code . " - " . $cur->course_title ?></option>
+                <?php foreach ($petition_suggestions as $petition_suggestion) : ?>
+                  <option value="<?= $petition_suggestion->course_code ?>"><?= $petition_suggestion->course_code . " - " . $petition_suggestion->course_title ?></option>
                 <?php endforeach; ?>
               </select>
             </div>
@@ -117,7 +117,10 @@
               <th>Action</th>
             </thead>
             <tbody>
-              <?php foreach ($petitions as $petition) : ?>
+              <!-- <?php foreach ($petition_suggestions as $petition_suggestion) : ?>
+                <option value="<?= $petition_suggestion->course_code ?>"><?= $petition_suggestion->course_code . " - " . $petition_suggestion->course_title ?></option>
+              <?php endforeach; ?> -->
+              <!-- <?php foreach ($petitions as $petition) : ?>
                 <tr>
                   <td>
                     <strong><?= $petition->course_code ?></strong>
@@ -152,9 +155,9 @@
                   </td>
                 </tr>
               <?php endforeach; ?>
-            </tbody>
+            </tbody> -->
           </table>
-          <div class="col-md-6"><?= $this->pagination->create_links(); ?></div>
+          <!-- <div class="col-md-6"><?= $this->pagination->create_links(); ?></div> -->
         </div>
         <!-- /.box-body -->
       </div>

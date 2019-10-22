@@ -49,22 +49,46 @@ class Courseflow_model extends CI_Model
 
     // FILTER WHAT TO PETITION
 
-    public function fetch_curriculum()
+    public function suggest_what_to_petition()
     {
+        $this->db->select('course_code');
+        $this->db->where(array('courses_tbl.curriculum_code' => $this->session->Curriculum_code, 'course_card_tbl.cc_status' => null));
+        $this->db->from('courses_tbl');
+        $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = courses_tbl.laboratory_code', 'LEFT');
+        $this->db->join('course_card_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'LEFT');
+        $this->db->order_by('courses_tbl.course_code', 'ASC');
+        $query = $this->db->get();
+        $untaken_courses = $query->result();
+
+        $untaken_in_offering = array();
+        foreach ($untaken_courses as $untaken_course) {
+            array_push($untaken_in_offering, $untaken_course->course_code);
+        }
+
         $this->db->distinct();
-        $this->db->select('course_code,course_title,cc_stud_number');
+        $this->db->select('offering_course_code');
         $this->db->where(array(
-            'courses_tbl.curriculum_code' => $this->session->Curriculum_code,
             'offering_year' => $this->session->curr_year,
             'offering_term' => $this->session->curr_term,
-            // 'cc_stud_number' => $this->session->acc_number,
-            'offering_course_slot >= ' => 1,
-            'cc_status' => null
+            'offering_course_slot >' => 0
         ));
+        $this->db->where_in('offering_course_code', $untaken_in_offering);
+        $this->db->from('offering_tbl');
+        $query = $this->db->get();
+        // return $query->result();
+        $available_courses =  $query->result();
+
+        $available_in_offering = array();
+        foreach ($available_courses as $available_course) {
+            array_push($available_in_offering, $available_course->offering_course_code);
+        }
+
+        $this->db->select('course_code,course_title');
+        $this->db->where(array('courses_tbl.curriculum_code' => $this->session->Curriculum_code, 'course_card_tbl.cc_status' => null));
+        $this->db->where_not_in('course_code', $available_in_offering);
         $this->db->from('courses_tbl');
-        // $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = courses_tbl.laboratory_code', 'LEFT');
+        $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = courses_tbl.laboratory_code', 'LEFT');
         $this->db->join('course_card_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'LEFT');
-        $this->db->join('offering_tbl', 'offering_tbl.offering_course_code = courses_tbl.course_code', 'LEFT');
         $this->db->order_by('courses_tbl.course_code', 'ASC');
         $query = $this->db->get();
         return $query->result();
@@ -98,8 +122,6 @@ class Courseflow_model extends CI_Model
         // return $query->result();
     }
 
-
-
     public function fetchOffering($course_code)
     {
         $this->db->select('offering_course_code, offering_course_slot');
@@ -112,8 +134,6 @@ class Courseflow_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
-
-
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     // LOAD REVISION FUNCTIONS

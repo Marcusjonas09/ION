@@ -28,9 +28,15 @@ class Notification extends CI_Controller
         echo json_encode($notif);
     }
 
-    public function get_notifications()
+    public function get_notif()
     {
-        $notifs['notifications'] = $this->Notification_model->get_notifications();
+        $notifs['notifications'] = $this->Notification_model->get_notif();
         echo json_encode($notifs);
+    }
+
+    public function get_all_notif_count()
+    {
+        $notif = $this->Notification_model->get_all_notif_count();
+        echo $notif;
     }
 }

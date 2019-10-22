@@ -305,9 +305,8 @@ class Student extends CI_Controller
 
 		$data['petitions'] = $this->Petition_model->fetchPetitions($per_page, $end_page);
 		$data['courses'] = $this->Petition_model->fetchCourses();
-		$data['curr'] = $this->Courseflow_model->fetch_curriculum();
+		$data['petition_suggestions'] = $this->Courseflow_model->suggest_what_to_petition();
 		$data['petitioners'] = $this->Petition_model->fetchAllPetitioners();
-		// $data['petition_suggestion'] = $this->Courseflow_model->fetch_petition_suggestion();
 
 		// echo json_encode($data);
 
@@ -401,20 +400,6 @@ class Student extends CI_Controller
 	// =======================================================================================
 	// VIEWLESS FUNCTIONS LINKS
 	// =======================================================================================
-
-	public function courseflow()
-	{
-		$data['curr'] = $this->Curriculum_model->fetchCurriculum();
-		$data['grades'] = $this->CourseCard_model->fetchGrades();
-
-		$this->load->view('content_student/courseflow', $data);
-
-		$this->load->view('includes_student/student_contentFooter');
-		$this->load->view('includes_student/student_rightnav');
-		$this->load->view('includes_student/student_footer');
-	}
-
-
 
 	public function submitPetition()
 	{
