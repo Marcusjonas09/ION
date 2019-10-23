@@ -141,8 +141,8 @@ class SuperAdmin extends CI_Controller
                 'curriculum_code' => $this->input->post('curriculum_code')
             );
 
-            $this->SuperAdmin->create_student($data);
-            redirect('SuperAdmin/add_students');
+            $this->SuperAdmin_model->create_student($data);
+            redirect('SuperAdmin/add_student');
         }
     }
 
@@ -174,10 +174,11 @@ class SuperAdmin extends CI_Controller
                 'cc_year' => $this->input->post('cc_year'),
                 'cc_term' => $this->input->post('cc_term'),
                 'cc_stud_number' => $this->input->post('cc_stud_number'),
-                'cc_status' => $this->input->post('cc_status')
+                'cc_status' => $this->input->post('cc_status'),
+                'cc_is_enrolled' => 1
             );
 
-            $this->SuperAdmin->submit_course_card($data);
+            $this->SuperAdmin_model->submit_course_card($data);
             redirect('SuperAdmin/course_card');
         }
     }
@@ -203,7 +204,7 @@ class SuperAdmin extends CI_Controller
                 'bal_total_assessment' => $this->input->post('bal_total_assessment')
             );
 
-            $this->SuperAdmin->submit_balance($data);
+            $this->SuperAdmin_model->submit_balance($data);
             redirect('SuperAdmin/balance');
         }
     }
@@ -231,7 +232,7 @@ class SuperAdmin extends CI_Controller
                 'pay_type' => $this->input->post('pay_type')
             );
 
-            $this->SuperAdmin->submit_payment($data);
+            $this->SuperAdmin_model->submit_payment($data);
             redirect('SuperAdmin/payment');
         }
     }

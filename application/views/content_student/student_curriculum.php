@@ -37,7 +37,6 @@
 
                             <?php foreach ($curr as $cur) : ?>
                                 <?php if ($cur->Year == $y && $cur->Term == $t) : ?>
-
                                     <tr class="<?php if (($cur->cc_status == "credited" || $cur->cc_status == "finished") && $cur->cc_stud_number == $this->session->acc_number) {
                                                                     echo "bg-success";
                                                                 } else {
@@ -50,8 +49,8 @@
                                         <td class="text-center"><?= $cur->laboratory_units ?></td>
                                         <td><?= $cur->pr_requisite ?></td>
                                     </tr>
-
                                 <?php endif; ?>
+
                             <?php endforeach; ?>
                         <?php endfor; ?>
                     <?php endfor; ?>

@@ -169,7 +169,6 @@ class Student extends CI_Controller
 	public function curriculum()
 	{
 		$data['curr'] = $this->Curriculum_model->fetch_curriculum();
-
 		// $data['grades'] = $this->Curriculum_model->fetch_grades();
 		// $data['curr'] = $this->Curriculum_model->fetchCourses();
 

@@ -77,15 +77,13 @@
                             <td></td>
                         </tr>
 
-
-
                         <tr>
                             <td>Beginning Balance</td>
                             <td>
                                 <?php if ($bal->bal_beginning >= 0) {
                                     echo '(' . $bal->bal_beginning . ')';
                                 } else {
-                                    echo $bal->bal_beginning;
+                                    echo abs($bal->bal_beginning);
                                 }  ?>
                             </td>
                             <td></td>
