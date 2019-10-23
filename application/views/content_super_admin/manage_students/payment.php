@@ -3,7 +3,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <strong>Insert balance Details</strong>
+            <strong>Insert Payment Details</strong>
         </h1>
     </section>
 
@@ -12,17 +12,25 @@
         <div class="col-md-8">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Balance Details</h3>
+                    <h3 class="box-title">Payment Details</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form class="form-horizontal" action="<?= base_url() ?>SuperAdmin/submit_balance" method="POST">
+                <form class="form-horizontal" action="<?= base_url() ?>SuperAdmin/submit_payment" method="POST">
                     <div class="box-body">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">STUD NUMBER</label>
 
                             <div class="col-sm-9">
-                                <input name="bal_stud_number" type="text" class="form-control">
+                                <input name="pay_stud_number" type="text" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">PAYMENT</label>
+
+                            <div class="col-sm-9">
+                                <input name="payment" type="text" class="form-control">
                             </div>
                         </div>
 
@@ -30,7 +38,7 @@
                             <label class="col-sm-3 control-label">SCHOOL TERM</label>
 
                             <div class="col-sm-9">
-                                <input name="bal_term" type="text" class="form-control">
+                                <input name="pay_term" type="text" class="form-control">
                             </div>
                         </div>
 
@@ -38,30 +46,30 @@
                             <label class="col-sm-3 control-label">SCHOOL YEAR</label>
 
                             <div class="col-sm-9">
-                                <input name="bal_year" type="text" class="form-control">
+                                <input name="pay_year" type="text" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">BALANCE STATUS</label>
+                            <label class="col-sm-3 control-label">OR NUMBER</label>
 
                             <div class="col-sm-9">
-                                <input name="bal_status" type="text" class="form-control">
+                                <input name="or_number" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">BEGINNING BALANCE</label>
+                            <label class="col-sm-3 control-label">PAYMENT DATE</label>
 
                             <div class="col-sm-9">
-                                <input name="bal_beginning" type="text" class="form-control">
+                                <input name="pay_date" type="text" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">TOTAL ASSESSMENT</label>
+                            <label class="col-sm-3 control-label">PAYMENT TYPE</label>
 
                             <div class="col-sm-9">
-                                <input name="bal_total_assessment" type="text" class="form-control">
+                                <input name="pay_type" type="text" class="form-control">
                             </div>
                         </div>
                     </div>

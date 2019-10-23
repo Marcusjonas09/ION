@@ -96,6 +96,19 @@ class SuperAdmin extends CI_Controller
         $this->load->view('includes_super_admin/superadmin_footer');
     }
 
+    public function payment()
+    {
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_students/payment');
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
     // =======================================================================================
     // STUDENT MANAGEMENT FUNCTIONS
     // =======================================================================================
@@ -126,7 +139,6 @@ class SuperAdmin extends CI_Controller
                 'acc_college' => $this->input->post('acc_college'),
                 'acc_access_level' => 3,
                 'curriculum_code' => $this->input->post('curriculum_code')
-
             );
 
             $this->SuperAdmin->create_student($data);
@@ -162,7 +174,7 @@ class SuperAdmin extends CI_Controller
                 'cc_year' => $this->input->post('cc_year'),
                 'cc_term' => $this->input->post('cc_term'),
                 'cc_stud_number' => $this->input->post('cc_stud_number'),
-                'cc_status' => $this->input->post('cc_status'),
+                'cc_status' => $this->input->post('cc_status')
             );
 
             $this->SuperAdmin->submit_course_card($data);
@@ -188,7 +200,7 @@ class SuperAdmin extends CI_Controller
                 'bal_status' => $this->input->post('bal_status'),
                 'bal_stud_number' => $this->input->post('bal_stud_number'),
                 'bal_beginning' => $this->input->post('bal_beginning'),
-                'bal_total_assessment' => $this->input->post('bal_total_assessment'),
+                'bal_total_assessment' => $this->input->post('bal_total_assessment')
             );
 
             $this->SuperAdmin->submit_balance($data);
@@ -198,7 +210,30 @@ class SuperAdmin extends CI_Controller
 
     public function submit_payment()
     {
-        redirect('SuperAdmin/balance');
+        $this->form_validation->set_rules('pay_stud_number', 'Student Number', 'required|strip_tags');
+        $this->form_validation->set_rules('payment', 'Payment', 'required|strip_tags');
+        $this->form_validation->set_rules('pay_term', 'School Term', 'required|strip_tags');
+        $this->form_validation->set_rules('pay_year', 'School Year', 'required|strip_tags');
+        $this->form_validation->set_rules('or_number', 'OR Number', 'required|strip_tags');
+        $this->form_validation->set_rules('pay_date', 'Payment Date', 'required|strip_tags');
+        $this->form_validation->set_rules('pay_type', 'Payment Type', 'required|strip_tags');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->payment();
+        } else {
+            $data = array(
+                'pay_stud_number' => $this->input->post('pay_stud_number'),
+                'payment' => $this->input->post('payment'),
+                'pay_term' => $this->input->post('pay_term'),
+                'pay_year' => $this->input->post('pay_year'),
+                'or_number' => $this->input->post('or_number'),
+                'pay_date' => $this->input->post('pay_date'),
+                'pay_type' => $this->input->post('pay_type')
+            );
+
+            $this->SuperAdmin->submit_payment($data);
+            redirect('SuperAdmin/payment');
+        }
     }
 
     // =======================================================================================
