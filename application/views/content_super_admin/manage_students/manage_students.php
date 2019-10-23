@@ -9,10 +9,10 @@
 
     <!-- Main content -->
     <section class="content container-fluid">
-        <a class="btn btn-success" href="<?= base_url() ?>SuperAdmin/add_students">ADD STUDENT DETAILS</a>
+        <a class="btn btn-success" href="<?= base_url() ?>SuperAdmin/add_student">ADD STUDENT DETAILS</a>
         <a class="btn btn-success" href="<?= base_url() ?>SuperAdmin/course_card">ADD COURSE CARD DETAILS</a>
         <a class="btn btn-success" href="<?= base_url() ?>SuperAdmin/balance">ADD BALANCE DETAILS</a>
-
+        <a class="btn btn-success" href="<?= base_url() ?>SuperAdmin/payment">ADD PAYMENT DETAILS</a>
     </section>
     <!-- /.content -->
 </div>

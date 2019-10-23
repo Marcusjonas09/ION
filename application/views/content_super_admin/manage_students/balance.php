@@ -12,7 +12,7 @@
         <div class="col-md-6">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Horizontal Form</h3>
+                    <h3 class="box-title"></h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
@@ -52,6 +52,15 @@
                 </form>
             </div>
             <!-- /.box -->
+        </div>
+        <div class="col-md-4">
+            <?php if (validation_errors()) : ?>
+                <div class="alert alert-warning alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+                    <?php echo validation_errors(); ?>
+                </div>
+            <?php endif; ?>
         </div>
     </section>
     <!-- /.content -->
