@@ -15,6 +15,8 @@ class Notification_model extends CI_Model
     {
         $this->db->limit(10);
         $this->db->select('*');
+        $this->db->where(array('notif_recipient' => $this->session->acc_number));
+        $this->db->or_where(array('notif_recipient' => 0));
         $this->db->from('notifications_tbl');
         $this->db->order_by('notif_created_at', 'DESC');
         $query = $this->db->get();
