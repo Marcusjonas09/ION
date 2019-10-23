@@ -37,10 +37,12 @@
 
                             <?php foreach ($curr as $cur) : ?>
                                 <?php if ($cur->Year == $y && $cur->Term == $t) : ?>
-                                    <tr class="<?php if (($cur->cc_status == "credited" || $cur->cc_status == "finished") && $cur->cc_stud_number == $this->session->acc_number) {
-                                                                    echo "bg-success";
-                                                                } else {
-                                                                    echo "bg-default";
+                                    <tr class="<?php foreach ($grades as $grade) {
+                                                                    if (($grade->cc_status == "credited" || $grade->cc_status == "finished") && $grade->cc_stud_number == $this->session->acc_number) {
+                                                                        echo "bg-success";
+                                                                    } else {
+                                                                        echo "bg-default";
+                                                                    }
                                                                 } ?>">
                                         <td><?= $cur->course_code ?></td>
                                         <td><?= $cur->course_title ?></td>

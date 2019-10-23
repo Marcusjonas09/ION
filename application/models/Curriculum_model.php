@@ -24,11 +24,11 @@ class Curriculum_model extends CI_Model
         $this->db->select('*');
         $this->db->where(array(
             'courses_tbl.curriculum_code' => $this->session->Curriculum_code,
-            'course_card_tbl.cc_stud_number' => $this->session->acc_number,
+            // 'course_card_tbl.cc_stud_number' => $this->session->acc_number,
         ));
         $this->db->from('courses_tbl');
         $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = courses_tbl.laboratory_code', 'LEFT');
-        $this->db->join('course_card_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'LEFT');
+        // $this->db->join('course_card_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'LEFT');
         $this->db->order_by('courses_tbl.course_code', 'ASC');
         $query = $this->db->get();
         return $query->result();

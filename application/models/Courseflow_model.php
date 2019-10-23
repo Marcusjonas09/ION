@@ -70,7 +70,7 @@ class Courseflow_model extends CI_Model
         }
 
         //fetch untaken courses in offering table
-        $this->db->distinct();
+        // $this->db->distinct();
         $this->db->select('offering_course_code');
         $this->db->where(array(
             'offering_year' => $this->session->curr_year,
