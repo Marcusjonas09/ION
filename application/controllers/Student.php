@@ -60,11 +60,10 @@ class Student extends CI_Controller
 	public function index()
 	{
 		$data['grades'] = $this->Dashboard_model->fetchProgress();
-		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
-		$data['cor'] = $this->CourseCard_model->fetch_current_COR();
 		$data['courses'] = $this->CourseCard_model->fetch_courses();
 		$data['offerings'] = $this->Dashboard_model->fetchOffering();
-
+		$data['cor'] = $this->CourseCard_model->fetch_current_COR();
+		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
 
 		$this->load->view('content_student/student_dashboard', $data);
 
@@ -321,8 +320,10 @@ class Student extends CI_Controller
 	//LOAD REVISION LINK
 	public function revisions()
 	{
+		$data['offerings'] = $this->Dashboard_model->fetchOffering();
+		$data['cor'] = $this->CourseCard_model->fetch_current_COR();
 
-		$this->load->view('content_student/student_revision');
+		$this->load->view('content_student/student_revision', $data);
 
 		$this->load->view('includes_student/student_contentFooter');
 		$this->load->view('includes_student/student_rightnav');

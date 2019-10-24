@@ -29,55 +29,75 @@
                           <tr>
                               <td><?= $this->session->acc_number ?></td>
                               <td><?= $this->session->Firstname . ' ' . $this->session->Lastname ?></td>
-                              <td></td>
-                              <td></td>
+                              <td><?= $this->session->Program ?></td>
+                              <td><?= 'TERM: ' . $this->session->curr_term . ' SY: ' . $this->session->curr_year ?></td>
                           </tr>
                       </table>
                       <br />
-                      <div class="col-md-6">
-                          <!-- Employee Details Box -->
-                          <div class="box box-success">
-                              <div class="box-header with-border">
-                                  <h3 class="box-title">COURSE TO BE DELETED</h3>
-                              </div>
-                              <!-- /.box-header -->
-                              <div class="box-body">
-                                  <table class="table">
-                                      <th>COURSE CODE</th>
-                                      <th>UNITS</th>
-                                      <th>SECTION</th>
-                                      <th>DAY</th>
-                                      <th>TIME</th>
-                                      <th>ROOM</th>
-                                  </table>
+                  </div>
+                  <!-- /.box-body -->
+              </div>
+          </div>
+          <!-- /.box -->
+          <div class="col-md-12">
+              <!-- Employee Details Box -->
+              <div class="box box-success">
+                  <div class="box-header with-border">
+                      <h3 class="box-title">Current Load</h3>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                      <table class="table">
+                          <tr class="bg-success" style="background-color:#00a65a; color:white;">
+                              <th class="text-center col-md-1">COURSES</th>
+                              <th class="text-center col-md-3">TITLE</th>
+                              <th class="text-center col-md-1">SECTION</th>
+                              <th class="text-center col-md-1">UNITS</th>
+                              <th class="text-center col-md-1">DAYS</th>
+                              <th class="text-center col-md-3">TIME</th>
+                              <th class="text-center col-md-1">ROOM</th>
+                              <th class="text-center col-md-1">ACTION</th>
+                          </tr>
+                          <tbody>
+                              <?php foreach ($cor as $record) : ?>
+                                  <?php if ($record->cc_status != "credited") : ?>
+                                      <tr>
+                                          <td><?= strtoupper($record->cc_course) ?></td>
+                                          <td>
+                                              <?php if (strtoupper($record->cc_course) == strtoupper($record->course_code)) {
+                                                            echo strtoupper($record->course_title);
+                                                        } else if (strtoupper($record->cc_course) == strtoupper($record->laboratory_code)) {
+                                                            echo strtoupper($record->laboratory_title);
+                                                        } else {
+                                                            echo '';
+                                                        } ?>
+                                          </td>
+                                          <td class="text-center"><?= strtoupper($record->cc_section) ?></td>
+                                          <td class="text-center">
+                                              <?php if (strtoupper($record->cc_course) == strtoupper($record->course_code)) {
+                                                            echo strtoupper($record->course_units);
+                                                        } else if (strtoupper($record->cc_course) == strtoupper($record->laboratory_code)) {
+                                                            echo strtoupper($record->laboratory_units);
+                                                        } else {
+                                                            echo '';
+                                                        } ?>
+                                          </td>
+                                          <?php foreach ($offerings as $offering) : ?>
+                                              <?php if ($record->cc_course == $offering->offering_course_code && $record->cc_section == $offering->offering_course_section) : ?>
+                                                  <td class="text-center"><?= $offering->offering_course_day ?></td>
+                                                  <td class="text-center"><?= $offering->offering_course_time ?></td>
+                                                  <td></td>
+                                                  <td>
+                                                      <a class="btn btn-danger" href="#"><span class="fa fa-trash"></span></a>
+                                                  </td>
+                                              <?php endif; ?>
+                                          <?php endforeach; ?>
 
-                              </div>
-                              <!-- /.box-body -->
-                          </div>
-                          <!-- /.box -->
-                      </div>
-                      <div class="col-md-6">
-                          <!-- Employee Details Box -->
-                          <div class="box box-success">
-                              <div class="box-header with-border">
-                                  <h3 class="box-title">COURSE TO ADD</h3>
-                              </div>
-                              <!-- /.box-header -->
-                              <div class="box-body">
-                                  <table class="table">
-                                      <th>COURSE CODE</th>
-                                      <th>UNITS</th>
-                                      <th>SECTION</th>
-                                      <th>DAY</th>
-                                      <th>TIME</th>
-                                      <th>ROOM</th>
-                                  </table>
-                              </div>
-                              <!-- /.box-body -->
-                          </div>
-                          <!-- /.box -->
-                      </div>
-
+                                      </tr>
+                                  <?php endif; ?>
+                              <?php endforeach; ?>
+                          </tbody>
+                      </table>
                   </div>
                   <!-- /.box-body -->
                   <div class="box-footer">
@@ -88,7 +108,7 @@
               </div>
               <!-- /.box -->
           </div>
-
+  </div>
   </div>
   </section>
   <!-- /.content -->
