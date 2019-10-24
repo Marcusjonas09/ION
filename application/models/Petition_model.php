@@ -103,20 +103,16 @@ class Petition_model extends CI_Model
         return $query->result();
     }
 
-    public function submitPetition()
+    public function submitPetition($petition_details)
     {
-        $petition = array(
-            'course_code' => $this->input->post('course_code'),
+        $petition = array_merge($petition_details, array(
             'stud_number' => $this->session->acc_number,
-            'petition_unique' => $this->input->post('course_code') . time(),
             'date_submitted' => time()
-        );
+        ));
 
-        $petitioners = array(
-            'petition_code' => $this->input->post('course_code'),
-            'petition_unique' => $this->input->post('course_code') . time(),
-            'stud_number' => $this->session->acc_number
-        );
+        $petitioners = array_merge($petition_details, array(
+            'stud_number' => $this->session->acc_number,
+        ));
 
         $this->db->insert('petitions_tbl', $petition);
         $this->db->insert('petitioners_tbl', $petitioners);
@@ -126,7 +122,7 @@ class Petition_model extends CI_Model
     {
         $petitioner = array(
             'stud_number' => $this->input->post('stud_number'),
-            'petition_code' => $this->input->post('course_code')
+            'course_code' => $this->input->post('course_code')
         );
         $this->db->insert('petitioners_tbl', $petitioner);
     }
@@ -134,7 +130,7 @@ class Petition_model extends CI_Model
     public function fetchNumberOfPetitioners($course_code)
     {
         $this->db->select('*');
-        $this->db->where(array('petition_code' => $course_code));
+        $this->db->where(array('course_code' => $course_code));
         $this->db->from('petitioners_tbl');
         $this->db->join('accounts_tbl', 'accounts_tbl.acc_number = petitioners_tbl.stud_number');
         $query = $this->db->get();

@@ -117,15 +117,12 @@
               <th>Action</th>
             </thead>
             <tbody>
-              <!-- <?php foreach ($petition_suggestions as $petition_suggestion) : ?>
-                <option value="<?= $petition_suggestion->course_code ?>"><?= $petition_suggestion->course_code . " - " . $petition_suggestion->course_title ?></option>
-              <?php endforeach; ?> -->
-              <!-- <?php foreach ($petitions as $petition) : ?>
+              <?php foreach ($petitions_available as $petition_available) : ?>
                 <tr>
                   <td>
-                    <strong><?= $petition->course_code ?></strong>
+                    <strong><?= $petition_available->course_code ?></strong>
                     <?php foreach ($courses as $course) : ?>
-                      <?php if ($petition->course_code == $course->course_code) : ?>
+                      <?php if ($petition_available->course_code == $course->course_code) : ?>
                         </p><small><?= $course->course_title ?></small></p>
                       <?php endif; ?>
                     <?php endforeach; ?>
@@ -134,7 +131,7 @@
                   <td>
                     <?php $j = 0; ?>
                     <?php foreach ($petitioners as $petitioner) {
-                        if ($petitioner->petition_unique == $petition->petition_unique) {
+                        if ($petitioner->petition_unique == $petition_available->petition_unique) {
                           $j++;
                         }
                       } ?>
@@ -142,20 +139,20 @@
                   </td>
 
                   <td>
-                    <?php if ($petition->petition_status == 1) {
+                    <?php if ($petition_available->petition_status == 1) {
                         echo "<span class='label label-success col-md-12'>Approved</span>";
-                      } elseif ($petition->petition_status == 2) {
+                      } elseif ($petition_available->petition_status == 2) {
                         echo "<span class='label label-warning col-md-12'>Pending</span>";
                       } else {
                         echo "<span class='label label-danger col-md-12'>Denied</span>";
                       } ?>
                   </td>
                   <td>
-                    <a href="<?= base_url() ?>Student/petitionView/<?= $petition->petition_ID ?>/<?= $petition->petition_unique ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
+                    <a href="<?= base_url() ?>Student/petitionView/<?= $petition_available->petition_ID ?>/<?= $petition_available->petition_unique ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
                   </td>
                 </tr>
               <?php endforeach; ?>
-            </tbody> -->
+            </tbody>
           </table>
           <!-- <div class="col-md-6"><?= $this->pagination->create_links(); ?></div> -->
         </div>

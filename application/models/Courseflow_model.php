@@ -88,12 +88,14 @@ class Courseflow_model extends CI_Model
         }
 
         // fetch courses not available in the course offering or with no more slots
-        $this->db->select('course_code,course_title');
+        // $this->db->select('courses_tbl.course_code,courses_tbl.course_title');
+        $this->db->select('courses_tbl.course_code,courses_tbl.course_title,petitions_tbl.petition_status,petitions_tbl.petition_ID,petitions_tbl.petition_unique');
         $this->db->where(array('courses_tbl.curriculum_code' => $this->session->Curriculum_code, 'course_card_tbl.cc_status' => null));
-        $this->db->where_not_in('course_code', $available_in_offering);
+        $this->db->where_not_in('courses_tbl.course_code', $available_in_offering);
         $this->db->from('courses_tbl');
         $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = courses_tbl.laboratory_code', 'LEFT');
         $this->db->join('course_card_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'LEFT');
+        $this->db->join('petitions_tbl', 'petitions_tbl.course_code = courses_tbl.course_code', 'LEFT');
         $this->db->order_by('courses_tbl.course_code', 'ASC');
         $query = $this->db->get();
         return $query->result();
@@ -139,7 +141,7 @@ class Courseflow_model extends CI_Model
         }
 
         // fetch courses not available in the course offering or with no more slots
-        $this->db->select('courses_tbl.course_code,courses_tbl.course_title,petitions_tbl.petition_status');
+        $this->db->select('courses_tbl.course_code,courses_tbl.course_title,petitions_tbl.petition_status,petitions_tbl.petition_ID,petitions_tbl.petition_unique');
         $this->db->where(array(
             'courses_tbl.curriculum_code' => $this->session->Curriculum_code,
             'petitioners_tbl.stud_number !=' => $this->session->acc_number,
@@ -151,7 +153,7 @@ class Courseflow_model extends CI_Model
         $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = courses_tbl.laboratory_code', 'LEFT');
         $this->db->join('course_card_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'LEFT');
         $this->db->join('petitions_tbl', 'petitions_tbl.course_code = courses_tbl.course_code', 'LEFT');
-        $this->db->join('petitioners_tbl', 'petitioners_tbl.petition_code = courses_tbl.course_code', 'LEFT');
+        $this->db->join('petitioners_tbl', 'petitioners_tbl.course_code = courses_tbl.course_code', 'LEFT');
         $this->db->order_by('courses_tbl.course_code', 'ASC');
         $query = $this->db->get();
         return $query->result();
@@ -168,6 +170,34 @@ class Courseflow_model extends CI_Model
         $this->db->from('offering_tbl');
         $query = $this->db->get();
         return $query->result();
+    }
+
+    public function check_petition($course_code)
+    {
+        $petition_details = array(
+            'course_code' => $course_code,
+            'petition_unique' => $course_code . time()
+        );
+
+        $conditions = array(
+            'course_code' => $course_code
+        );
+        $this->db->select('*');
+        $query = $this->db->get_where('petitions_tbl', $conditions);
+        $petition_exists = $query->result();
+
+        if ($petition_exists) {
+            return $petition_exists;
+        } else {
+            return $petition_details;
+        }
+
+        // $query = $this->db->get_where('petitions_tbl', array('petition_unique' => $course_code . time()));
+        // $petitioner_count = $query->num_rows();
+        // echo json_encode($petition_exists);
+        // die();
+
+        // return $petitioner_count;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////

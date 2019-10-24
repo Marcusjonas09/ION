@@ -170,6 +170,7 @@ class Student extends CI_Controller
 	{
 		$data['curr'] = $this->Curriculum_model->fetch_curriculum();
 		$data['grades'] = $this->Curriculum_model->fetch_grades();
+
 		// $data['curr'] = $this->Curriculum_model->fetchCourses();
 
 		// echo json_encode($data);
@@ -305,6 +306,7 @@ class Student extends CI_Controller
 		$data['petitions'] = $this->Petition_model->fetchPetitions($per_page, $end_page);
 		$data['courses'] = $this->Petition_model->fetchCourses();
 		$data['petition_suggestions'] = $this->Courseflow_model->suggest_what_to_petition();
+		$data['petitions_available'] = $this->Courseflow_model->suggested_petitions_available();
 		$data['petitioners'] = $this->Petition_model->fetchAllPetitioners();
 
 		// echo json_encode($data);
@@ -402,13 +404,18 @@ class Student extends CI_Controller
 
 	public function submitPetition()
 	{
-		// $this->form_validation->set_rules('course_code', 'Course Code', 'is_unique[petitions_tbl.course_code]|strip_tags');
-		// if ($this->form_validation->run() == FALSE) {
-		// $this->petitions();
-		// } else {
-		$this->Petition_model->submitPetition($_POST);
-		redirect('Student/petitions');
-		// }
+		$data = $this->input->post('course_code');
+		$result = $this->Courseflow_model->check_petition($data);
+
+		echo json_encode($result);
+		die();
+
+		if ($result) {
+			$this->Petition_model->submitPetition($result);
+			redirect('Student/petitions');
+		} else {
+			redirect('Student/petitions');
+		}
 	}
 
 	public function petitionView($petitionID, $petition_unique)
