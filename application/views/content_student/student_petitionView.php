@@ -74,6 +74,9 @@
                                 </div>
                             </div>
                         </div>
+                        <?php if ($number == 0) : ?>
+                            <a class="btn btn-success pull-right" href="<?= base_url() ?>Student/sign/<?= $this->session->acc_number ?>/<?= $petition->course_code ?>/<?= $petition->petition_unique ?>">Sign</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

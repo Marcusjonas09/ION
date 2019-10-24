@@ -8,6 +8,12 @@ class SuperAdmin_model extends CI_Model
     // ADMIN MANAGEMENT FUNCTIONS
     // =======================================================================================
 
+    public function empty_petitions()
+    {
+        $this->db->truncate('petitioners_tbl');
+        $this->db->truncate('petitions_tbl');
+    }
+
     public function view_all_admin($per_page, $end_page)
     {
         $this->db->limit($per_page, $end_page);

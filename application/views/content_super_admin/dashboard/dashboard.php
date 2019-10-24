@@ -9,6 +9,8 @@
 
     <!-- Main content -->
     <section class="content container-fluid">
+        <a class="btn btn-danger" href="<?= base_url() ?>SuperAdmin/empty_petitions">EMPTY PETITIONS</a>
+
     </section>
     <!-- /.content -->
 </div>

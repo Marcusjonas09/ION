@@ -51,8 +51,15 @@ class Petition_model extends CI_Model
     public function fetchPetitions($per_page, $end_page)
     {
         $this->db->limit($per_page, $end_page);
-        $this->db->order_by('date_submitted', 'DESC');
-        $query = $this->db->get_where('petitions_tbl', array('stud_number' => $this->session->acc_number));
+        $this->db->select('*');
+        $this->db->order_by('petitions_tbl.date_submitted', 'DESC');
+        $this->db->where(array(
+            // 'petitions_tbl.stud_number' => $this->session->acc_number,
+            'petitioners_tbl.stud_number' => $this->session->acc_number
+        ));
+        $this->db->join('petitioners_tbl', 'petitioners_tbl.petition_unique = petitions_tbl.petition_unique', 'LEFT');
+        $this->db->from('petitions_tbl');
+        $query = $this->db->get();
         return $query->result();
     }
 
@@ -85,6 +92,15 @@ class Petition_model extends CI_Model
         return $query->result();
     }
 
+    public function check_if_you_petitioned($petition_unique)
+    {
+        $this->db->select('*');
+        $this->db->where(array('petition_unique' => $petition_unique, 'stud_number' => $this->session->acc_number));
+        $this->db->from('petitioners_tbl');
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
     public function fetch_recipients($petition_unique)
     {
         $this->db->select('stud_number');
@@ -105,24 +121,17 @@ class Petition_model extends CI_Model
 
     public function submitPetition($petition_details)
     {
-        $petition = array_merge($petition_details, array(
-            'stud_number' => $this->session->acc_number,
-            'date_submitted' => time()
-        ));
-
-        $petitioners = array_merge($petition_details, array(
-            'stud_number' => $this->session->acc_number,
-        ));
-
-        $this->db->insert('petitions_tbl', $petition);
-        $this->db->insert('petitioners_tbl', $petitioners);
+        $this->db->insert('petitions_tbl', $petition_details);
+        $this->db->insert('petitioners_tbl', $petition_details);
     }
 
-    public function signPetition()
+    public function signPetition($stud_number, $course_code, $petition_unique)
     {
         $petitioner = array(
-            'stud_number' => $this->input->post('stud_number'),
-            'course_code' => $this->input->post('course_code')
+            'stud_number' => $stud_number,
+            'course_code' => $course_code,
+            'petition_unique' => $petition_unique,
+            'date_submitted' => time()
         );
         $this->db->insert('petitioners_tbl', $petitioner);
     }

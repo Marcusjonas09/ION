@@ -17,6 +17,7 @@
       <!-- form start -->
       <form class="form-horizontal" action="<?= base_url() ?>Student/submitPetition" method="POST">
         <div class="box-body">
+
           <?php if (validation_errors()) : ?>
             <div class="alert alert-warning alert-dismissible">
               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -118,39 +119,41 @@
             </thead>
             <tbody>
               <?php foreach ($petitions_available as $petition_available) : ?>
-                <tr>
-                  <td>
-                    <strong><?= $petition_available->course_code ?></strong>
-                    <?php foreach ($courses as $course) : ?>
-                      <?php if ($petition_available->course_code == $course->course_code) : ?>
-                        </p><small><?= $course->course_title ?></small></p>
-                      <?php endif; ?>
-                    <?php endforeach; ?>
-                  </td>
+                <?php if ($petition_available->stud_number == $this->session->acc_number) : ?>
+                  <tr>
+                    <td>
+                      <strong><?= $petition_available->course_code ?></strong>
+                      <?php foreach ($courses as $course) : ?>
+                        <?php if ($petition_available->course_code == $course->course_code) : ?>
+                          </p><small><?= $course->course_title ?></small></p>
+                        <?php endif; ?>
+                      <?php endforeach; ?>
+                    </td>
 
-                  <td>
-                    <?php $j = 0; ?>
-                    <?php foreach ($petitioners as $petitioner) {
-                        if ($petitioner->petition_unique == $petition_available->petition_unique) {
-                          $j++;
-                        }
-                      } ?>
-                    <?= $j . '/40' ?>
-                  </td>
+                    <td>
+                      <?php $j = 0; ?>
+                      <?php foreach ($petitioners as $petitioner) {
+                            if ($petitioner->petition_unique == $petition_available->petition_unique) {
+                              $j++;
+                            }
+                          } ?>
+                      <?= $j . '/40' ?>
+                    </td>
 
-                  <td>
-                    <?php if ($petition_available->petition_status == 1) {
-                        echo "<span class='label label-success col-md-12'>Approved</span>";
-                      } elseif ($petition_available->petition_status == 2) {
-                        echo "<span class='label label-warning col-md-12'>Pending</span>";
-                      } else {
-                        echo "<span class='label label-danger col-md-12'>Denied</span>";
-                      } ?>
-                  </td>
-                  <td>
-                    <a href="<?= base_url() ?>Student/petitionView/<?= $petition_available->petition_ID ?>/<?= $petition_available->petition_unique ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
-                  </td>
-                </tr>
+                    <td>
+                      <?php if ($petition_available->petition_status == 1) {
+                            echo "<span class='label label-success col-md-12'>Approved</span>";
+                          } elseif ($petition_available->petition_status == 2) {
+                            echo "<span class='label label-warning col-md-12'>Pending</span>";
+                          } else {
+                            echo "<span class='label label-danger col-md-12'>Denied</span>";
+                          } ?>
+                    </td>
+                    <td>
+                      <a href="<?= base_url() ?>Student/petitionView/<?= $petition_available->petition_ID ?>/<?= $petition_available->petition_unique ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
+                    </td>
+                  </tr>
+                <?php endif; ?>
               <?php endforeach; ?>
             </tbody>
           </table>

@@ -18,6 +18,12 @@ class SuperAdmin extends CI_Controller
     // SIDEBAR LINKS
     // =======================================================================================
 
+    public function empty_petitions()
+    {
+        $this->SuperAdmin_model->empty_petitions();
+        redirect('SuperAdmin');
+    }
+
     public function index()
     {
         $this->load->view('includes_super_admin/superadmin_header');

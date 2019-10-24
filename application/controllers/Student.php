@@ -404,14 +404,18 @@ class Student extends CI_Controller
 
 	public function submitPetition()
 	{
-		$data = $this->input->post('course_code');
-		$result = $this->Courseflow_model->check_petition($data);
+		$course_code = $this->input->post('course_code');
+		$result = $this->Courseflow_model->check_petition($course_code);
 
-		echo json_encode($result);
-		die();
+		$petition_details = array(
+			'course_code' => $course_code,
+			'petition_unique' => $course_code . time(),
+			'stud_number' => $this->session->acc_number,
+			'date_submitted' => time()
+		);
 
 		if ($result) {
-			$this->Petition_model->submitPetition($result);
+			$this->Petition_model->submitPetition($petition_details);
 			redirect('Student/petitions');
 		} else {
 			redirect('Student/petitions');
@@ -423,6 +427,9 @@ class Student extends CI_Controller
 		$data['petition'] = $this->Petition_model->fetchPetition($petitionID);
 		$data['petitioners'] = $this->Petition_model->fetchPetitioners($petition_unique);
 		$data['courses'] = $this->Petition_model->fetchCourses();
+		$data['number'] = $this->Petition_model->check_if_you_petitioned($petition_unique);
+
+		// echo json_encode($data);
 
 		$this->load->view('content_student/student_petitionView', $data);
 
@@ -431,25 +438,28 @@ class Student extends CI_Controller
 		$this->load->view('includes_student/student_footer');
 	}
 
-	public function sign()
+	public function sign($stud_number, $course_code, $petition_unique)
 	{
-		$this->form_validation->set_rules('stud_number', 'Student Number', 'is_unique[petitioners_tbl.stud_number]|strip_tags|required');
-		$this->form_validation->set_rules('course_code', 'Course Code', 'strip_tags|required');
 
-		$course_code = $this->input->post('course_code');
+		$this->Petition_model->signPetition($stud_number, $course_code, $petition_unique);
+		redirect('Student/petitions');
+		// $this->form_validation->set_rules('stud_number', 'Student Number', 'is_unique[petitioners_tbl.stud_number]|strip_tags|required');
+		// $this->form_validation->set_rules('course_code', 'Course Code', 'strip_tags|required');
 
-		$row = $this->Petition_model->fetchNumberOfPetitioners($course_code);
-		if ($row >= 40) {
-			echo "<script>alert('no more space');</script>";
-			redirect('Student/petitions');
-		} else {
-			if ($this->form_validation->run() == FALSE) {
-				$this->petitions();
-			} else {
-				$this->Petition_model->signPetition();
-				redirect('Student/petitions');
-			}
-		}
+		// $course_code = $this->input->post('course_code');
+
+		// $row = $this->Petition_model->fetchNumberOfPetitioners($course_code.time);
+		// if ($row >= 40) {
+		// 	echo "<script>alert('no more space');</script>";
+		// 	redirect('Student/petitions');
+		// } else {
+		// 	if ($this->form_validation->run() == FALSE) {
+		// 		$this->petitions();
+		// 	} else {
+		// 		$this->Petition_model->signPetition();
+		// 		redirect('Student/petitions');
+		// 	}
+		// }
 	}
 
 	public function input()
