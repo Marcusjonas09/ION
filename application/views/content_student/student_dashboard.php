@@ -38,7 +38,7 @@ $totalunitspassed = $coursepassed + $labpassed;
     <section class="content container-fluid">
         <div id="dash" class=' alert alert-warning alert-dismissible' style='display:none;' role='alert'>
         </div>
-        
+
         <div class="box box-success">
             <div class="box-header">
                 <h3 class="box-title"><b>Student Progress</b></h3>
@@ -93,7 +93,17 @@ $totalunitspassed = $coursepassed + $labpassed;
                         </tr>
                         <tr>
                             <td><strong>Name: </strong><?= $this->session->Lastname . ', ' . $this->session->Firstname . ' ' . $this->session->Middlename ?></td>
-                            <td><strong>Year Level: </strong></td>
+                            <td><strong>Year Level: </strong><?php if ($totalunitspassed >= 3 && $totalunitspassed <= 56) {
+                                                                        echo "1";
+                                                                    } else if ($totalunitspassed >= 57 && $totalunitspassed <= 116) {
+                                                                        echo "2";
+                                                                    } else if ($totalunitspassed >= 117 && $totalunitspassed <= 173) {
+                                                                        echo "3";
+                                                                    } else if ($totalunitspassed >= 174 && $totalunitspassed <= ($totalunits - 18)) {
+                                                                        echo "4";
+                                                                    } else if (($totalunits - $totalunitspassed) <= 18) {
+                                                                        echo "GRADUATING";
+                                                                    } else { } ?></td>
                         </tr>
                     </table>
                     <table class="table">

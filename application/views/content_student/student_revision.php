@@ -9,36 +9,6 @@
 
       <!-- Main content -->
       <section class="content container-fluid">
-
-          <div class="col-md-12">
-              <!-- Employee Details Box -->
-              <div class="box box-success">
-                  <div class="box-header with-border">
-                      <h3 class="box-title">Student Information</h3>
-                  </div>
-                  <!-- /.box-header -->
-                  <div class="box-body">
-                      <table class="table">
-                          <tr>
-                              <th>STUDENT NO.</th>
-                              <th>NAME</th>
-                              <th>PROGRAM</th>
-                              <th>TERM/YEAR</th>
-                          </tr>
-
-                          <tr>
-                              <td><?= $this->session->acc_number ?></td>
-                              <td><?= $this->session->Firstname . ' ' . $this->session->Lastname ?></td>
-                              <td><?= $this->session->Program ?></td>
-                              <td><?= 'TERM: ' . $this->session->curr_term . ' SY: ' . $this->session->curr_year ?></td>
-                          </tr>
-                      </table>
-                      <br />
-                  </div>
-                  <!-- /.box-body -->
-              </div>
-          </div>
-          <!-- /.box -->
           <div class="col-md-12">
               <!-- Employee Details Box -->
               <div class="box box-success">
@@ -48,7 +18,22 @@
                   <!-- /.box-header -->
                   <div class="box-body">
                       <table class="table">
-                          <tr class="bg-success" style="background-color:#00a65a; color:white;">
+                          <thead>
+                              <th>STUDENT NO.</th>
+                              <th>NAME</th>
+                              <th>PROGRAM</th>
+                              <th>TERM/YEAR</th>
+                          </thead>
+
+                          <tr>
+                              <td><?= $this->session->acc_number ?></td>
+                              <td><?= $this->session->Firstname . ' ' . $this->session->Lastname ?></td>
+                              <td><?= $this->session->Program ?></td>
+                              <td><?= 'TERM: ' . $this->session->curr_term . ' SY: ' . $this->session->curr_year ?></td>
+                          </tr>
+                      </table>
+                      <table class="table">
+                          <thead class="bg-success" style="background-color:#00a65a; color:white;">
                               <th class="text-center col-md-1">COURSES</th>
                               <th class="text-center col-md-3">TITLE</th>
                               <th class="text-center col-md-1">SECTION</th>
@@ -57,7 +42,7 @@
                               <th class="text-center col-md-3">TIME</th>
                               <th class="text-center col-md-1">ROOM</th>
                               <th class="text-center col-md-1">ACTION</th>
-                          </tr>
+                          </thead>
                           <tbody>
                               <?php foreach ($cor as $record) : ?>
                                   <?php if ($record->cc_status != "credited") : ?>
@@ -102,7 +87,7 @@
                   <!-- /.box-body -->
                   <div class="box-footer">
                       <button type="submit" class="btn btn-success pull-right" style="margin-left:10px;">Submit</button>
-                      <button type="submit" class="btn btn-default pull-right">Cancel</button>
+                      <a href="<?= base_url() ?>Student" class="btn btn-default pull-right">Cancel</a>
                   </div>
                   <!-- /.box-footer -->
               </div>

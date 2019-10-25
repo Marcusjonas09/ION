@@ -59,11 +59,11 @@ class Student extends CI_Controller
 	//DASHBOARD LINK
 	public function index()
 	{
+		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
 		$data['grades'] = $this->Dashboard_model->fetchProgress();
 		$data['courses'] = $this->CourseCard_model->fetch_courses();
 		$data['offerings'] = $this->Dashboard_model->fetchOffering();
 		$data['cor'] = $this->CourseCard_model->fetch_current_COR();
-		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
 
 		$this->load->view('content_student/student_dashboard', $data);
 
@@ -346,7 +346,52 @@ class Student extends CI_Controller
 		} else if ($totalunits > 0 && $totalunits > 21 && $totalunits <= 24) {
 			redirect('Student/overload_request/' . $stud_number);
 		} else {
-			redirect('Student');
+			$this->load->view('content_student/not_qualified');
+
+			$this->load->view('includes_student/student_contentFooter');
+			$this->load->view('includes_student/student_rightnav');
+			$this->load->view('includes_student/student_footer');
+			// redirect('Student');
+		}
+	}
+
+	public function check_graduating()
+	{
+		$totalunits = 0.0;
+		$totalunitspassed = 0.0;
+		$course_units = 0.0;
+		$lab_units = 0.0;
+		$coursepassed = 0.0;
+		$labpassed = 0.0;
+
+		$curriculum = $this->Dashboard_model->fetch_curriculum();
+		$progress = $this->Dashboard_model->fetchProgress();
+		$curr = json_decode(json_encode($curriculum));
+		$grades = json_decode(json_encode($progress));
+
+		foreach ($curr as $unit) {
+			$course_units += $unit->course_units;
+			$lab_units += $unit->laboratory_units;
+			foreach ($grades as $grade) {
+				if ($unit->course_code == $grade->cc_course && ($grade->cc_status == "finished" || $grade->cc_status == "credited") && $grade->cc_final >= 1.0) {
+					$coursepassed += $unit->course_units;
+				}
+				if (strtoupper($unit->laboratory_code) == strtoupper($grade->cc_course) && ($grade->cc_final > 1.0 && $grade->cc_final <= 4.0)) {
+					$labpassed += $unit->laboratory_units;
+				}
+			}
+		}
+		$totalunits = $course_units + $lab_units;
+		$totalunitspassed = $coursepassed + $labpassed;
+
+		if (($totalunits - $totalunitspassed) <= 18) {
+			redirect('Student/studen_simul');
+		} else {
+			$this->load->view('content_student/not_qualified');
+
+			$this->load->view('includes_student/student_contentFooter');
+			$this->load->view('includes_student/student_rightnav');
+			$this->load->view('includes_student/student_footer');
 		}
 	}
 
@@ -367,6 +412,8 @@ class Student extends CI_Controller
 	//UNDERLOAD REQUEST LINK
 	public function underload_request($stud_number)
 	{
+		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
+		$data['grades'] = $this->Dashboard_model->fetchProgress();
 		$data['cor'] = $this->CourseCard_model->fetch_course_card_admin($stud_number);
 		$data['courses'] = $this->CourseCard_model->fetch_courses();
 		$data['offerings'] = $this->Dashboard_model->fetchOffering();

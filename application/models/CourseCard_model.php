@@ -55,6 +55,31 @@ class CourseCard_model extends CI_Model
         return $query->result();
     }
 
+    public function fetch_whole_course_card()
+    {
+        // $this->db->select('*');
+        // $this->db->where(array(
+        //     'course_card_tbl.cc_stud_number' => $this->session->acc_number,
+        //     'course_card_tbl.cc_is_enrolled' => true
+        // ));
+        // $this->db->from('course_card_tbl');
+        // $this->db->join('courses_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'LEFT');
+        // $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = course_card_tbl.cc_course', 'LEFT');
+        // $this->db->order_by('course_card_tbl.cc_course', 'ASC');
+        // $query = $this->db->get();
+        // return $query->result();
+
+        
+
+        $this->db->select('*');
+        $this->db->where(array('course_card_tbl.cc_stud_number' => $this->session->acc_number));
+        $this->db->from('course_card_tbl');
+        $this->db->join('courses_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'LEFT');
+        $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = course_card_tbl.cc_course', 'LEFT');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     public function fetch_current_COR()
     {
         $this->db->select('*');

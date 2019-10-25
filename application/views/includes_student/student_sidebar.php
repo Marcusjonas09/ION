@@ -19,15 +19,9 @@
      <!-- Sidebar Menu -->
      <ul id="sidenav" class="sidebar-menu" data-widget="tree">
        <li class="header">MAIN NAVIGATION</li>
-       <!-- Optionally, you can add icons to the links -->
-
        <li class="active"><a href="<?= base_url() ?>Student/"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-       <li><a href="<?= base_url() ?>Student/input"><i class="fa fa-dashboard"></i> <span>Input</span></a></li>
        <li><a href="<?= base_url() ?>Student/announcements"><i class="fa fa-bullhorn"></i><span>Announcements</span>
-           <span class="pull-right-container">
-             <span id="notifbadge" class="label label-warning pull-right"></span>
-           </span></a></li>
-       <!-- <li><a href="<?= base_url() ?>Student/calendar"><i class="fa fa-calendar"></i> <span>Calendar</span></a></li> -->
+       <li><a href="<?= base_url() ?>Student/calendar"><i class="fa fa-calendar"></i><span>Calendar</span></a></li>
 
        <!--=======================================================================================-->
        <!--=======================================================================================-->
@@ -83,8 +77,8 @@
            <li><a href="http://fcis.feutech.edu.ph/" target="_blank"><i class="fa fa-file-text-o"></i> <span>Online Fitness Reservation</span></a></li>
            <li><a href="<?= base_url() ?>Student/petitions"><i class="fa fa-file-text-o"></i> <span>Petition Course</span></a></li>
            <li><a href="<?= base_url() ?>Student/revisions"><i class="fa fa-file-text-o"></i> <span>Load Revision</span></a></li>
-           <li><a href="<?= base_url() ?>Student/check_units/<?= $this->session->acc_number ?>/20192020/1"><i class="fa fa-file-text-o"></i> <span>Overload / Underload</span></a></li>
-           <li><a href="<?= base_url() ?>Student/simulRequest"><i class="fa fa-file-text-o"></i> <span>Request for Simultaneous</span></a></li>
+           <li><a href="<?= base_url() ?>Student/check_units/<?= $this->session->acc_number ?>/<?= $this->session->curr_year ?>/<?= $this->session->curr_term ?>"><i class="fa fa-file-text-o"></i> <span>Overload / Underload</span></a></li>
+           <li><a href="<?= base_url() ?>Student/check_graduating"><i class="fa fa-file-text-o"></i> <span>Request for Simultaneous</span></a></li>
          </ul>
        </li>
 

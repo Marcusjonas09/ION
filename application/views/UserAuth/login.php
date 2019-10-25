@@ -1,3 +1,16 @@
+<?php
+if (!$this->session->login) {
+    session_destroy();
+}
+if ($this->session->access == 'admin') {
+    redirect('Admin');
+} else if ($this->session->access == 'student') {
+    redirect('Student');
+} else if ($this->session->access == 'superadmin') {
+    redirect('SuperAdmin');
+} else { }
+?>
+
 <!DOCTYPE html>
 <html>
 
