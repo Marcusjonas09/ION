@@ -86,7 +86,6 @@ class Courseflow_model extends CI_Model
         }
 
         // fetch courses not available in the course offering or with no more slots
-        // $this->db->select('courses_tbl.course_code,courses_tbl.course_title');
         $this->db->select('courses_tbl.course_code,courses_tbl.course_title,petitions_tbl.petition_status,petitions_tbl.petition_ID,petitions_tbl.petition_unique');
         $this->db->where(array('courses_tbl.curriculum_code' => $this->session->Curriculum_code, 'course_card_tbl.cc_status' => null));
         $this->db->where_not_in('courses_tbl.course_code', $available_in_offering);

@@ -7,15 +7,16 @@ class Overload_underload_model extends CI_Model
     // STUDENT FUNCTIONS
     ///////////////////////////////////////////////////////////////////////////////////////////
 
-    public function submit_revision($stud_number, $curr_year, $curr_term)
+    public function submit_ou($stud_number, $curr_year, $curr_term, $type)
     {
-        $revision_details = array(
+        $ou_details = array(
             'ou_stud_number' => $stud_number,
             'ou_year' => $curr_year,
             'ou_term' => $curr_term,
-            'ou_date_posted' => time()
+            'ou_date_posted' => time(),
+            'ou_type' => $type
         );
-        $this->db->insert('overload_underload_tbl', $revision_details);
+        $this->db->insert('overload_underload_tbl', $ou_details);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -104,5 +105,18 @@ class Overload_underload_model extends CI_Model
             'ou_id' => $id,
         ));
         $this->db->update('overload_underload_tbl');
+    }
+
+    public function fetch_coordinator()
+    {
+        $this->db->select('acc_number');
+        $this->db->from('accounts_tbl');
+        $this->db->where(array(
+            'acc_program' => $this->session->Program,
+            'acc_college' => $this->session->College,
+            'acc_access_level' => 2,
+        ));
+        $query = $this->db->get();
+        return $query->result();
     }
 }

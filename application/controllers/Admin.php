@@ -45,6 +45,7 @@ class Admin extends CI_Controller
 	public function index() // | Display Dashboard |
 	{
 		$this->load->view('includes_admin/admin_header');
+		$this->load->view('includes_admin/notif_widget');
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 

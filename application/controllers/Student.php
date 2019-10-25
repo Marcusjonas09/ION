@@ -37,8 +37,6 @@ class Student extends CI_Controller
 		$this->load->view('includes_student/student_sidebar');
 	}
 
-
-
 	public function user_data_submit()
 	{
 		$data = array(
@@ -431,7 +429,16 @@ class Student extends CI_Controller
 		$stud_number = $this->session->acc_number;
 		$curr_year = $this->session->curr_year;
 		$curr_term = $this->session->curr_term;
-		$this->Overload_underload_model->submit_revision($stud_number, $curr_year, $curr_term);
+		$type = 'underload';
+		$this->Overload_underload_model->submit_ou($stud_number, $curr_year, $curr_term, $type);
+
+		$recipients = $this->Overload_underload_model->fetch_coordinator();
+		$message = 'Underload Request!';
+
+		// echo json_encode($recipients);
+		// die();
+
+		$this->send_notifications($recipients, $message);
 		redirect('Student/underload_request/' . $stud_number);
 	}
 
@@ -533,6 +540,37 @@ class Student extends CI_Controller
 		);
 		$this->CourseCard_model->input($data);
 		$this->input();
+	}
+
+	public function send_notifications($recipients, $message)
+	{
+		$options = array(
+			'cluster' => 'ap1',
+			'useTLS' => true
+		);
+		$pusher = new Pusher\Pusher(
+			'8a5cfc7f91e3ec8112f4',
+			'e5e5c5534c2aa13bb349',
+			'880418',
+			$options
+		);
+
+		$clients = array();
+		foreach ($recipients as $recipient) {
+			$notif_details = array(
+				'notif_sender' => $this->session->acc_number,
+				'notif_recipient' => $recipient->acc_number,
+				'notif_content' => $message,
+				'notif_created_at' => time()
+			);
+
+			$this->Notification_model->notify($notif_details);
+			array_push($clients, $recipient->stud_number);
+		}
+
+		$announcement['message'] = $message;
+		$announcement['recipient'] = $clients;
+		$pusher->trigger('my-channel', 'client_specific', $announcement);
 	}
 
 	// =======================================================================================

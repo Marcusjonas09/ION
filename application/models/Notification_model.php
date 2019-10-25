@@ -7,6 +7,7 @@ class Notification_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('notifications_tbl');
+        $this->db->where(array('notif_recipient' => $this->session->acc_number));
         $query = $this->db->get();
         return $query->num_rows();
     }
@@ -26,7 +27,10 @@ class Notification_model extends CI_Model
     public function get_latest_notifications()
     {
         $this->db->select('*');
-        $query = $this->db->get_where('notifications_tbl', array('notif_created_at >= ' => $_POST['time']));
+        $query = $this->db->get_where('notifications_tbl', array(
+            'notif_created_at >= ' => $_POST['time'],
+            'notif_recipient' => $this->session->acc_number
+        ));
         return $query->num_rows();
     }
 

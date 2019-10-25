@@ -21,8 +21,21 @@ class SuperAdmin extends CI_Controller
     public function empty_petitions()
     {
         $this->SuperAdmin_model->empty_petitions();
-        redirect('SuperAdmin');
+        redirect('SuperAdmin/database');
     }
+
+    public function empty_notifications()
+    {
+        $this->SuperAdmin_model->empty_notifications();
+        redirect('SuperAdmin/database');
+    }
+
+    public function empty_overload_underload()
+    {
+        $this->SuperAdmin_model->empty_overload_underload();
+        redirect('SuperAdmin/database');
+    }
+
 
     public function index()
     {
@@ -57,6 +70,19 @@ class SuperAdmin extends CI_Controller
         $this->load->view('includes_super_admin/superadmin_sidebar');
 
         $this->load->view('content_super_admin/manage_students/manage_students');
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function database()
+    {
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/database_management/database_management');
 
         $this->load->view('includes_super_admin/superadmin_contentFooter');
         $this->load->view('includes_super_admin/superadmin_rightnav');

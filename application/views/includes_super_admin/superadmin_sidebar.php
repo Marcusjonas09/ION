@@ -23,6 +23,7 @@
        <li class="active"><a href="<?= base_url() ?>Admin/"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
        <li><a href="<?= base_url() ?>SuperAdmin/view_all_admin"><i class="fa fa-user"></i> <span>Admin Accounts</span></a></li>
        <li><a href="<?= base_url() ?>SuperAdmin/manage_students"><i class="fa fa-user"></i> <span>Manage Students</span></a></li>
+       <li><a href="<?= base_url() ?>SuperAdmin/database"><i class="fa fa-user"></i> <span>Database</span></a></li>
        <!-- <li><a href="<?= base_url() ?>SuperAdmin/school_announcements"><i class="fa fa-bullhorn"></i><span>School Announcements</span>
        <li><a href="<?= base_url() ?>SuperAdmin/academic_calendar"><i class="fa fa-bullhorn"></i><span>School Calendar</span></a></li>
        <li><a href="<?= base_url() ?>SuperAdmin/curricula"><i class="fa fa-file-text-o"></i><span>All Curricula</span></a></li>

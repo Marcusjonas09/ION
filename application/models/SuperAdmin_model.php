@@ -14,6 +14,16 @@ class SuperAdmin_model extends CI_Model
         $this->db->truncate('petitions_tbl');
     }
 
+    public function empty_notifications()
+    {
+        $this->db->truncate('notifications_tbl');
+    }
+
+    public function empty_overload_underload()
+    {
+        $this->db->truncate('overload_underload_tbl');
+    }
+
     public function view_all_admin($per_page, $end_page)
     {
         $this->db->limit($per_page, $end_page);
