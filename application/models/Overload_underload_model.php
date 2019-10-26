@@ -172,4 +172,8 @@ class Overload_underload_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+
+    public function fetch_potential_petitioner(){
+        
+    }
 }

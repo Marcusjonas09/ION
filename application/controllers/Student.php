@@ -483,15 +483,21 @@ class Student extends CI_Controller
 	{
 		$course_code = $this->input->post('course_code');
 		$result = $this->Courseflow_model->check_petition($course_code);
-
+		$petition_unique = $course_code . time();
 		$petition_details = array(
 			'course_code' => $course_code,
-			'petition_unique' => $course_code . time(),
+			'petition_unique' => $petition_unique,
 			'stud_number' => $this->session->acc_number,
 			'date_submitted' => time()
 		);
 
 		if ($result) {
+			// $recipients = $this->Overload_underload_model->fetch_potential_petitioner($course_code);
+			// $message = 'New petition suggestions!';
+
+			// $link = base_url() . "Student/petitions/";
+
+			// $this->send_notifications($recipients, $message, $link);
 			$this->Petition_model->submitPetition($petition_details);
 			redirect('Student/petitions');
 		} else {
