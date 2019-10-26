@@ -441,7 +441,7 @@ class Student extends CI_Controller
 		$recipients = $this->Overload_underload_model->fetch_coordinator();
 		$message = 'Sent an underload request';
 
-		$this->send_notifications($recipients, $message);
+		$this->send_notification($recipients, $message);
 		redirect('Student/underload_request/' . $stud_number);
 	}
 
@@ -456,7 +456,7 @@ class Student extends CI_Controller
 		$recipients = $this->Overload_underload_model->fetch_coordinator();
 		$message = 'Sent an overload request';
 
-		$this->send_notifications($recipients, $message);
+		$this->send_notification($recipients, $message);
 		redirect('Student/overload_request/' . $stud_number);
 	}
 
