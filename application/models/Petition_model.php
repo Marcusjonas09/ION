@@ -114,7 +114,7 @@ class Petition_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('petitioners_tbl');
-        $this->db->join('accounts_tbl', 'accounts_tbl.acc_number = petitioners_tbl.stud_number');
+        // $this->db->join('accounts_tbl', 'accounts_tbl.acc_number = petitioners_tbl.stud_number');
         $query = $this->db->get();
         return $query->result();
     }
