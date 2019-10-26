@@ -340,9 +340,11 @@ class Student extends CI_Controller
 		}
 		// echo $totalunits;
 		if ($totalunits < 12 && $totalunits > 0) {
-			redirect('Student/underload_request/' . $stud_number);
+			// 			redirect('Student/underload_request/' . );
+			$this->underload_request($stud_number);
 		} else if ($totalunits > 0 && $totalunits > 21 && $totalunits <= 24) {
-			redirect('Student/overload_request/' . $stud_number);
+			// 			redirect('Student/overload_request/' . $stud_number);
+			$this->overload_request($stud_number);
 		} else {
 			$this->load->view('content_student/not_qualified');
 
@@ -386,7 +388,8 @@ class Student extends CI_Controller
 		// die();
 
 		if (($totalunits - $totalunitspassed) <= 18) {
-			redirect('Student/simulRequest');
+			// 			redirect('Student/simulRequest');
+			$this->simulRequest();
 		} else {
 			$this->load->view('content_student/not_qualified');
 
@@ -444,7 +447,8 @@ class Student extends CI_Controller
 		$link = base_url() . "Student/underload_request/" . $stud_number;
 
 		$this->send_notifications($recipients, $message, $link);
-		redirect('Student/underload_request/' . $stud_number);
+		$this->underload_request($stud_number);
+		// 		redirect('Student/underload_request/' . $stud_number);
 	}
 
 	public function submit_overload()
@@ -461,7 +465,8 @@ class Student extends CI_Controller
 		$link = base_url() . "Student/overload_request/" . $stud_number;
 
 		$this->send_notifications($recipients, $message, $link);
-		redirect('Student/overload_request/' . $stud_number);
+		// 		redirect('Student/overload_request/' . $stud_number);
+		$this->overload_request($stud_number);
 	}
 
 	//SIMUL REQUEST LINK
@@ -499,9 +504,11 @@ class Student extends CI_Controller
 
 			// $this->send_notifications($recipients, $message, $link);
 			$this->Petition_model->submitPetition($petition_details);
-			redirect('Student/petitions');
+			$this->petitions();
+			// 			redirect('Student/petitions');
 		} else {
-			redirect('Student/petitions');
+			$this->petitions();
+			// 			redirect('Student/petitions');
 		}
 	}
 
@@ -525,7 +532,8 @@ class Student extends CI_Controller
 	{
 
 		$this->Petition_model->signPetition($stud_number, $course_code, $petition_unique);
-		redirect('Student/petitions');
+		$this->petitions();
+		// 		redirect('Student/petitions');
 		// $this->form_validation->set_rules('stud_number', 'Student Number', 'is_unique[petitioners_tbl.stud_number]|strip_tags|required');
 		// $this->form_validation->set_rules('course_code', 'Course Code', 'strip_tags|required');
 
@@ -573,7 +581,7 @@ class Student extends CI_Controller
 			);
 
 			$this->Notification_model->notify($notif_details);
-			array_push($clients, $recipient->stud_number);
+			array_push($clients, $recipient->acc_number);
 		}
 
 		$announcement['message'] = $message;
