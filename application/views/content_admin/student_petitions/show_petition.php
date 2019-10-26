@@ -75,12 +75,12 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="<?= base_url() ?>Admin/approve_petition/<?= $petition->petition_unique ?>" class="btn btn-success btn-sm rounded pull-right col-md-3 <?php if ($petition->petition_status != 2) {
-                                                                                                                                                                            echo "disabled";
-                                                                                                                                                                        } ?>"><span class="fa fa-check"></span>&nbsp Approve</a>
-                        <a href="<?= base_url() ?>Admin/decline_petition/<?= $petition->petition_unique ?>" class="btn btn-danger btn-sm rounded pull-right col-md-3 <?php if ($petition->petition_status != 2) {
-                                                                                                                                                                            echo "disabled";
-                                                                                                                                                                        } ?>" style="margin-right:10px;"><span class="fa fa-ban"></span>&nbsp Decline</a>
+                        <a href="<?= base_url() ?>Admin/approve_petition/<?= $petition->petition_ID ?>/<?= $petition->petition_unique ?>" class="btn btn-success btn-sm rounded pull-right col-md-3 <?php if ($petition->petition_status != 2) {
+                                                                                                                                                                                                        echo "disabled";
+                                                                                                                                                                                                    } ?>"><span class="fa fa-check"></span>&nbsp Approve</a>
+                        <a href="<?= base_url() ?>Admin/decline_petition/<?= $petition->petition_ID ?>/<?= $petition->petition_unique ?>" class="btn btn-danger btn-sm rounded pull-right col-md-3 <?php if ($petition->petition_status != 2) {
+                                                                                                                                                                                                        echo "disabled";
+                                                                                                                                                                                                    } ?>" style="margin-right:10px;"><span class="fa fa-ban"></span>&nbsp Decline</a>
                     </div>
                 </div>
             </div>

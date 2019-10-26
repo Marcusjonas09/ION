@@ -81,9 +81,10 @@
             var content = notif.notif_content;
             var time_posted = notif.notif_created_at;
             var formattedDate = convert_unix(time_posted);
+            var link = notif.notif_link;
             $("#notif_container").append(
                 "<li>" +
-                "<a href='#'>" +
+                "<a href='" + link + "'>" +
                 "<div class='pull-left'>" +
                 "<img src='<?= base_url() ?>dist/img/default_avatar.png' class='img-circle' alt='User Image'>" +
                 "</div>" +

@@ -453,23 +453,25 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function approve_petition($petition_unique)
+	public function approve_petition($petitionID, $petition_unique)
 	{
 		$recipients = $this->Petition_model->fetch_petition_recipients($petition_unique);
 		$message = 'Petition approved!';
-
-		$this->send_notifications($recipients, $message);
+		$link = base_url() . "Student/petitionView/" . $petitionID . "/" . $petition_unique;
+		$this->send_notifications($recipients, $message, $link);
 
 		$this->Petition_model->approve_petition($petition_unique);
 		redirect('Admin/course_petitions');
 	}
 
-	public function decline_petition($petition_unique)
+	public function decline_petition($petitionID, $petition_unique)
 	{
 		$recipients = $this->Petition_model->fetch_petition_recipients($petition_unique);
 		$message = 'Petition declined!';
 
-		$this->send_notifications($recipients, $message);
+		$link = base_url() . "Student/petitionView/" . $petitionID . "/" . $petition_unique;
+		$this->send_notifications($recipients, $message, $link);
+
 
 		$this->Petition_model->decline_petition($petition_unique);
 		redirect('Admin/course_petitions');
@@ -708,7 +710,8 @@ class Admin extends CI_Controller
 	{
 		$message = 'Underload request granted!';
 
-		$this->send_notification($stud_number, $message);
+		$link = base_url() . "Student/underload_request/" . $stud_number;
+		$this->send_notification($stud_number, $message, $link);
 		$this->Overload_underload_model->approve_underload($id);
 
 		redirect('Admin/underload');
@@ -718,7 +721,8 @@ class Admin extends CI_Controller
 	{
 		$message = 'Underload request declined!';
 
-		$this->send_notification($stud_number, $message);
+		$link = base_url() . "Student/underload_request/" . $stud_number;
+		$this->send_notification($stud_number, $message, $link);
 		$this->Overload_underload_model->decline_underload($id);
 
 		redirect('Admin/underload');
@@ -728,7 +732,8 @@ class Admin extends CI_Controller
 	{
 		$message = 'Overload request granted!';
 
-		$this->send_notification($stud_number, $message);
+		$link = base_url() . "Student/overload_request/" . $stud_number;
+		$this->send_notification($stud_number, $message, $link);
 		$this->Overload_underload_model->approve_overload($id);
 
 		redirect('Admin/overload');
@@ -738,7 +743,8 @@ class Admin extends CI_Controller
 	{
 		$message = 'Overload request declined!';
 
-		$this->send_notification($stud_number, $message);
+		$link = base_url() . "Student/overload_request/" . $stud_number;
+		$this->send_notification($stud_number, $message, $link);
 		$this->Overload_underload_model->decline_overload($id);
 
 		redirect('Admin/overload');
@@ -748,7 +754,7 @@ class Admin extends CI_Controller
 	// Notification Module
 	// =======================================================================================
 
-	public function send_notifications($recipients, $message)
+	public function send_notifications($recipients, $message, $link)
 	{
 		$options = array(
 			'cluster' => 'ap1',
@@ -766,8 +772,9 @@ class Admin extends CI_Controller
 			$notif_details = array(
 				'notif_sender' => $this->session->acc_number,
 				'notif_sender_name' => $this->session->Firstname . ' ' . $this->session->Lastname,
-				'notif_recipient' => $recipient->acc_number,
+				'notif_recipient' => $recipient->stud_number,
 				'notif_content' => $message,
+				'notif_link' => $link,
 				'notif_created_at' => time()
 			);
 
@@ -780,7 +787,7 @@ class Admin extends CI_Controller
 		$pusher->trigger('my-channel', 'client_specific', $announcement);
 	}
 
-	public function send_notification($recipient, $message)
+	public function send_notification($recipient, $message, $link)
 	{
 		$options = array(
 			'cluster' => 'ap1',
@@ -798,6 +805,7 @@ class Admin extends CI_Controller
 			'notif_sender_name' => $this->session->Firstname . ' ' . $this->session->Lastname,
 			'notif_recipient' => $recipient,
 			'notif_content' => $message,
+			'notif_link' => $link,
 			'notif_created_at' => time()
 		);
 

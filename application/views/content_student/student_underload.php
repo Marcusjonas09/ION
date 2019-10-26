@@ -170,10 +170,10 @@ $totalunitspassed = $coursepassed + $labpassed;
                     </table>
                 <?php endif; ?>
                 <div class="container-fluid">
-                    <a href="<?= base_url() ?>/Student/submit_underload" class="btn btn-success pull-right col-md-1 <?php if ($underload) {
+                    <a href="<?= base_url() ?>Student/submit_underload" class="btn btn-success pull-right col-md-1 <?php if ($underload) {
                                                                                                                         if ($underload->ou_stud_number == $this->session->acc_number) echo "disabled";
                                                                                                                     } ?>">Submit</a>
-                    <a href="<?= base_url() ?>/Student" class="btn btn-default pull-right col-md-1 <?php if ($underload) {
+                    <a href="<?= base_url() ?>Student" class="btn btn-default pull-right col-md-1 <?php if ($underload) {
                                                                                                         if ($underload->ou_stud_number == $this->session->acc_number) echo "disabled";
                                                                                                     } ?>" style="margin-right:10px;">Cancel</a>
                 </div>

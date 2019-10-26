@@ -386,7 +386,7 @@ class Student extends CI_Controller
 		// die();
 
 		if (($totalunits - $totalunitspassed) <= 18) {
-			redirect('Student/studen_simul');
+			redirect('Student/simulRequest');
 		} else {
 			$this->load->view('content_student/not_qualified');
 
@@ -441,7 +441,9 @@ class Student extends CI_Controller
 		$recipients = $this->Overload_underload_model->fetch_coordinator();
 		$message = 'Sent an underload request';
 
-		$this->send_notifications($recipients, $message);
+		$link = base_url() . "Student/underload_request/" . $stud_number;
+
+		$this->send_notifications($recipients, $message, $link);
 		redirect('Student/underload_request/' . $stud_number);
 	}
 
@@ -456,7 +458,9 @@ class Student extends CI_Controller
 		$recipients = $this->Overload_underload_model->fetch_coordinator();
 		$message = 'Sent an overload request';
 
-		$this->send_notifications($recipients, $message);
+		$link = base_url() . "Student/overload_request/" . $stud_number;
+
+		$this->send_notifications($recipients, $message, $link);
 		redirect('Student/overload_request/' . $stud_number);
 	}
 
@@ -535,30 +539,9 @@ class Student extends CI_Controller
 		// }
 	}
 
-	public function input()
-	{
-
-		$this->load->view('content_student/input');
-
-		$this->load->view('includes_student/student_contentFooter');
-		$this->load->view('includes_student/student_rightnav');
-		$this->load->view('includes_student/student_footer');
-	}
-
-	public function entergrade()
-	{
-		$data = array(
-			'cc_stud_number' => $this->input->post('stud'),
-			'year' => $this->input->post('year'),
-			'term' => $this->input->post('term'),
-			'cc_midterm' => $this->input->post('mid'),
-			'cc_final' => $this->input->post('final'),
-			'cc_course' => $this->input->post('course'),
-			'cc_status' => $this->input->post('status')
-		);
-		$this->CourseCard_model->input($data);
-		$this->input();
-	}
+	// =======================================================================================
+	// NOTIFICATIONS
+	// =======================================================================================
 
 	public function send_notifications($recipients, $message)
 	{
@@ -592,17 +575,32 @@ class Student extends CI_Controller
 		$pusher->trigger('my-channel', 'client_specific', $announcement);
 	}
 
-	// =======================================================================================
-	// DEBUG LINK
-	// =======================================================================================
-
-	public function debug()
+	public function send_notification($recipient, $message)
 	{
-		// $data['fetch_curriculum'] = $this->Curriculum_model->fetchCurriculum();
-		// $data['fetch_curriculum'] = $this->Curriculum_model->updatedCurriculum();
-		// $data['lab'] = $this->Curriculum_model->fetchLaboratory();
-		$data['cc'] = $this->CourseCard_model->fetchProgress();
+		$options = array(
+			'cluster' => 'ap1',
+			'useTLS' => true
+		);
+		$pusher = new Pusher\Pusher(
+			'8a5cfc7f91e3ec8112f4',
+			'e5e5c5534c2aa13bb349',
+			'880418',
+			$options
+		);
 
-		echo json_encode($data);
+		$notif_details = array(
+			'notif_sender' => $this->session->acc_number,
+			'notif_sender_name' => $this->session->Firstname . ' ' . $this->session->Lastname,
+			'notif_recipient' => $recipient,
+			'notif_content' => $message,
+			'notif_created_at' => time()
+		);
+
+		$this->Notification_model->notify($notif_details);
+
+		$announcement['message'] = $message;
+		$announcement['recipient'] = $recipient;
+		$pusher->trigger('my-channel', 'client_specific', $announcement);
+		$pusher->trigger('my-channel', 'update_dashboard_admin', null);
 	}
 }
