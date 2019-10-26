@@ -252,7 +252,7 @@ class Admin extends CI_Controller
 
 	public function underload() // | Display all underload requests |
 	{
-		$data['underloads'] = $this->Overload_underload_model->fetch_all_revisions();
+		$data['underloads'] = $this->Overload_underload_model->fetch_all_underload();
 
 		$this->load->view('includes_admin/admin_header');
 		$this->load->view('includes_admin/admin_topnav');
@@ -271,7 +271,7 @@ class Admin extends CI_Controller
 		$data['student'] = $this->Overload_underload_model->fetch_user($stud_number);
 		$data['courses'] = $this->Overload_underload_model->fetch_courses();
 		$data['offerings'] = $this->Overload_underload_model->fetchOffering();
-		$data['underload'] = $this->Overload_underload_model->fetch_revision($stud_number, $term, $year);
+		$data['underload'] = $this->Overload_underload_model->fetch_underload($stud_number, $term, $year);
 
 		$this->load->view('includes_admin/admin_header');
 		$this->load->view('includes_admin/admin_topnav');
@@ -286,11 +286,13 @@ class Admin extends CI_Controller
 
 	public function overload() // | Display all overload request |
 	{
+		$data['overloads'] = $this->Overload_underload_model->fetch_all_overload();
+
 		$this->load->view('includes_admin/admin_header');
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
-		$this->load->view('content_admin/overload/overload');
+		$this->load->view('content_admin/overload_underload/overload_requests', $data);
 
 		$this->load->view('includes_admin/admin_contentFooter');
 		$this->load->view('includes_admin/admin_rightnav');
@@ -304,13 +306,13 @@ class Admin extends CI_Controller
 		$data['student'] = $this->Overload_underload_model->fetch_user($stud_number);
 		$data['courses'] = $this->Overload_underload_model->fetch_courses();
 		$data['offerings'] = $this->Overload_underload_model->fetchOffering();
-		$data['underload'] = $this->Overload_underload_model->fetch_revision($stud_number, $term, $year);
+		$data['overload'] = $this->Overload_underload_model->fetch_overload($stud_number, $term, $year);
 
 		$this->load->view('includes_admin/admin_header');
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
-		$this->load->view('content_admin/overload/overload', $data);
+		$this->load->view('content_admin/overload_underload/overload_view', $data);
 
 		$this->load->view('includes_admin/admin_contentFooter');
 		$this->load->view('includes_admin/admin_rightnav');
@@ -704,29 +706,9 @@ class Admin extends CI_Controller
 
 	public function approve_underload($id, $stud_number)
 	{
-		$options = array(
-			'cluster' => 'ap1',
-			'useTLS' => true
-		);
-		$pusher = new Pusher\Pusher(
-			'8a5cfc7f91e3ec8112f4',
-			'e5e5c5534c2aa13bb349',
-			'880418',
-			$options
-		);
+		$message = 'Underload request granted!';
 
-		$notif_details = array(
-			'notif_sender' => $this->session->acc_number,
-			'notif_recipient' => $stud_number,
-			'notif_content' => 'Your Underload Request was approved',
-			'notif_created_at' => time()
-		);
-
-		$specific['message'] = 'Your Underload Request was approved';
-		$specific['recipient'] = [$stud_number];
-		$pusher->trigger('my-channel', 'client_specific', $specific);
-
-		$this->Notification_model->notify($notif_details);
+		$this->send_notification($stud_number, $message);
 		$this->Overload_underload_model->approve_underload($id);
 
 		redirect('Admin/underload');
@@ -734,32 +716,32 @@ class Admin extends CI_Controller
 
 	public function decline_underload($id, $stud_number)
 	{
-		$options = array(
-			'cluster' => 'ap1',
-			'useTLS' => true
-		);
-		$pusher = new Pusher\Pusher(
-			'8a5cfc7f91e3ec8112f4',
-			'e5e5c5534c2aa13bb349',
-			'880418',
-			$options
-		);
+		$message = 'Underload request declined!';
 
-		$notif_details = array(
-			'notif_sender' => $this->session->acc_number,
-			'notif_recipient' => $stud_number,
-			'notif_content' => 'Your Underload Request was declined',
-			'notif_created_at' => time()
-		);
-
-		$specific['message'] = 'Your Underload Request was declined';
-		$specific['recipient'] = [$stud_number];
-		$pusher->trigger('my-channel', 'client_specific', $specific);
-
-		$this->Notification_model->notify($notif_details);
+		$this->send_notification($stud_number, $message);
 		$this->Overload_underload_model->decline_underload($id);
 
 		redirect('Admin/underload');
+	}
+
+	public function approve_overload($id, $stud_number)
+	{
+		$message = 'Overload request granted!';
+
+		$this->send_notification($stud_number, $message);
+		$this->Overload_underload_model->approve_overload($id);
+
+		redirect('Admin/overload');
+	}
+
+	public function decline_overload($id, $stud_number)
+	{
+		$message = 'Overload request declined!';
+
+		$this->send_notification($stud_number, $message);
+		$this->Overload_underload_model->decline_overload($id);
+
+		redirect('Admin/overload');
 	}
 
 	// =======================================================================================
@@ -783,7 +765,8 @@ class Admin extends CI_Controller
 		foreach ($recipients as $recipient) {
 			$notif_details = array(
 				'notif_sender' => $this->session->acc_number,
-				'notif_recipient' => $recipient->stud_number,
+				'notif_sender_name' => $this->session->Firstname . ' ' . $this->session->Lastname,
+				'notif_recipient' => $recipient->acc_number,
 				'notif_content' => $message,
 				'notif_created_at' => time()
 			);
@@ -797,6 +780,33 @@ class Admin extends CI_Controller
 		$pusher->trigger('my-channel', 'client_specific', $announcement);
 	}
 
+	public function send_notification($recipient, $message)
+	{
+		$options = array(
+			'cluster' => 'ap1',
+			'useTLS' => true
+		);
+		$pusher = new Pusher\Pusher(
+			'8a5cfc7f91e3ec8112f4',
+			'e5e5c5534c2aa13bb349',
+			'880418',
+			$options
+		);
+
+		$notif_details = array(
+			'notif_sender' => $this->session->acc_number,
+			'notif_sender_name' => $this->session->Firstname . ' ' . $this->session->Lastname,
+			'notif_recipient' => $recipient,
+			'notif_content' => $message,
+			'notif_created_at' => time()
+		);
+
+		$this->Notification_model->notify($notif_details);
+
+		$announcement['message'] = $message;
+		$announcement['recipient'] = $recipient;
+		$pusher->trigger('my-channel', 'client_specific', $announcement);
+	}
 	// =======================================================================================
 	// OTHER Module
 	// =======================================================================================

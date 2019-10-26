@@ -13,7 +13,7 @@
 
           <div class="box box-success">
               <div class="box-header">
-                  <h3 class="box-title">My Petitions</h3>
+                  <h3 class="box-title">Pending requests</h3>
               </div>
               <!-- /.box-header -->
               <div class="box-body">

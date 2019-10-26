@@ -77,6 +77,7 @@
         // fetch notifications
         function get_notif(notif, index) {
             var content = notif.notif_content;
+            var sender_name = notif.notif_sender_name;
             var time_posted = notif.notif_created_at;
             var formattedDate = convert_unix(time_posted);
             $("#notif_container").append(
@@ -85,7 +86,7 @@
                 "<div class='pull-left'>" +
                 "<img src='<?= base_url() ?>dist/img/default_avatar.png' class='img-circle' alt='User Image'>" +
                 "</div>" +
-                "<h4>Support Team</h4>" +
+                "<h4>" + sender_name + "</h4>" +
                 "<p>" + content + "</p>" +
                 "<small>" + formattedDate + "</small>" +
                 "</a>" +
@@ -175,6 +176,7 @@
                 $("#sched_table_body").append(tr);
 
             };
+
             schedule_entry_old = schedule_entry;
         });
 

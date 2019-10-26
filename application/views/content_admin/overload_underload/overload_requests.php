@@ -3,72 +3,50 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
           <h1>
-              <strong>Overload</strong>
-              <small>Manage accounts</small>
+              <strong>Overload Requests</strong>
+              <!-- <small>Manage accounts</small> -->
           </h1>
-          <ol class="breadcrumb">
-              <li class="active">Student Accounts</li>
-          </ol>
       </section>
 
       <!-- Main content -->
       <section class="content container-fluid">
 
-          <div class="row">
-              <div class="col-xs-12">
-                  <div class="box">
-                      <div class="box-header">
-                          <!-- <h3 class="box-title">Students</h3> -->
-
-                          <div class="box-tools">
-                              <div class="input-group input-group-sm" style="width: 150px;">
-                                  <!-- <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-                  <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                  </div> -->
-                              </div>
-                          </div>
-                      </div>
-                      <!-- /.box-header -->
-                      <div class="box-body table-responsive no-padding">
-                          <table class="table table-hover">
-                              <thead>
-                                  <th>ID</th>
-                                  <th>Name</th>
-                                  <th>Username</th>
-                                  <th>Curriculum</th>
-                                  <th>Action</th>
-                              </thead>
-                              <?php foreach ($students as $student) : ?>
-                                  <tr>
-                                      <td><?= $student->acc_number ?></td>
-                                      <td><?= $student->acc_lname . ', ' . $student->acc_fname ?></td>
-                                      <td><?= $student->acc_username ?></td>
-                                      <td><?= $student->curriculum_code ?></td>
-                                      <td>
-                                          <!-- <a href="<?= base_url() ?>Admin/show_account/<?= $student->acc_number ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
-                      <?php if ($student->acc_status) {
-                                echo '<a href="' . base_url() . 'Admin/blockUser/' . $student->acc_number . '" class="btn btn-danger btn-sm rounded"><i class="fa fa-ban"></i></a>';
-                            } else {
-                                echo '<a href="' . base_url() . 'Admin/blockUser/' . $student->acc_number . '" class="btn btn-success btn-sm rounded"><i class="fa fa-check"></i></a>';
-                            }; ?> -->
-
-
-                                          <a href="<?= base_url() ?>Admin/show_account/<?= $student->acc_number ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
-                                          <?php if ($student->acc_status) {
-                                                    echo '<a href="' . base_url() . 'Admin/blockUser/' . $student->acc_number . '" class="btn btn-danger btn-sm rounded"><i class="fa fa-ban"></i></a>';
-                                                } else {
-                                                    echo '<a href="' . base_url() . 'Admin/blockUser/' . $student->acc_number . '" class="btn btn-success btn-sm rounded"><i class="fa fa-check"></i></a>';
-                                                }; ?>
-                                      </td>
-                                  </tr>
-                              <?php endforeach ?>
-                          </table>
-                      </div>
-                      <!-- /.box-body -->
-                  </div>
-                  <!-- /.box -->
+          <div class="box box-success">
+              <div class="box-header">
+                  <h3 class="box-title">Pending Requests</h3>
               </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                  <div class="box-body table-responsive no-padding">
+                      <table id="petitionTable" class="table table-striped">
+                          <thead>
+                              <th>Student_number</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                          </thead>
+                          <tbody>
+
+                              <?php foreach ($overloads as $overload) : ?>
+                                  <tr>
+                                      <td><?= $overload->ou_stud_number ?></td>
+                                      <td>
+                                          <?php if ($overload->ou_status == 1) {
+                                                    echo "<span class='label label-success'>Approved</span>";
+                                                } elseif ($overload->ou_status == 2) {
+                                                    echo "<span class='label label-warning'>Pending</span>";
+                                                } else {
+                                                    echo "<span class='label label-danger'>Denied</span>";
+                                                } ?>
+                                      </td>
+                                      <td><a href="<?= base_url() ?>Admin/overload_view/<?= $overload->ou_stud_number ?>/<?= $overload->ou_term ?>/<?= $overload->ou_year ?>" class="btn btn-warning btn-sm"><span class="fa fa-eye"></span> View</a></td>
+                                  </tr>
+                              <?php endforeach; ?>
+                          </tbody>
+                      </table>
+                  </div>
+                  <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
           </div>
       </section>
       <!-- /.content -->

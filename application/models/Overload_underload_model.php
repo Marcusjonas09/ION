@@ -30,12 +30,45 @@ class Overload_underload_model extends CI_Model
         return $query->result();
     }
 
-    public function fetch_revision($stud_number, $term, $year)
+    public function fetch_all_overload()
+    {
+        $this->db->order_by('ou_id', 'DESC');
+        $this->db->where(array(
+            'ou_type' => 'overload'
+        ));
+        $query = $this->db->get('overload_underload_tbl');
+        return $query->result();
+    }
+
+    public function fetch_all_underload()
+    {
+        $this->db->order_by('ou_date_posted', 'DESC');
+        $this->db->where(array(
+            'ou_type' => 'underload'
+        ));
+        $query = $this->db->get('overload_underload_tbl');
+        return $query->result();
+    }
+
+    public function fetch_overload($stud_number, $term, $year)
     {
         $this->db->where(array(
             'ou_stud_number' => $stud_number,
             'ou_year' => $year,
-            'ou_term' => $term
+            'ou_term' => $term,
+            'ou_type' => 'overload'
+        ));
+        $query = $this->db->get('overload_underload_tbl');
+        return $query->row();
+    }
+
+    public function fetch_underload($stud_number, $term, $year)
+    {
+        $this->db->where(array(
+            'ou_stud_number' => $stud_number,
+            'ou_year' => $year,
+            'ou_term' => $term,
+            'ou_type' => 'underload'
         ));
         $query = $this->db->get('overload_underload_tbl');
         return $query->row();
@@ -98,6 +131,26 @@ class Overload_underload_model extends CI_Model
     }
 
     public function decline_underload($id)
+    {
+        $this->db->set('ou_status', 0);
+        $this->db->set('ou_date_processed', time());
+        $this->db->where(array(
+            'ou_id' => $id,
+        ));
+        $this->db->update('overload_underload_tbl');
+    }
+
+    public function approve_overload($id)
+    {
+        $this->db->set('ou_status', 1);
+        $this->db->set('ou_date_processed', time());
+        $this->db->where(array(
+            'ou_id' => $id,
+        ));
+        $this->db->update('overload_underload_tbl');
+    }
+
+    public function decline_overload($id)
     {
         $this->db->set('ou_status', 0);
         $this->db->set('ou_date_processed', time());

@@ -382,6 +382,9 @@ class Student extends CI_Controller
 		$totalunits = $course_units + $lab_units;
 		$totalunitspassed = $coursepassed + $labpassed;
 
+		// echo json_encode($totalunits - $totalunitspassed);
+		// die();
+
 		if (($totalunits - $totalunitspassed) <= 18) {
 			redirect('Student/studen_simul');
 		} else {
@@ -396,9 +399,12 @@ class Student extends CI_Controller
 	//OVERLOAD REQUEST LINK
 	public function overload_request($stud_number)
 	{
+		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
+		$data['grades'] = $this->Dashboard_model->fetchProgress();
 		$data['cor'] = $this->CourseCard_model->fetch_course_card_admin($stud_number);
 		$data['courses'] = $this->CourseCard_model->fetch_courses();
 		$data['offerings'] = $this->Dashboard_model->fetchOffering();
+		$data['overload'] = $this->Overload_underload_model->fetch_overload($stud_number, $this->session->curr_term, $this->session->curr_year);
 
 		$this->load->view('content_student/student_overload', $data);
 
@@ -415,7 +421,7 @@ class Student extends CI_Controller
 		$data['cor'] = $this->CourseCard_model->fetch_course_card_admin($stud_number);
 		$data['courses'] = $this->CourseCard_model->fetch_courses();
 		$data['offerings'] = $this->Dashboard_model->fetchOffering();
-		$data['underload'] = $this->Overload_underload_model->fetch_revision($stud_number, $this->session->curr_term, $this->session->curr_year);
+		$data['underload'] = $this->Overload_underload_model->fetch_underload($stud_number, $this->session->curr_term, $this->session->curr_year);
 
 		$this->load->view('content_student/student_underload', $data);
 
@@ -433,13 +439,25 @@ class Student extends CI_Controller
 		$this->Overload_underload_model->submit_ou($stud_number, $curr_year, $curr_term, $type);
 
 		$recipients = $this->Overload_underload_model->fetch_coordinator();
-		$message = 'Underload Request!';
-
-		// echo json_encode($recipients);
-		// die();
+		$message = 'Sent an underload request';
 
 		$this->send_notifications($recipients, $message);
 		redirect('Student/underload_request/' . $stud_number);
+	}
+
+	public function submit_overload()
+	{
+		$stud_number = $this->session->acc_number;
+		$curr_year = $this->session->curr_year;
+		$curr_term = $this->session->curr_term;
+		$type = 'overload';
+		$this->Overload_underload_model->submit_ou($stud_number, $curr_year, $curr_term, $type);
+
+		$recipients = $this->Overload_underload_model->fetch_coordinator();
+		$message = 'Sent an overload request';
+
+		$this->send_notifications($recipients, $message);
+		redirect('Student/overload_request/' . $stud_number);
 	}
 
 	//SIMUL REQUEST LINK
@@ -559,6 +577,7 @@ class Student extends CI_Controller
 		foreach ($recipients as $recipient) {
 			$notif_details = array(
 				'notif_sender' => $this->session->acc_number,
+				'notif_sender_name' => $this->session->Firstname . ' ' . $this->session->Lastname,
 				'notif_recipient' => $recipient->acc_number,
 				'notif_content' => $message,
 				'notif_created_at' => time()
