@@ -80,11 +80,16 @@
             var sender_name = notif.notif_sender_name;
             var time_posted = notif.notif_created_at;
             var formattedDate = convert_unix(time_posted);
+            var link = notif.notif_link;
+            var status = notif.notif_status;
             $("#notif_container").append(
                 "<li>" +
-                "<a href='#'>" +
+                "<a href='" + link + "'>" +
                 "<div class='pull-left'>" +
                 "<img src='<?= base_url() ?>dist/img/default_avatar.png' class='img-circle' alt='User Image'>" +
+                "</div>" +
+                "<div class='pull-right'>" +
+                "<span class='label label-info'><small>NEW</small></span>" +
                 "</div>" +
                 "<h4>" + sender_name + "</h4>" +
                 "<p>" + content + "</p>" +
@@ -105,10 +110,6 @@
                 } else {
                     $('#notif_badge').hide();
                 }
-            });
-            $.get("<?= base_url() ?>Notification/get_all_notif_count", function(data) {
-                var obj = JSON.parse(data);
-                $('#total_notif_count').text('(' + obj + ') See All Notifications');
             });
         }, 1000);
 

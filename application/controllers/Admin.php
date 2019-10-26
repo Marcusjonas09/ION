@@ -593,6 +593,8 @@ class Admin extends CI_Controller
 
 				$notif_details = array(
 					'notif_sender' => $this->session->acc_number,
+					'notif_sender_name' => $this->session->Firstname . ' ' . $this->session->Lastname,
+					'notif_recipient' => 0,
 					'notif_content' => $this->input->post('caption'),
 					'notif_created_at' => time()
 				);

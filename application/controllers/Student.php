@@ -444,7 +444,7 @@ class Student extends CI_Controller
 		$recipients = $this->Overload_underload_model->fetch_coordinator();
 		$message = 'Sent an underload request';
 
-		$link = base_url() . "Student/underload_request/" . $stud_number;
+		$link = base_url() . "Admin/underload_view/" . $stud_number . "/" . $curr_term . "/" . $curr_year . "/";
 
 		$this->send_notifications($recipients, $message, $link);
 		$this->underload_request($stud_number);
@@ -462,7 +462,7 @@ class Student extends CI_Controller
 		$recipients = $this->Overload_underload_model->fetch_coordinator();
 		$message = 'Sent an overload request';
 
-		$link = base_url() . "Student/overload_request/" . $stud_number;
+		$link = base_url() . "Admin/overload_view/" . $stud_number . "/" . $curr_term . "/" . $curr_year . "/";
 
 		$this->send_notifications($recipients, $message, $link);
 		// 		redirect('Student/overload_request/' . $stud_number);
@@ -557,7 +557,7 @@ class Student extends CI_Controller
 	// NOTIFICATIONS
 	// =======================================================================================
 
-	public function send_notifications($recipients, $message)
+	public function send_notifications($recipients, $message, $link)
 	{
 		$options = array(
 			'cluster' => 'ap1',
@@ -577,6 +577,7 @@ class Student extends CI_Controller
 				'notif_sender_name' => $this->session->Firstname . ' ' . $this->session->Lastname,
 				'notif_recipient' => $recipient->acc_number,
 				'notif_content' => $message,
+				'notif_link' => $link,
 				'notif_created_at' => time()
 			);
 
@@ -589,7 +590,7 @@ class Student extends CI_Controller
 		$pusher->trigger('my-channel', 'client_specific', $announcement);
 	}
 
-	public function send_notification($recipient, $message)
+	public function send_notification($recipient, $message, $link)
 	{
 		$options = array(
 			'cluster' => 'ap1',
@@ -607,6 +608,7 @@ class Student extends CI_Controller
 			'notif_sender_name' => $this->session->Firstname . ' ' . $this->session->Lastname,
 			'notif_recipient' => $recipient,
 			'notif_content' => $message,
+			'notif_link' => $link,
 			'notif_created_at' => time()
 		);
 
