@@ -9,9 +9,10 @@
 <script src="<?= base_url() ?>bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="<?= base_url() ?>bower_components/fastclick/lib/fastclick.js"></script>
-
 <!-- AdminLTE App -->
 <script src="<?= base_url() ?>dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="<?= base_url() ?>dist/js/demo.js"></script>
 <!-- page script -->
 <script src="https://rawgit.com/kimmobrunfeldt/progressbar.js/1.0.0/dist/progressbar.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
@@ -77,6 +78,30 @@
         });
 
         // fetch notifications
+        function get_announce(notif, index) {
+            var content = notif.notif_content;
+            var sender_name = notif.notif_sender_name;
+            var time_posted = notif.notif_created_at;
+            var formattedDate = convert_unix(time_posted);
+            var link = notif.notif_link;
+            var status = notif.notif_status;
+            $("#notif_container").append(
+                "<li>" +
+                "<a href='" + link + "'>" +
+                "<div class='pull-left'>" +
+                "<img src='<?= base_url() ?>dist/img/default_avatar.png' class='img-circle' alt='User Image'>" +
+                "</div>" +
+                "<div class='pull-right'>" +
+                "<span class='label label-info'><small>NEW</small></span>" +
+                "</div>" +
+                "<h4>" + sender_name + "</h4>" +
+                "<p>" + content + "</p>" +
+                "<small>" + formattedDate + "</small>" +
+                "</a>" +
+                "<li>"
+            );
+        }
+
         function get_notif(notif, index) {
             var content = notif.notif_content;
             var sender_name = notif.notif_sender_name;

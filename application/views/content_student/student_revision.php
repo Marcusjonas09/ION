@@ -72,12 +72,12 @@
                                                   <td class="text-center"><?= $offering->offering_course_day ?></td>
                                                   <td class="text-center"><?= $offering->offering_course_time ?></td>
                                                   <td></td>
-                                                  <td>
-                                                      <a class="btn btn-danger" href="#"><span class="fa fa-trash"></span></a>
-                                                  </td>
+
                                               <?php endif; ?>
                                           <?php endforeach; ?>
-
+                                          <td>
+                                              <a class="btn btn-danger" href="#"><span class="fa fa-trash"></span></a>
+                                          </td>
                                       </tr>
                                   <?php endif; ?>
                               <?php endforeach; ?>

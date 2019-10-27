@@ -340,10 +340,8 @@ class Student extends CI_Controller
 		}
 		// echo $totalunits;
 		if ($totalunits < 12 && $totalunits > 0) {
-			// 			redirect('Student/underload_request/' . );
 			$this->underload_request($stud_number);
 		} else if ($totalunits > 0 && $totalunits > 21 && $totalunits <= 24) {
-			// 			redirect('Student/overload_request/' . $stud_number);
 			$this->overload_request($stud_number);
 		} else {
 			$this->load->view('content_student/not_qualified');
@@ -351,7 +349,6 @@ class Student extends CI_Controller
 			$this->load->view('includes_student/student_contentFooter');
 			$this->load->view('includes_student/student_rightnav');
 			$this->load->view('includes_student/student_footer');
-			// redirect('Student');
 		}
 	}
 
@@ -388,8 +385,7 @@ class Student extends CI_Controller
 		// die();
 
 		if (($totalunits - $totalunitspassed) <= 18) {
-			// 			redirect('Student/simulRequest');
-			$this->simulRequest();
+			redirect('Student/simulRequest');
 		} else {
 			$this->load->view('content_student/not_qualified');
 
@@ -448,7 +444,6 @@ class Student extends CI_Controller
 
 		$this->send_notifications($recipients, $message, $link);
 		$this->underload_request($stud_number);
-		// 		redirect('Student/underload_request/' . $stud_number);
 	}
 
 	public function submit_overload()
@@ -465,15 +460,19 @@ class Student extends CI_Controller
 		$link = base_url() . "Admin/overload_view/" . $stud_number . "/" . $curr_term . "/" . $curr_year . "/";
 
 		$this->send_notifications($recipients, $message, $link);
-		// 		redirect('Student/overload_request/' . $stud_number);
 		$this->overload_request($stud_number);
 	}
 
 	//SIMUL REQUEST LINK
 	public function simulRequest()
 	{
+		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
+		$data['grades'] = $this->Dashboard_model->fetchProgress();
+		$data['courses'] = $this->CourseCard_model->fetch_courses();
+		$data['offerings'] = $this->Dashboard_model->fetchOffering();
+		$data['cor'] = $this->CourseCard_model->fetch_current_COR();
 
-		$this->load->view('content_student/student_simul');
+		$this->load->view('content_student/student_simul', $data);
 
 		$this->load->view('includes_student/student_contentFooter');
 		$this->load->view('includes_student/student_rightnav');
@@ -504,11 +503,10 @@ class Student extends CI_Controller
 
 			// $this->send_notifications($recipients, $message, $link);
 			$this->Petition_model->submitPetition($petition_details);
-			$this->petitions();
-			// 			redirect('Student/petitions');
+			redirect('Student/petitions');
 		} else {
-			$this->petitions();
-			// 			redirect('Student/petitions');
+
+			redirect('Student/petitions');
 		}
 	}
 
@@ -532,8 +530,8 @@ class Student extends CI_Controller
 	{
 
 		$this->Petition_model->signPetition($stud_number, $course_code, $petition_unique);
-		$this->petitions();
-		// 		redirect('Student/petitions');
+		redirect('Student/petitions');
+		// $this->petitions();
 		// $this->form_validation->set_rules('stud_number', 'Student Number', 'is_unique[petitioners_tbl.stud_number]|strip_tags|required');
 		// $this->form_validation->set_rules('course_code', 'Course Code', 'strip_tags|required');
 
@@ -588,6 +586,44 @@ class Student extends CI_Controller
 		$announcement['message'] = $message;
 		$announcement['recipient'] = $clients;
 		$pusher->trigger('my-channel', 'client_specific', $announcement);
+	}
+
+	public function notifications()
+	{
+		$per_page = 10;
+		$end_page = $this->uri->segment(3);
+		$this->load->library('pagination');
+		$config = [
+			'base_url' => base_url('Student/notifications'),
+			'per_page' => $per_page,
+			'total_rows' => $this->Notification_model->get_all_notif_count(),
+		];
+
+		$config['full_tag_open'] = '<ul class="pagination">';
+		$config['full_tag_close'] = '</ul>';
+		$config['num_tag_open'] = '<li class="page-item">';
+		$config['num_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+		$config['cur_tag_close'] = '</a></li>';
+		$config['next_tag_open'] = '<li class="page-item">';
+		$config['next_tagl_close'] = '</a></li>';
+		$config['prev_tag_open'] = '<li class="page-item">';
+		$config['prev_tagl_close'] = '</li>';
+		$config['first_tag_open'] = '<li class="page-item">';
+		$config['first_tagl_close'] = '</li>';
+		$config['last_tag_open'] = '<li class="page-item">';
+		$config['last_tagl_close'] = '</a></li>';
+		$config['attributes'] = array('class' => 'page-link');
+
+		$this->pagination->initialize($config); // model function
+
+		$data['notifications'] = $this->Notification_model->get_notifs($per_page, $end_page);
+
+		$this->load->view('content_student/student_notifications', $data);
+
+		$this->load->view('includes_student/student_contentFooter');
+		$this->load->view('includes_student/student_rightnav');
+		$this->load->view('includes_student/student_footer');
 	}
 
 	public function send_notification($recipient, $message, $link)

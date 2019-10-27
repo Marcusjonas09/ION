@@ -11,7 +11,7 @@
             </ul>
         </li>
         <li class="footer">
-            <a id="total_notif_count" href="#">See all notifications</a>
+            <a id="total_notif_count" href="<?= base_url() ?>Student/notifications">See all notifications</a>
         </li>
     </ul>
 </li>

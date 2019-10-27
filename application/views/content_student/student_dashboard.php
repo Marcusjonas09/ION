@@ -117,7 +117,8 @@ $totalunitspassed = $coursepassed + $labpassed;
                             <th class="text-center col-md-1">ROOM</th>
                         </tr>
                         <tbody>
-                            <?php foreach ($cor as $record) : ?>
+                            <?php $total = 0;
+                                foreach ($cor as $record) : ?>
                                 <?php if ($record->cc_status != "credited") : ?>
                                     <tr>
                                         <td><?= strtoupper($record->cc_course) ?></td>
@@ -134,8 +135,10 @@ $totalunitspassed = $coursepassed + $labpassed;
                                         <td class="text-center">
                                             <?php if (strtoupper($record->cc_course) == strtoupper($record->course_code)) {
                                                             echo strtoupper($record->course_units);
+                                                            $total += $record->course_units;
                                                         } else if (strtoupper($record->cc_course) == strtoupper($record->laboratory_code)) {
                                                             echo strtoupper($record->laboratory_units);
+                                                            $total += $record->laboratory_units;
                                                         } else {
                                                             echo '';
                                                         } ?>
@@ -150,6 +153,14 @@ $totalunitspassed = $coursepassed + $labpassed;
                                     </tr>
                                 <?php endif; ?>
                             <?php endforeach; ?>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><strong>Total:</strong></td>
+                                <td class="text-center">
+                                    <strong><?= $total ?></strong>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 <?php endif; ?>
