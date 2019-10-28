@@ -92,7 +92,7 @@ class Student extends CI_Controller
 			'month_type'   => 'long',
 			'day_type'     => 'short',
 			'show_next_prev'  => TRUE,
-			'next_prev_url'   => 'http://localhost/ION/Student/calendar/'
+			'next_prev_url'   => 'http://card-indusstries.info/Student/calendar/'
 		);
 
 
