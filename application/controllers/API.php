@@ -1,5 +1,5 @@
 <?php
-// defined('BASEPATH') or exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class API extends CI_Controller
 {
@@ -47,11 +47,35 @@ class API extends CI_Controller
 		echo json_encode($data);
 	}
 
-	public function fetchCourseCard($stud_number, $year, $term)
+	///////////////////////////////////////////////////////////////////////////////////////////
+	// COURSE CARD FUNCTIONS
+	///////////////////////////////////////////////////////////////////////////////////////////
+
+	public function fetchCourseCard($year, $term, $stud_number)
 	{
-		$data = $this->Mobile_model->fetch_course_card($stud_number, $year, $term);
+		$sample = array($year, $term, $stud_number);
+		// 		$filter = array(file_get_contents("php://input"));
+		$data = $this->Mobile_model->fetch_course_card($year, $term, $stud_number);
 		echo json_encode($data);
 	}
+
+	public function fetch_course_card_term()
+	{
+		$stud_number = file_get_contents("php://input");
+		$data = $this->Mobile_model->fetch_course_card_term($stud_number);
+		echo json_encode($data);
+	}
+
+	public function fetch_course_card_year($stud_number)
+	{
+		$stud_number = file_get_contents("php://input");
+		$data = $this->Mobile_model->fetch_course_card_year($stud_number);
+		echo json_encode($data);
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////
+	// END
+	///////////////////////////////////////////////////////////////////////////////////////////
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	// SERVICES FUNCTIONS

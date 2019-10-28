@@ -58,10 +58,19 @@ class Mobile_model extends CI_Model
         return $query->result();
     }
 
-    public function fetch_course_card($stud_number, $year, $term)
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    // COURSE CARD FUNCTIONS
+    ///////////////////////////////////////////////////////////////////////////////////////////
+
+    public function fetch_course_card($year, $term, $stud_number)
     {
         $this->db->select('*');
-        $this->db->where(array('course_card_tbl.cc_stud_number' => $stud_number, 'course_card_tbl.year' => $year, 'course_card_tbl.term' => $term));
+        $this->db->where(array(
+            'cc_stud_number' => $stud_number,
+            'cc_year' => $year,
+            'cc_term' => $term,
+            'cc_status' => "finished",
+        ));
         $this->db->from('course_card_tbl');
         $this->db->join('courses_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'LEFT');
         $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = course_card_tbl.cc_course', 'LEFT');
@@ -69,6 +78,28 @@ class Mobile_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+
+    public function fetch_course_card_term($stud_number)
+    {
+        $this->db->distinct();
+        $this->db->select('cc_term');
+        $this->db->where(array('course_card_tbl.cc_stud_number' => $stud_number));
+        $query = $this->db->get('course_card_tbl');
+        return $query->result();
+    }
+
+    public function fetch_course_card_year($stud_number)
+    {
+        $this->db->distinct();
+        $this->db->select('cc_year');
+        $this->db->where(array('course_card_tbl.cc_stud_number' => $stud_number));
+        $query = $this->db->get('course_card_tbl');
+        return $query->result();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    // END 
+    ///////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     // SERVICES FUNCTIONS

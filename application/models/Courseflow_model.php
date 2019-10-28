@@ -117,30 +117,7 @@ class Courseflow_model extends CI_Model
 
             return $query->result();
         }
-
-
         return $query->result();
-        // return $suggestion;
-        // $available_courses =  $query->result();
-
-        // $available_in_offering = array();
-        // foreach ($available_courses as $available_course) {
-        //     array_push($available_in_offering, $available_course->offering_course_code);
-        // }
-
-        // // fetch courses not available in the course offering or with no more slots
-        // $this->db->select('courses_tbl.course_code,courses_tbl.course_title,petitions_tbl.petition_status,petitions_tbl.petition_ID,petitions_tbl.petition_unique');
-        // $this->db->where(array(
-        //     'courses_tbl.curriculum_code' => $this->session->Curriculum_code,
-        //     'course_card_tbl.cc_status' => null
-        // ));
-        // $this->db->where_not_in('courses_tbl.course_code', $available_in_offering);
-        // $this->db->from('courses_tbl');
-        // $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = courses_tbl.laboratory_code', 'LEFT');
-        // $this->db->join('course_card_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'LEFT');
-        // $this->db->join('petitions_tbl', 'petitions_tbl.course_code = courses_tbl.course_code', 'LEFT');
-        // $this->db->order_by('courses_tbl.course_code', 'ASC');
-        // $query = $this->db->get();
     }
 
     public function suggested_petitions_available()
