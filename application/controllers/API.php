@@ -53,8 +53,6 @@ class API extends CI_Controller
 
 	public function fetchCourseCard($year, $term, $stud_number)
 	{
-		$sample = array($year, $term, $stud_number);
-		// 		$filter = array(file_get_contents("php://input"));
 		$data = $this->Mobile_model->fetch_course_card($year, $term, $stud_number);
 		echo json_encode($data);
 	}
@@ -66,7 +64,7 @@ class API extends CI_Controller
 		echo json_encode($data);
 	}
 
-	public function fetch_course_card_year($stud_number)
+	public function fetch_course_card_year()
 	{
 		$stud_number = file_get_contents("php://input");
 		$data = $this->Mobile_model->fetch_course_card_year($stud_number);
@@ -78,14 +76,52 @@ class API extends CI_Controller
 	///////////////////////////////////////////////////////////////////////////////////////////
 
 	///////////////////////////////////////////////////////////////////////////////////////////
+	// BALANCE FUNCTIONS
+	///////////////////////////////////////////////////////////////////////////////////////////
+
+	public function get_balance()
+	{
+		$stud_number = file_get_contents("php://input");
+		$data = $this->Mobile_model->get_balance($stud_number);
+		echo json_encode($data);
+	}
+
+	public function get_balance_single($stud_number, $term, $year)
+	{
+		$data = $this->Mobile_model->get_balance_single($stud_number, $term, $year);
+		echo json_encode($data);
+	}
+
+	public function get_payments($stud_number, $term, $year)
+	{
+		$data = $this->Mobile_model->get_payments($stud_number, $term, $year);
+		echo json_encode($data);
+	}
+
+	public function get_balance_year()
+	{
+		$stud_number = file_get_contents("php://input");
+		$data = $this->Mobile_model->get_balance_year($stud_number);
+		echo json_encode($data);
+	}
+
+	public function get_balance_term()
+	{
+		$stud_number = file_get_contents("php://input");
+		$data = $this->Mobile_model->get_balance_term($stud_number);
+		echo json_encode($data);
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////
 	// SERVICES FUNCTIONS
 	///////////////////////////////////////////////////////////////////////////////////////////
 
 	///////////////////////////////// PETITION FUNCTIONS //////////////////////////////////////
 
-	public function fetchPetitions()
+	public function fetchMyPetitions()
 	{
-		$data = $this->Mobile_model->fetchPetitions();
+		$stud_number = file_get_contents("php://input");
+		$data = $this->Mobile_model->fetchMyPetitions($stud_number);
 		echo json_encode($data);
 	}
 
@@ -95,18 +131,32 @@ class API extends CI_Controller
 		echo json_encode($data);
 	}
 
-	public function fetchPetitioners($course_code)
-	{
-		$data = $this->Mobile_model->fetchPetitioners($course_code);
-		echo json_encode($data);
-	}
-
 	public function submitPetition()
 	{
 		$course_code = file_get_contents("php://input");
 		$data = $this->Mobile_model->submitPetition($course_code);
 		echo json_encode($data);
 	}
+
+	public function suggest_what_to_petition($curriculum_code, $stud_number, $curr_term, $curr_year)
+	{
+		$data = $this->Mobile_model->suggest_what_to_petition($curriculum_code, $stud_number, $curr_term, $curr_year);
+		echo json_encode($data);
+	}
+
+	public function suggested_petitions_available($curriculum_code, $stud_number, $curr_term, $curr_year)
+	{
+		$data = $this->Mobile_model->suggested_petitions_available($curriculum_code, $stud_number, $curr_term, $curr_year);
+		echo json_encode($data);
+	}
+
+	public function fetchPetitioners()
+	{
+		$petition_unique = file_get_contents("php://input");
+		$data = $this->Mobile_model->fetchPetitioners($petition_unique);
+		echo json_encode($data);
+	}
+
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	// ACADEMICS FUNCTIONS
@@ -168,14 +218,23 @@ class API extends CI_Controller
 		}
 	}
 
-	public function createPetition()
+	public function createPetition($stud_number, $petition_code)
 	{
-		$petition = file_get_contents('php://input');
-		if ($petition) {
-			$data = $this->Mobile_model->submitPetition($petition);
-			echo $data;
+		$result = $this->Mobile_model->check_petition($petition_code);
+		$petition_unique = $petition_code . time();
+		$petition_details = array(
+			'course_code' => $petition_code,
+			'petition_unique' => $petition_unique,
+			'stud_number' => $stud_number,
+			'date_submitted' => time()
+		);
+		if ($result) {
+			$data = $this->Mobile_model->submitPetition($petition_details);
+			echo json_encode($data);
 		}
 	}
+
+
 
 	public function signPetition()
 	{
