@@ -125,8 +125,9 @@ class API extends CI_Controller
 		echo json_encode($data);
 	}
 
-	public function fetchPetition($petition_ID)
+	public function fetchPetition()
 	{
+		$petition_ID = file_get_contents("php://input");
 		$data = $this->Mobile_model->fetchPetition($petition_ID);
 		echo json_encode($data);
 	}
@@ -159,9 +160,8 @@ class API extends CI_Controller
 
 	public function signPetition($stud_number, $course_code, $petition_unique)
 	{
-		// $data = $this->Mobile_model->signPetition($stud_number, $course_code, $petition_unique);
-		// echo json_encode($data);
-		echo json_encode($stud_number, $course_code, $petition_unique);
+		$data = $this->Mobile_model->signPetition($stud_number, $course_code, $petition_unique);
+		echo json_encode($data);
 	}
 
 
@@ -181,27 +181,21 @@ class API extends CI_Controller
 		echo json_encode($data);
 	}
 
-	public function fetchOffering()
+	public function fetchOffering($year, $term)
 	{
-		$data = $this->Mobile_model->fetchOffering();
+		$data = $this->Mobile_model->fetchOffering($year, $term);
 		echo json_encode($data);
 	}
 
-	public function fetchOfferingDistinct()
+	public function fetch_term()
 	{
-		$data = $this->Mobile_model->fetchOfferingDistinct();
+		$data = $this->Mobile_model->fetch_term();
 		echo json_encode($data);
 	}
 
-	public function fetchOfferingLab()
+	public function fetch_year()
 	{
-		$data = $this->Mobile_model->fetchOfferingLab();
-		echo json_encode($data);
-	}
-
-	public function fetchOfferingSched()
-	{
-		$data = $this->Mobile_model->fetchOfferingSched();
+		$data = $this->Mobile_model->fetch_year();
 		echo json_encode($data);
 	}
 

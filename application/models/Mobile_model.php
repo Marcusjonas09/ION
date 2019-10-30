@@ -170,7 +170,7 @@ class Mobile_model extends CI_Model
     public function fetchPetition($petitionID)
     {
         $query = $this->db->get_where('petitions_tbl', array('petition_ID' => $petitionID));
-        return $query->row();
+        return $query->result();
     }
 
     public function suggest_what_to_petition($curriculum_code, $stud_number, $curr_term, $curr_year)
@@ -357,16 +357,17 @@ class Mobile_model extends CI_Model
         return $query->result();
     }
 
-    public function fetchOffering()
+    public function fetchOffering($year, $term)
     {
-        $query = $this->db->get_where('offering_tbl', array('year' => 20192020, 'term' => 1));
+        $query = $this->db->get_where('offering_tbl', array('offering_year' => $year, 'offering_term' => $term));
         return $query->result();
     }
 
     public function fetch_term()
     {
         $this->db->distinct();
-        $this->db->select('term');
+        $this->db->select('offering_term');
+        $this->db->order_by('offering_term', 'DESC');
         $query = $this->db->get('offering_tbl');
         return $query->result();
     }
@@ -374,14 +375,9 @@ class Mobile_model extends CI_Model
     public function fetch_year()
     {
         $this->db->distinct();
-        $this->db->select('year');
+        $this->db->select('offering_year');
+        $this->db->order_by('offering_year', 'DESC');
         $query = $this->db->get('offering_tbl');
-        return $query->result();
-    }
-
-    public function fetchOfferingSched()
-    {
-        $query = $this->db->get('offering_sched_tbl');
         return $query->result();
     }
 

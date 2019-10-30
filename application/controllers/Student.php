@@ -528,7 +528,6 @@ class Student extends CI_Controller
 
 	public function sign($stud_number, $course_code, $petition_unique)
 	{
-
 		$this->Petition_model->signPetition($stud_number, $course_code, $petition_unique);
 		redirect('Student/petitions');
 		// $this->petitions();
