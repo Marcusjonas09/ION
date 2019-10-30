@@ -84,6 +84,7 @@ class Mobile_model extends CI_Model
         $this->db->distinct();
         $this->db->select('cc_term');
         $this->db->where(array('cc_stud_number' => $stud_number));
+        $this->db->order_by('cc_term', 'DESC');
         $query = $this->db->get('course_card_tbl');
         return $query->result();
     }
@@ -93,6 +94,7 @@ class Mobile_model extends CI_Model
         $this->db->distinct();
         $this->db->select('cc_year');
         $this->db->where(array('cc_stud_number' => $stud_number));
+        $this->db->order_by('cc_year', 'DESC');
         $query = $this->db->get('course_card_tbl');
         return $query->result();
     }
@@ -154,6 +156,38 @@ class Mobile_model extends CI_Model
 
     ///////////////////////////////// PETITION FUNCTIONS //////////////////////////////////////
 
+    public function signPetition($stud_number, $course_code, $petition_unique)
+    {
+        $petitioner = array(
+            'stud_number' => $stud_number,
+            'course_code' => $course_code,
+            'petition_unique' => $petition_unique,
+            'date_submitted' => time()
+        );
+        $this->db->insert('petitioners_tbl', $petitioner);
+    }
+
+    public function submitPetition($petition_details)
+    {
+        $this->db->insert('petitions_tbl', $petition_details);
+        $this->db->insert('petitioners_tbl', $petition_details);
+    }
+
+    public function check_petition($course_code)
+    {
+        $conditions = array(
+            'course_code' => $course_code
+        );
+        $query = $this->db->get_where('petitions_tbl', $conditions);
+        $petition_count = $query->num_rows();
+
+        if ($petition_count > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public function fetchMyPetitions($stud_number)
     {
         $this->db->select('*');
@@ -170,11 +204,22 @@ class Mobile_model extends CI_Model
     public function fetchPetition($petitionID)
     {
         $query = $this->db->get_where('petitions_tbl', array('petition_ID' => $petitionID));
+        return $query->row();
+    }
+
+    public function fetchPetitioners($petition_unique)
+    {
+        $this->db->select('*');
+        $this->db->where(array('petition_unique' => $petition_unique));
+        $this->db->from('petitioners_tbl');
+        $this->db->join('accounts_tbl', 'accounts_tbl.acc_number = petitioners_tbl.stud_number');
+        $query = $this->db->get();
         return $query->result();
     }
 
     public function suggest_what_to_petition($curriculum_code, $stud_number, $curr_term, $curr_year)
     {
+
         //fetch untaken courses
 
         $this->db->distinct();
@@ -331,16 +376,6 @@ class Mobile_model extends CI_Model
         return $query->result();
     }
 
-    public function fetchPetitioners($petition_unique)
-    {
-        $this->db->select('*');
-        $this->db->where(array('petition_unique' => $petition_unique));
-        $this->db->from('petitioners_tbl');
-        $this->db->join('accounts_tbl', 'accounts_tbl.acc_number = petitioners_tbl.stud_number');
-        $query = $this->db->get();
-        return $query->result();
-    }
-
     ///////////////////////////////////////////////////////////////////////////////////////////
     // ACADEMICS FUNCTIONS
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -405,35 +440,22 @@ class Mobile_model extends CI_Model
         return json_encode(true);
     }
 
-    public function submitPetition($petition_details)
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    // SERVICES FUNCTIONS
+    ///////////////////////////////////////////////////////////////////////////////////////////
+
+    public function fetchAllNotifications($stud_number)
     {
-        $this->db->insert('petitions_tbl', $petition_details);
-        $this->db->insert('petitioners_tbl', $petition_details);
+        $this->db->select('*');
+        $this->db->where(array('notif_recipient' => $stud_number));
+        $this->db->or_where(array('notif_recipient' => 0));
+        $this->db->from('notifications_tbl');
+        $this->db->order_by('notif_created_at', 'DESC');
+        $query = $this->db->get();
+        return $query->result();
     }
 
-    public function check_petition($course_code)
-    {
-        $conditions = array(
-            'course_code' => $course_code
-        );
-        $query = $this->db->get_where('petitions_tbl', $conditions);
-        $petition_count = $query->num_rows();
-
-        if ($petition_count > 0) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public function signPetition($stud_number, $course_code, $petition_unique)
-    {
-        $petitioner = array(
-            'stud_number' => $stud_number,
-            'course_code' => $course_code,
-            'petition_unique' => $petition_unique,
-            'date_submitted' => time()
-        );
-        $this->db->insert('petitioners_tbl', $petitioner);
-    }
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    // END
+    ///////////////////////////////////////////////////////////////////////////////////////////
 }

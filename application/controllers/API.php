@@ -234,4 +234,15 @@ class API extends CI_Controller
 			echo json_encode($data);
 		}
 	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////
+	// OTHER FUNCTIONS
+	///////////////////////////////////////////////////////////////////////////////////////////
+
+	public function fetchAllNotifications()
+	{
+		$stud_number = file_get_contents("php://input");
+		$data = $this->Mobile_model->fetchAllNotifications($stud_number);
+		echo json_encode($data);
+	}
 }
