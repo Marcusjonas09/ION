@@ -157,6 +157,13 @@ class API extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function signPetition($stud_number, $course_code, $petition_unique)
+	{
+		// $data = $this->Mobile_model->signPetition($stud_number, $course_code, $petition_unique);
+		// echo json_encode($data);
+		echo json_encode($stud_number, $course_code, $petition_unique);
+	}
+
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	// ACADEMICS FUNCTIONS
@@ -231,17 +238,6 @@ class API extends CI_Controller
 		if ($result) {
 			$data = $this->Mobile_model->submitPetition($petition_details);
 			echo json_encode($data);
-		}
-	}
-
-
-
-	public function signPetition()
-	{
-		$petition = json_decode(file_get_contents('php://input'), true);
-		if ($petition) {
-			$data = $this->Mobile_model->signPetition($petition);
-			echo $data;
 		}
 	}
 }

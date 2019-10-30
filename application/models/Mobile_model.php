@@ -430,14 +430,14 @@ class Mobile_model extends CI_Model
         }
     }
 
-    public function signPetition($petition)
+    public function signPetition($stud_number, $course_code, $petition_unique)
     {
-        // return json_encode($petition['stud_number']);
-        $data = array(
-            'stud_number' => $petition['stud_number'],
-            'petition_code' => $petition['petition_code']
+        $petitioner = array(
+            'stud_number' => $stud_number,
+            'course_code' => $course_code,
+            'petition_unique' => $petition_unique,
+            'date_submitted' => time()
         );
-        $this->db->insert('petitioners_tbl', $data);
-        return json_encode('Petition Signed!');
+        $this->db->insert('petitioners_tbl', $petitioner);
     }
 }
