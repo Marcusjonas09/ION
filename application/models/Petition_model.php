@@ -136,10 +136,10 @@ class Petition_model extends CI_Model
         $this->db->insert('petitioners_tbl', $petitioner);
     }
 
-    public function fetchNumberOfPetitioners($course_code)
+    public function check_number_of_petitioners($petition_unique)
     {
         $this->db->select('*');
-        $this->db->where(array('course_code' => $course_code));
+        $this->db->where(array('petition_unique' => $petition_unique));
         $this->db->from('petitioners_tbl');
         $this->db->join('accounts_tbl', 'accounts_tbl.acc_number = petitioners_tbl.stud_number');
         $query = $this->db->get();
@@ -153,5 +153,12 @@ class Petition_model extends CI_Model
         $this->db->from('courses_tbl');
         $query = $this->db->get();
         return $query->result();
+    }
+
+    public function fetch_updated_petition_status($petition_unique)
+    {
+        $this->db->select('petition_status');
+        $query = $this->db->get_where('petitions_tbl', array('petition_unique' => $petition_unique));
+        return $query->row();
     }
 }

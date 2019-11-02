@@ -16,6 +16,7 @@
 <script src="<?= base_url() ?>dist/js/adminlte.min.js"></script>
 <!-- Pusher JS -->
 <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -212,6 +213,121 @@
         $('.timepicker').timepicker({
             showInputs: false
         });
+
+        // =======================================================================================
+        // petitioning module
+        // =======================================================================================
+
+        var petition_ID = $("#petition_ID").val();
+        var petition_unique = $("#petition_unique").val();
+
+        $("#approve_petition").click(function() {
+            $.post("<?= base_url() ?>Admin/approve_petition", {
+                    petitionID: petition_ID,
+                    petitionUnique: petition_unique
+                }).done(function(data) {
+                    var obj = JSON.parse(data);
+                    if (obj.context == "success") {
+                        swal(obj.message, {
+                            title: "Success",
+                            icon: "success",
+                        });
+                    } else {
+                        swal(obj.message, {
+                            title: "Error!",
+                            icon: "error",
+                        });
+                    }
+
+                    $.post("<?= base_url() ?>Admin/fetch_updated_petition_status", {
+                        petitionUnique: petition_unique
+                    }).done(function(data) {
+                        var obj = JSON.parse(data);
+                        $('#petition_status_badge').text('');
+                        if (obj.petition_status == 1) {
+                            $("#petition_status_badge").append("Petition Status: <span class='label label-success'>Approved</span>");
+                        } else if (obj.petition_status == 2) {
+                            $("#petition_status_badge").append("Petition Status: <span class='label label-warning'>Pending</span>");
+                        } else {
+                            $("#petition_status_badge").append("Petition Status: <span class='label label-danger'>Denied</span>");
+                        }
+                    });
+                })
+                .fail(function() {
+                    swal("Failed to process petition, Please check your network connection!", {
+                        icon: "error",
+                    });
+                });
+        });
+
+        $("#decline_petition").click(function() {
+            swal({
+                    title: "Are you sure?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.post("<?= base_url() ?>Admin/decline_petition", {
+                                petitionID: petition_ID,
+                                petitionUnique: petition_unique
+                            }).done(function(data) {
+                                var obj = JSON.parse(data);
+                                if (obj.context == "success") {
+                                    swal(obj.message, {
+                                        title: "Success!",
+                                        icon: "success",
+                                    });
+                                } else {
+                                    swal(obj.message, {
+                                        title: "Error!",
+                                        icon: "error",
+                                    });
+                                }
+                                $.post("<?= base_url() ?>Admin/fetch_updated_petition_status", {
+                                    petitionUnique: petition_unique
+                                }).done(function(data) {
+                                    var obj = JSON.parse(data);
+                                    $('#petition_status_badge').text('');
+                                    if (obj.petition_status == 1) {
+                                        $("#petition_status_badge").append("Petition Status: <span class='label label-success'>Approved</span>");
+                                    } else if (obj.petition_status == 2) {
+                                        $("#petition_status_badge").append("Petition Status: <span class='label label-warning'>Pending</span>");
+                                    } else {
+                                        $("#petition_status_badge").append("Petition Status: <span class='label label-danger'>Denied</span>");
+                                    }
+                                });
+                            })
+                            .fail(function() {
+                                swal("Failed to process petition, Please check your network connection!", {
+                                    icon: "error",
+                                });
+                            });
+                    }
+                });
+        });
+
+        // =======================================================================================
+        // end of petitioning module
+        // =======================================================================================
+
+        // =======================================================================================
+        // overload module
+        // =======================================================================================
+
+        // =======================================================================================
+        // end of overload module
+        // =======================================================================================
+
+        // =======================================================================================
+        // underload module
+        // =======================================================================================
+
+        // =======================================================================================
+        // end of underload module
+        // =======================================================================================
+
     });
 </script>
 

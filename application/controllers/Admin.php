@@ -131,6 +131,7 @@ class Admin extends CI_Controller
 		$data['petitions'] = $this->Petition_model->fetchPetitionsAdmin($per_page, $end_page);
 		$data['petitioners'] = $this->Petition_model->fetchAllPetitioners();
 		$data['courses'] = $this->Petition_model->fetchCoursesAdmin();
+
 		$this->load->view('includes_admin/admin_header');
 		$this->load->view('includes_admin/notif_widget');
 		$this->load->view('includes_admin/admin_topnav');
@@ -468,28 +469,47 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function approve_petition($petitionID, $petition_unique)
+	public function approve_petition()
 	{
-		$recipients = $this->Petition_model->fetch_petition_recipients($petition_unique);
-		$message = 'Petition approved!';
-		$link = base_url() . "Student/petitionView/" . $petitionID . "/" . $petition_unique;
-		$this->send_notifications($recipients, $message, $link);
+		//fetch number of petitioners
+		//approve petition of more than or equal to 15 but less than of equal to 40
+		$petitionID = $this->input->post('petitionID');
+		$petition_unique = $this->input->post('petitionUnique');
 
-		$this->Petition_model->approve_petition($petition_unique);
-		redirect('Admin/course_petitions');
+		$number_of_petitioners = $this->Petition_model->check_number_of_petitioners($petition_unique);
+
+		if ($number_of_petitioners >= 1 && $number_of_petitioners <= 40) {
+			//petition is approved
+			$recipients = $this->Petition_model->fetch_petition_recipients($petition_unique);
+			$notif_message = 'Petition approved!';
+			$message['message'] = 'Petition approved!';
+			$message['context'] = 'success';
+			$link = base_url() . "Student/petitionView/" . $petitionID . "/" . $petition_unique;
+			$this->send_notifications($recipients, $notif_message, $link);
+			$this->Petition_model->approve_petition($petition_unique);
+		} else {
+			$message['message'] = 'Insufficient number of petitioners!';
+			$message['context'] = 'failed';
+		}
+
+		echo json_encode($message);
 	}
 
-	public function decline_petition($petitionID, $petition_unique)
+	public function decline_petition()
 	{
+		$petitionID = $this->input->post('petitionID');
+		$petition_unique = $this->input->post('petitionUnique');
+
+		//petition is declined
 		$recipients = $this->Petition_model->fetch_petition_recipients($petition_unique);
-		$message = 'Petition declined!';
-
+		$notif_message = 'Petition declined!';
+		$message['message'] = 'Petition declined!';
+		$message['context'] = 'success';
 		$link = base_url() . "Student/petitionView/" . $petitionID . "/" . $petition_unique;
-		$this->send_notifications($recipients, $message, $link);
-
-
+		$this->send_notifications($recipients, $notif_message, $link);
 		$this->Petition_model->decline_petition($petition_unique);
-		redirect('Admin/course_petitions');
+
+		echo json_encode($message);
 	}
 
 	public function show_petition($petition_ID, $petition_unique) // | Display Specific Student Account |
@@ -513,6 +533,13 @@ class Admin extends CI_Controller
 	{
 		echo json_encode($_POST['course_details']);
 		echo json_encode($_POST['course_sched']);
+	}
+
+	public function fetch_updated_petition_status()
+	{
+		$petition_unique = $this->input->post('petitionUnique');
+		$sample = $this->Petition_model->fetch_updated_petition_status($petition_unique);
+		echo json_encode($sample);
 	}
 
 	// =======================================================================================

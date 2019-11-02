@@ -16,14 +16,14 @@
         <div class="col-md-6">
             <div class="box box-success">
                 <div class="box-header">
-                    <h4><strong>Petition Status: </strong>
-                        <?php if ($petition->petition_status == 1) {
-                            echo "<span class='label label-success'>Approved</span>";
-                        } elseif ($petition->petition_status == 2) {
-                            echo "<span class='label label-warning'>Pending</span>";
-                        } else {
-                            echo "<span class='label label-danger'>Denied</span>";
-                        } ?></h4>
+                    <h4><strong id='petition_status_badge'>Petition Status:
+                            <?php if ($petition->petition_status == 1) {
+                                echo "<span class='label label-success'>Approved</span>";
+                            } elseif ($petition->petition_status == 2) {
+                                echo "<span class='label label-warning'>Pending</span>";
+                            } else {
+                                echo "<span class='label label-danger'>Denied</span>";
+                            } ?></strong></h4>
                 </div>
                 <div class="box-body">
                     <div class="container-fluid col-md-12">
@@ -75,12 +75,16 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="<?= base_url() ?>Admin/approve_petition/<?= $petition->petition_ID ?>/<?= $petition->petition_unique ?>" class="btn btn-success btn-sm rounded pull-right col-md-3 <?php if ($petition->petition_status != 2) {
-                                                                                                                                                                                                        echo "disabled";
-                                                                                                                                                                                                    } ?>"><span class="fa fa-check"></span>&nbsp Approve</a>
+                        <input type="hidden" value="<?= $petition->petition_ID ?>" id="petition_ID">
+                        <input type="hidden" value="<?= $petition->petition_unique ?>" id="petition_unique">
+                        <button class="btn btn-success pull-right col-md-3" id="approve_petition">Approve</button>
+                        <button class="btn btn-danger pull-right col-md-3" id="decline_petition" style="margin-right:10px;">Decline</button>
+                        <!-- <a href="<?= base_url() ?>Admin/approve_petition/<?= $petition->petition_ID ?>/<?= $petition->petition_unique ?>" class="btn btn-success btn-sm rounded pull-right col-md-3 <?php if ($petition->petition_status != 2) {
+                                                                                                                                                                                                                echo "disabled";
+                                                                                                                                                                                                            } ?>"><span class="fa fa-check"></span>&nbsp Approve</a>
                         <a href="<?= base_url() ?>Admin/decline_petition/<?= $petition->petition_ID ?>/<?= $petition->petition_unique ?>" class="btn btn-danger btn-sm rounded pull-right col-md-3 <?php if ($petition->petition_status != 2) {
                                                                                                                                                                                                         echo "disabled";
-                                                                                                                                                                                                    } ?>" style="margin-right:10px;"><span class="fa fa-ban"></span>&nbsp Decline</a>
+                                                                                                                                                                                                    } ?>" style="margin-right:10px;"><span class="fa fa-ban"></span>&nbsp Decline</a> -->
                     </div>
                 </div>
             </div>
