@@ -41,29 +41,8 @@ $totalunitspassed = $coursepassed + $labpassed;
                     <br />
                     <h3 class="profile-username text-center"><?= $account->acc_fname . ' ' . $account->acc_mname . ' ' . $account->acc_lname ?></h3>
 
-                    <p class="text-muted text-center">Program Director</p>
+                    <p class="text-muted text-center"><?= $account->acc_program ?></p>
 
-                </div>
-                <!-- /.box-body -->
-            </div>
-            <!-- /.box -->
-            <!-- Employee Details Box -->
-            <div class="box box-success">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Student Details</h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <table class="table">
-                        <tr>
-                            <td><strong class="pull-right">Student No: </strong></td>
-                            <td><?= $account->acc_number ?></td>
-                        </tr>
-                        <tr>
-                            <td><strong class="pull-right">Designation: </strong></td>
-                            <td><?= $account->acc_program ?></td>
-                        </tr>
-                    </table>
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -73,9 +52,9 @@ $totalunitspassed = $coursepassed + $labpassed;
         <div class="col-md-9">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#COR" data-toggle="tab">Certificate of Registration</a></li>
-                    <li><a href="#Academics" data-toggle="tab">Curriculum</a></li>
-                    <li><a href="#settings" data-toggle="tab">Account Settings</a></li>
+                    <li class="active"><a href="#COR" data-toggle="tab"><strong>Certificate of Registration</strong></a></li>
+                    <li><a href="#Academics" data-toggle="tab"><strong>Curriculum</strong></a></li>
+                    <li><a href="#settings" data-toggle="tab"><strong>Account Settings</strong></a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="active tab-pane" id="COR">
@@ -165,6 +144,20 @@ $totalunitspassed = $coursepassed + $labpassed;
 
                     <div class="tab-pane" id="Academics">
                         <div class="container-fluid">
+                            <!-- <h3><strong>Remaining Courses</strong></h3>
+                            <table class="table table-bordered table-responsive">
+                                <thead class=" bg-success" style="background-color:#00a65a; color:white;">
+                                    <th class="text-center">COURSE</th>
+                                    <th class="text-center">COURSE TITLE</th>
+                                    <th class="text-center">UNITS</th>
+                                    <th class="text-center">LABORATORY</th>
+                                    <th class="text-center">UNITS</th>
+                                    <th class="text-center">PREREQUISITE</th>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table> -->
                             <table class="table table-bordered table-responsive">
                                 <thead class=" bg-success" style="background-color:#00a65a; color:white;">
                                     <th class="text-center">COURSE</th>
