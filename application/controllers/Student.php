@@ -151,9 +151,14 @@ class Student extends CI_Controller
 	// =======================================================================================
 
 	//PROFILE LINK
-	public function Profile($studNumber)
+	public function Profile()
 	{
-		$data['account'] = $this->Account_model->view_user($studNumber);
+		$data['account'] = $this->Account_model->view_user($this->session->acc_number);
+		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
+		$data['grades'] = $this->Dashboard_model->fetchProgress();
+		$data['courses'] = $this->CourseCard_model->fetch_courses();
+		$data['offerings'] = $this->Dashboard_model->fetchOffering();
+		$data['cor'] = $this->CourseCard_model->fetch_current_COR();
 
 		$this->load->view('content_student/student_profile', $data);
 
@@ -167,11 +172,6 @@ class Student extends CI_Controller
 	{
 		$data['curr'] = $this->Curriculum_model->fetch_curriculum();
 		$data['grades'] = $this->Curriculum_model->fetch_grades();
-
-		// $data['curr'] = $this->Curriculum_model->fetchCourses();
-
-		// echo json_encode($data);
-
 
 		$this->load->view('content_student/student_curriculum', $data);
 

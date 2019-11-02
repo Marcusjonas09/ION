@@ -1,102 +1,226 @@
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-          <h1>
-              <a class="navi" href="<?= base_url() ?>Admin/student_accounts"><span class="fa fa-chevron-left"></span></a>&nbsp&nbsp<strong>Student Profile</strong>
-              <!-- <small>Administrator</small> -->
-          </h1>
-          <ol class="breadcrumb">
-              <li><a href="<?= base_url() ?>Admin/student_accounts"><i class="fa fa-user"></i>Student Accounts</a></li>
-              <li class="active">Student Profile</li>
-          </ol>
-      </section>
+<?php
+$totalunits = 0.0;
+$totalunitspassed = 0.0;
+$course_units = 0.0;
+$lab_units = 0.0;
+$coursepassed = 0.0;
+$labpassed = 0.0;
+?>
 
-      <!-- Main content -->
-      <section class="content container-fluid">
+<?php foreach ($curr as $unit) {
+    $course_units += $unit->course_units;
+    $lab_units += $unit->laboratory_units;
+    foreach ($grades as $grade) {
+        if ($unit->course_code == $grade->cc_course && ($grade->cc_status == "finished" || $grade->cc_status == "credited") && $grade->cc_final >= 1.0) {
+            $coursepassed += $unit->course_units;
+        }
+        if (strtoupper($unit->laboratory_code) == strtoupper($grade->cc_course) && ($grade->cc_final > 1.0 && $grade->cc_final <= 4.0)) {
+            $labpassed += $unit->laboratory_units;
+        }
+    }
+}
+$totalunits = $course_units + $lab_units;
+$totalunitspassed = $coursepassed + $labpassed;
+?>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <strong><a class="navi" href="<?= base_url() ?>Admin/student_accounts"><span class="fa fa-chevron-left"></span>&nbsp&nbsp</a>Student Profile</strong>
+        </h1>
+    </section>
 
-          <div class="row">
-              <div class="col-md-3">
+    <!-- Main content -->
+    <section class="content container-fluid">
+        <div class="col-md-3">
+            <!-- Profile Image -->
+            <div class="box box-success">
+                <div class="box-body box-profile">
+                    <img class="profile-user-img img-responsive img-circle" src="<?= base_url() ?>dist/img/default_avatar.png" style="width:200px; height:200px;" alt="User profile picture">
+                    <br />
+                    <h3 class="profile-username text-center"><?= $account->acc_fname . ' ' . $account->acc_mname . ' ' . $account->acc_lname ?></h3>
 
-                  <!-- Profile Image -->
-                  <div class="box box-success">
-                      <div class="box-body box-profile">
-                          <img class="profile-user-img img-responsive img-circle" src="<?= base_url() ?>dist/img/default_avatar.png" alt="User profile picture">
+                    <p class="text-muted text-center">Program Director</p>
 
-                          <h3 class="profile-username text-center"><?= $account->acc_fname . ' ' . $account->acc_mname . ' ' . $account->acc_lname ?></h3>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+            <!-- Employee Details Box -->
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Student Details</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table">
+                        <tr>
+                            <td><strong class="pull-right">Student No: </strong></td>
+                            <td><?= $account->acc_number ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong class="pull-right">Designation: </strong></td>
+                            <td><?= $account->acc_program ?></td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
 
-                          <p class="text-muted text-center"><?= $account->acc_number ?></p>
+        <div class="col-md-9">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#COR" data-toggle="tab">Certificate of Registration</a></li>
+                    <li><a href="#Academics" data-toggle="tab">Curriculum</a></li>
+                    <li><a href="#settings" data-toggle="tab">Account Settings</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="active tab-pane" id="COR">
+                        <div class="container-fluid">
+                            <?php if ($cor) : ?>
+                                <table class="table">
+                                    <tr>
+                                        <td><strong>Student #: </strong><?= $this->session->acc_number ?></td>
+                                        <td><strong>College: </strong> <?= $this->session->College ?></td>
+                                        <td><strong>Program: </strong><?= $this->session->Program ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Name: </strong><?= $this->session->Lastname . ', ' . $this->session->Firstname . ' ' . $this->session->Middlename ?></td>
+                                        <td><strong>Year Level: </strong><?php if ($totalunitspassed >= 3 && $totalunitspassed <= 56) {
+                                                                                    echo "1";
+                                                                                } else if ($totalunitspassed >= 57 && $totalunitspassed <= 116) {
+                                                                                    echo "2";
+                                                                                } else if ($totalunitspassed >= 117 && $totalunitspassed <= 173) {
+                                                                                    echo "3";
+                                                                                } else if ($totalunitspassed >= 174 && $totalunitspassed <= ($totalunits - 18)) {
+                                                                                    echo "4";
+                                                                                } else if (($totalunits - $totalunitspassed) <= 18) {
+                                                                                    echo "GRADUATING";
+                                                                                } else { } ?></td>
+                                    </tr>
+                                </table>
+                                <table class="table">
+                                    <tr class="bg-success" style="background-color:#00a65a; color:white;">
+                                        <th class="text-center col-md-1">COURSES</th>
+                                        <th class="text-center col-md-4">TITLE</th>
+                                        <th class="text-center col-md-1">SECTION</th>
+                                        <th class="text-center col-md-1">UNITS</th>
+                                        <th class="text-center col-md-1">DAYS</th>
+                                        <th class="text-center col-md-3">TIME</th>
+                                        <th class="text-center col-md-1">ROOM</th>
+                                    </tr>
+                                    <tbody>
+                                        <?php $total = 0;
+                                            foreach ($cor as $record) : ?>
+                                            <?php if ($record->cc_status != "credited") : ?>
+                                                <tr>
+                                                    <td><?= strtoupper($record->cc_course) ?></td>
+                                                    <td>
+                                                        <?php if (strtoupper($record->cc_course) == strtoupper($record->course_code)) {
+                                                                        echo strtoupper($record->course_title);
+                                                                    } else if (strtoupper($record->cc_course) == strtoupper($record->laboratory_code)) {
+                                                                        echo strtoupper($record->laboratory_title);
+                                                                    } else {
+                                                                        echo '';
+                                                                    } ?>
+                                                    </td>
+                                                    <td><?= strtoupper($record->cc_section) ?></td>
+                                                    <td class="text-center">
+                                                        <?php if (strtoupper($record->cc_course) == strtoupper($record->course_code)) {
+                                                                        echo strtoupper($record->course_units);
+                                                                        $total += $record->course_units;
+                                                                    } else if (strtoupper($record->cc_course) == strtoupper($record->laboratory_code)) {
+                                                                        echo strtoupper($record->laboratory_units);
+                                                                        $total += $record->laboratory_units;
+                                                                    } else {
+                                                                        echo '';
+                                                                    } ?>
+                                                    </td>
+                                                    <?php foreach ($offerings as $offering) : ?>
+                                                        <?php if ($record->cc_course == $offering->offering_course_code && $record->cc_section == $offering->offering_course_section) : ?>
+                                                            <td><?= $offering->offering_course_day ?></td>
+                                                            <td><?= $offering->offering_course_time ?></td>
+                                                        <?php endif; ?>
+                                                    <?php endforeach; ?>
 
-                          <!-- <ul class="list-group list-group-unbordered">
-                              <li class="list-group-item">
-                                  <b>Followers</b> <a class="pull-right">1,322</a>
-                              </li>
-                              <li class="list-group-item">
-                                  <b>Following</b> <a class="pull-right">543</a>
-                              </li>
-                              <li class="list-group-item">
-                                  <b>Friends</b> <a class="pull-right">13,287</a>
-                              </li>
-                          </ul> -->
-                          <?php if ($account->acc_status) {
-                                echo '<a href="' . base_url() . 'Admin/block_user/' . $account->acc_number . '" class="btn btn-danger btn-sm rounded col-md-12"><span class="fa fa-ban"></span> Block </a>';
-                            } else {
-                                echo '<a href="' . base_url() . 'Admin/block_user/' . $account->acc_number . '" class="btn btn-success btn-sm rounded col-md-12"><span class="fa fa-check"></span> Unblock </a>';
-                            }; ?>
-                          <!-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
-                      </div>
-                      <!-- /.box-body -->
-                  </div>
-                  <!-- /.box -->
-              </div>
-              <!-- /.col -->
-              <div class="col-md-9">
-                  <div class="nav-tabs-custom">
-                      <ul class="nav nav-tabs">
-                          <li class="active"><a href="#studInfo" data-toggle="tab">Student Information</a></li>
-                          <!-- <li><a href="#Schedule" data-toggle="tab">Schedule</a></li>
-                          <li><a href="#settings" data-toggle="tab">Settings</a></li> -->
-                      </ul>
-                      <div class="tab-content">
-                          <div class="active tab-pane" id="studInfo">
-                              <div class="container-fluid">
-                                  <ul class="list-group">
-                                      <li class="list-group-item">
-                                          <b>Student Number:</b> <a class="pull-right"><?= $account->acc_number ?></a>
-                                      </li>
-                                      <li class="list-group-item">
-                                          <b>Citizenship:</b> <a class="pull-right"><?= $account->acc_citizenship ?></a>
-                                      </li>
-                                      <li class="list-group-item">
-                                          <b>Program: </b> <a class="pull-right"><?= $account->acc_program ?></a>
-                                      </li>
-                                      <li class="list-group-item">
-                                          <b>College</b> <a class="pull-right"><?= $account->acc_college ?></a>
-                                      </li>
-                                      <li class="list-group-item">
-                                          <b>Curriculum Code:</b> <a class="pull-right"><?= $account->curriculum_code ?></a>
-                                      </li>
-                                  </ul>
-                              </div>
-                          </div>
-                          <!-- 
-                          <div class="tab-pane" id="Schedule">
+                                                </tr>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td><strong>Total:</strong></td>
+                                            <td class="text-center">
+                                                <strong><?= $total ?></strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            <?php endif; ?>
+                        </div>
+                    </div>
 
-                          </div>
+                    <div class="tab-pane" id="Academics">
+                        <div class="container-fluid">
+                            <table class="table table-bordered table-responsive">
+                                <thead class=" bg-success" style="background-color:#00a65a; color:white;">
+                                    <th class="text-center">COURSE</th>
+                                    <th class="text-center">COURSE TITLE</th>
+                                    <th class="text-center">UNITS</th>
+                                    <th class="text-center">LABORATORY</th>
+                                    <th class="text-center">UNITS</th>
+                                    <th class="text-center">PREREQUISITE</th>
+                                </thead>
 
-                          <div class="tab-pane" id="settings">
+                                <?php for ($y = 1; $y < 5; $y++) : ?>
+                                    <tr>
+                                        <th class="text-center" style="background-color:#00a65a; color:white;" colspan="7"><?= 'YEAR: ' . $y ?></th>
+                                    </tr>
+                                    <?php for ($t = 1; $t < 4; $t++) : ?>
+                                        <tr>
+                                            <th style="background-color:#ccc;" colspan="7"><?= 'Term: ' . $t ?></th>
+                                        </tr>
 
-                          </div> -->
+                                        <?php foreach ($curr as $cur) : ?>
+                                            <?php if ($cur->Year == $y && $cur->Term == $t) : ?>
+                                                <tr class="<?php foreach ($grades as $grade) {
+                                                                                if (($grade->cc_status == "credited" || $grade->cc_status == "finished") && $grade->cc_stud_number == $this->session->acc_number) {
+                                                                                    echo "bg-success";
+                                                                                } else {
+                                                                                    echo "bg-default";
+                                                                                }
+                                                                            } ?>">
+                                                    <td><?= $cur->course_code ?></td>
+                                                    <td><?= $cur->course_title ?></td>
+                                                    <td class="text-center"><?= $cur->course_units ?></td>
+                                                    <td><?= $cur->laboratory_code ?></td>
+                                                    <td class="text-center"><?= $cur->laboratory_units ?></td>
+                                                    <td><?= $cur->pr_requisite ?></td>
+                                                </tr>
+                                            <?php endif; ?>
 
-                      </div>
-                      <!-- /.tab-content -->
-                  </div>
-                  <!-- /.nav-tabs-custom -->
-              </div>
-              <!-- /.col -->
-          </div>
-          <!-- /.row -->
-      </section>
-      <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+                                        <?php endforeach; ?>
+                                    <?php endfor; ?>
+                                <?php endfor; ?>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="settings">
+
+                    </div>
+
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+</div>
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

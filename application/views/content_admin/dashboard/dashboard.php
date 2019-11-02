@@ -62,8 +62,6 @@
         </a>
       </div>
     </div>
-
-    <button class="btn btn-success" id="samplebutton">sample swal</button>
     <!-- ./col -->
 
     <!-- <div class="col-lg-3 col-xs-6"> -->

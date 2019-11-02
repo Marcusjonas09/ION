@@ -54,7 +54,7 @@
                         }; ?> -->
 
 
-                      <a href="<?= base_url() ?>Admin/show_account/<?= $student->acc_number ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
+                      <a href="<?= base_url() ?>Admin/show_account/<?= $student->acc_number ?>/<?= $student->curriculum_code ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
                       <?php if ($student->acc_status) {
                           echo '<a href="' . base_url() . 'Admin/block_user/' . $student->acc_number . '" class="btn btn-danger btn-sm rounded"><i class="fa fa-ban"></i></a>';
                         } else {
@@ -63,7 +63,7 @@
                     </td>
                   </tr>
                 <?php endforeach ?>
-                
+
               </table>
               <div class="col-md-6"><?= $this->pagination->create_links(); ?></div>
             </div>

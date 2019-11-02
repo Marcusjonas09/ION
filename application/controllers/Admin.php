@@ -13,6 +13,7 @@ class Admin extends CI_Controller
 		$this->load->library('form_validation');
 
 		$this->load->model('Account_model');
+		$this->load->model('Academics_model');
 		$this->load->model('Petition_model');
 		$this->load->model('Curriculum_model');
 		$this->load->model('CourseCard_model');
@@ -376,9 +377,15 @@ class Admin extends CI_Controller
 		redirect('Admin/student_accounts');
 	}
 
-	public function show_account($studNumber) // | Display Specific Student Account |
+	public function show_account($studNumber, $curriculum_code) // | Display Specific Student Account |
 	{
 		$data['account'] = $this->Account_model->view_user($studNumber);
+		$data['curr'] = $this->Academics_model->fetch_curriculum($curriculum_code);
+		$data['grades'] = $this->Academics_model->fetchProgress($studNumber);
+		$data['offerings'] = $this->Academics_model->fetchCurrentOffering();
+		$data['courses'] = $this->Academics_model->fetch_courses($curriculum_code);
+		$data['cor'] = $this->Academics_model->fetch_current_COR($studNumber);
+
 		$this->load->view('includes_admin/admin_header');
 		$this->load->view('includes_admin/notif_widget');
 		$this->load->view('includes_admin/admin_topnav');
@@ -391,9 +398,9 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_footer');
 	}
 
-	public function profile($acc_number) // | Display Admin Profile |
+	public function profile() // | Display Admin Profile |
 	{
-		$data['account'] = $this->Account_model->view_user($acc_number);
+		$data['account'] = $this->Account_model->view_user($this->session->acc_number);
 		$this->load->view('includes_admin/admin_header');
 		$this->load->view('includes_admin/notif_widget');
 		$this->load->view('includes_admin/admin_topnav');
@@ -478,7 +485,7 @@ class Admin extends CI_Controller
 
 		$number_of_petitioners = $this->Petition_model->check_number_of_petitioners($petition_unique);
 
-		if ($number_of_petitioners >= 1 && $number_of_petitioners <= 40) {
+		if ($number_of_petitioners >= 15 && $number_of_petitioners <= 40) {
 			//petition is approved
 			$recipients = $this->Petition_model->fetch_petition_recipients($petition_unique);
 			$notif_message = 'Petition approved!';

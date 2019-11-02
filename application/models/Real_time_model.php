@@ -13,7 +13,7 @@ class Real_time_model extends CI_Model
 
     public function fetchPetitions_num_rows()
     {
-        $query = $this->db->get('petitions_tbl');
+        $query = $this->db->get_where('petitions_tbl', array('petition_status' => '2'));
         return $query->num_rows();
     }
 
