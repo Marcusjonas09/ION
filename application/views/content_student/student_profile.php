@@ -39,7 +39,7 @@ $totalunitspassed = $coursepassed + $labpassed;
                 <div class="box-body box-profile">
                     <img class="profile-user-img img-responsive img-circle" src="<?= base_url() ?>dist/img/default_avatar.png" style="width:200px; height:200px;" alt="User profile picture">
                     <br />
-                    <h3 class="profile-username text-center"><?= $account->acc_fname . ' ' . $account->acc_mname . ' ' . $account->acc_lname ?></h3>
+                    <h3 class="profile-username text-center"><strong><?= $account->acc_fname . ' ' . $account->acc_mname . ' ' . $account->acc_lname ?></strong></h3>
 
                     <p class="text-muted text-center"><?= $account->acc_program ?></p>
 
@@ -203,7 +203,22 @@ $totalunitspassed = $coursepassed + $labpassed;
                     </div>
 
                     <div class="tab-pane" id="settings">
-
+                        <div class="container-fluid">
+                            <h3><strong>Change Password</strong></h3>
+                            <div class="form-group col-md-4">
+                                <label>Old password</label>
+                                <input type="password" class="form-control" id="oldpassword" placeholder="Enter old password">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>New password</label>
+                                <input type="password" class="form-control" id="newpassword" placeholder="Enter new password">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Retype new password</label>
+                                <input type="password" class="form-control" id="renewpassword" placeholder="Retype new password">
+                            </div>
+                            <button id="change_pass" class="btn btn-success pull-right col-md-2">Save</button>
+                        </div>
                     </div>
 
                 </div>
