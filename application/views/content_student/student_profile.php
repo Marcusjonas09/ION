@@ -27,7 +27,7 @@ $totalunitspassed = $coursepassed + $labpassed;
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <strong><a class="navi" href="<?= base_url() ?>Admin/student_accounts"><span class="fa fa-chevron-left"></span>&nbsp&nbsp</a>Student Profile</strong>
+            <strong>Student Profile</strong>
         </h1>
     </section>
 

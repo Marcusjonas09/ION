@@ -29,19 +29,8 @@ class Admin extends CI_Controller
 	}
 
 	// =======================================================================================
-	// SIDEBAR LINKS
+	// DASHBOARD MODULE
 	// =======================================================================================
-
-	public function user_data_submit()
-	{
-		$data = array(
-			'username' => $this->input->post('name'),
-			'pwd' => $this->input->post('pwd')
-		);
-
-		//Either you can print value or you can send value to database
-		echo json_encode($data);
-	}
 
 	public function index() // | Display Dashboard |
 	{
@@ -56,6 +45,35 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_rightnav');
 		$this->load->view('includes_admin/admin_footer');
 	}
+
+	public function petitions_number()
+	{
+		echo json_encode($this->Real_time_model->fetchPetitions_num_rows());
+	}
+
+	public function underload_number()
+	{
+		echo json_encode($this->Real_time_model->fetchUnderload_num_rows());
+	}
+
+	public function overload_number()
+	{
+		echo json_encode($this->Real_time_model->fetchOverload_num_rows());
+	}
+
+	public function simul_number()
+	{
+		echo json_encode($this->Real_time_model->fetchSimul_num_rows());
+	}
+
+
+	// =======================================================================================
+	// END OF DASHBOARD MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// STUDENT ACCOUNT MANAGEMENT MODULE
+	// =======================================================================================
 
 	public function student_accounts() // | Display Student Accounts |
 	{
@@ -86,7 +104,7 @@ class Admin extends CI_Controller
 
 		$this->pagination->initialize($config); // model function
 
-		$data['students'] = $this->Account_model->fetchStudentAccounts($per_page, $end_page);
+		$data['students'] = $this->Account_model->fetch_student_accounts($per_page, $end_page);
 
 		$this->load->view('includes_admin/admin_header');
 		$this->load->view('includes_admin/notif_widget');
@@ -99,6 +117,41 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_rightnav');
 		$this->load->view('includes_admin/admin_footer');
 	}
+
+	public function block_user($studnumber)
+	{
+		$this->Account_model->block_user($studnumber);
+		redirect('Admin/student_accounts');
+	}
+
+	public function show_account($studNumber, $curriculum_code) // | Display Specific Student Account |
+	{
+		$data['account'] = $this->Account_model->view_user($studNumber);
+		$data['curr'] = $this->Academics_model->fetch_curriculum($curriculum_code);
+		$data['grades'] = $this->Academics_model->fetchProgress($studNumber);
+		$data['offerings'] = $this->Academics_model->fetchCurrentOffering();
+		$data['courses'] = $this->Academics_model->fetch_courses($curriculum_code);
+		$data['cor'] = $this->Academics_model->fetch_current_COR($studNumber);
+
+		$this->load->view('includes_admin/admin_header');
+		$this->load->view('includes_admin/notif_widget');
+		$this->load->view('includes_admin/admin_topnav');
+		$this->load->view('includes_admin/admin_sidebar');
+
+		$this->load->view('content_admin/student_accounts/show_account', $data);
+
+		$this->load->view('includes_admin/admin_contentFooter');
+		$this->load->view('includes_admin/admin_rightnav');
+		$this->load->view('includes_admin/admin_footer');
+	}
+
+	// =======================================================================================
+	// END OF STUDENT ACCOUNT MANAGEMENT MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// COURSE PETITIONING MODULE
+	// =======================================================================================
 
 	public function course_petitions() // | Display Course Petitions |
 	{
@@ -144,6 +197,14 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_rightnav');
 		$this->load->view('includes_admin/admin_footer');
 	}
+
+	// =======================================================================================
+	// END OF COURSE PETITIONING MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// CALENDAR MODULE
+	// =======================================================================================
 
 	public function academic_calendar() // | Display Academic Calendar |
 	{
@@ -214,6 +275,14 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_footer');
 	}
 
+	// =======================================================================================
+	// END OF CALENDAR MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// ANNOUNCEMENT MODULE
+	// =======================================================================================
+
 	public function school_announcements() // | Display school announcement |
 	{
 		$data['posts'] = $this->Post_model->fetch_posts();
@@ -228,334 +297,6 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_rightnav');
 		$this->load->view('includes_admin/admin_footer');
 	}
-
-	public function curricula()
-	{
-		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
-		$this->load->view('includes_admin/admin_topnav');
-		$this->load->view('includes_admin/admin_sidebar');
-
-		$this->load->view('content_admin/curricula/curricula');
-
-		$this->load->view('includes_admin/admin_contentFooter');
-		$this->load->view('includes_admin/admin_rightnav');
-		$this->load->view('includes_admin/admin_footer');
-	}
-
-	public function cor() // | Display all COR revision requests |
-	{
-
-		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
-		$this->load->view('includes_admin/admin_topnav');
-		$this->load->view('includes_admin/admin_sidebar');
-
-		$this->load->view('content_admin/cor/cor');
-
-		$this->load->view('includes_admin/admin_contentFooter');
-		$this->load->view('includes_admin/admin_rightnav');
-		$this->load->view('includes_admin/admin_footer');
-	}
-
-	public function underload() // | Display all underload requests |
-	{
-		$data['underloads'] = $this->Overload_underload_model->fetch_all_underload();
-
-		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
-		$this->load->view('includes_admin/admin_topnav');
-		$this->load->view('includes_admin/admin_sidebar');
-
-		$this->load->view('content_admin/overload_underload/underload_requests', $data);
-
-		$this->load->view('includes_admin/admin_contentFooter');
-		$this->load->view('includes_admin/admin_rightnav');
-		$this->load->view('includes_admin/admin_footer');
-	}
-
-	public function underload_view($stud_number, $term, $year) // | Display underload request view |
-	{
-		$data['cor'] = $this->Overload_underload_model->fetch_course_card_admin($stud_number, $term, $year);
-		$data['student'] = $this->Overload_underload_model->fetch_user($stud_number);
-		$data['courses'] = $this->Overload_underload_model->fetch_courses();
-		$data['offerings'] = $this->Overload_underload_model->fetchOffering();
-		$data['underload'] = $this->Overload_underload_model->fetch_underload($stud_number, $term, $year);
-
-		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
-		$this->load->view('includes_admin/admin_topnav');
-		$this->load->view('includes_admin/admin_sidebar');
-
-		$this->load->view('content_admin/overload_underload/underload_view', $data);
-
-		$this->load->view('includes_admin/admin_contentFooter');
-		$this->load->view('includes_admin/admin_rightnav');
-		$this->load->view('includes_admin/admin_footer');
-	}
-
-	public function overload() // | Display all overload request |
-	{
-		$data['overloads'] = $this->Overload_underload_model->fetch_all_overload();
-
-		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
-		$this->load->view('includes_admin/admin_topnav');
-		$this->load->view('includes_admin/admin_sidebar');
-
-		$this->load->view('content_admin/overload_underload/overload_requests', $data);
-
-		$this->load->view('includes_admin/admin_contentFooter');
-		$this->load->view('includes_admin/admin_rightnav');
-		$this->load->view('includes_admin/admin_footer');
-	}
-
-	public function overload_view($stud_number, $term, $year) // | Display overload request view |
-	{
-
-		$data['cor'] = $this->Overload_underload_model->fetch_course_card_admin($stud_number, $term, $year);
-		$data['student'] = $this->Overload_underload_model->fetch_user($stud_number);
-		$data['courses'] = $this->Overload_underload_model->fetch_courses();
-		$data['offerings'] = $this->Overload_underload_model->fetchOffering();
-		$data['overload'] = $this->Overload_underload_model->fetch_overload($stud_number, $term, $year);
-
-		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
-		$this->load->view('includes_admin/admin_topnav');
-		$this->load->view('includes_admin/admin_sidebar');
-
-		$this->load->view('content_admin/overload_underload/overload_view', $data);
-
-		$this->load->view('includes_admin/admin_contentFooter');
-		$this->load->view('includes_admin/admin_rightnav');
-		$this->load->view('includes_admin/admin_footer');
-	}
-
-	public function simul() // | Display all simul request |
-	{
-		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
-		$this->load->view('includes_admin/admin_topnav');
-		$this->load->view('includes_admin/admin_sidebar');
-
-		$this->load->view('content_admin/simul/simul');
-
-		$this->load->view('includes_admin/admin_contentFooter');
-		$this->load->view('includes_admin/admin_rightnav');
-		$this->load->view('includes_admin/admin_footer');
-	}
-
-
-
-	public function admin_curriculum() // | Display All Curricula |
-	{
-		$data['labs'] = $this->Curriculum_model->fetchLab();
-		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
-		$this->load->view('includes_admin/admin_topnav');
-		$this->load->view('includes_admin/admin_sidebar');
-
-		$this->load->view('content_admin/curricula/curricula', $data);
-
-		$this->load->view('includes_admin/admin_contentFooter');
-		$this->load->view('includes_admin/admin_rightnav');
-		$this->load->view('includes_admin/admin_footer');
-	}
-
-	// =======================================================================================
-	// END OF SIDEBAR LINKS
-	// =======================================================================================
-
-
-	// =======================================================================================
-	// Account Management Module
-	// =======================================================================================
-
-	public function block_user($studnumber)
-	{
-		$this->Account_model->block_user($studnumber);
-		redirect('Admin/student_accounts');
-	}
-
-	public function show_account($studNumber, $curriculum_code) // | Display Specific Student Account |
-	{
-		$data['account'] = $this->Account_model->view_user($studNumber);
-		$data['curr'] = $this->Academics_model->fetch_curriculum($curriculum_code);
-		$data['grades'] = $this->Academics_model->fetchProgress($studNumber);
-		$data['offerings'] = $this->Academics_model->fetchCurrentOffering();
-		$data['courses'] = $this->Academics_model->fetch_courses($curriculum_code);
-		$data['cor'] = $this->Academics_model->fetch_current_COR($studNumber);
-
-		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
-		$this->load->view('includes_admin/admin_topnav');
-		$this->load->view('includes_admin/admin_sidebar');
-
-		$this->load->view('content_admin/student_accounts/show_account', $data);
-
-		$this->load->view('includes_admin/admin_contentFooter');
-		$this->load->view('includes_admin/admin_rightnav');
-		$this->load->view('includes_admin/admin_footer');
-	}
-
-	public function profile() // | Display Admin Profile |
-	{
-		$data['account'] = $this->Account_model->view_user($this->session->acc_number);
-		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
-		$this->load->view('includes_admin/admin_topnav');
-		$this->load->view('includes_admin/admin_sidebar');
-
-		$this->load->view('content_admin/profile/profile', $data);
-
-		$this->load->view('includes_admin/admin_contentFooter');
-		$this->load->view('includes_admin/admin_rightnav');
-		$this->load->view('includes_admin/admin_footer');
-	}
-
-	// =======================================================================================
-	// END OF ACCOUNT MANAGEMENT MODULE
-	// =======================================================================================
-
-	// =======================================================================================
-	// Curriculum Module
-	// =======================================================================================
-
-	public function show_curriculum()
-	{
-
-		$this->form_validation->set_rules('CurriculumCode', 'Curriculum Code', 'required|strip_tags');
-		$CurriculumCode = $this->input->post('CurriculumCode');
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->curricula();
-		} else {
-			$data['curr'] = $this->Curriculum_model->show_curriculum($CurriculumCode);
-			$data['currCode'] = $CurriculumCode;
-			$this->load->view('includes_admin/admin_header');
-			$this->load->view('includes_admin/notif_widget');
-			$this->load->view('includes_admin/admin_topnav');
-			$this->load->view('includes_admin/admin_sidebar');
-
-			$this->load->view('content_admin/curricula/curricula', $data);
-
-			$this->load->view('includes_admin/admin_contentFooter');
-			$this->load->view('includes_admin/admin_rightnav');
-			$this->load->view('includes_admin/admin_footer');
-		}
-	}
-
-	// =======================================================================================
-	// END OF CURRICULUM MODULE
-	// =======================================================================================
-
-	// =======================================================================================
-	// COURSE PETITIONING MODULE
-	// =======================================================================================
-
-	public function process_petition()
-	{
-		$this->form_validation->set_rules('course_code', 'Course Code', 'required|strip_tags');
-		$this->form_validation->set_rules('course_section', 'Section', 'required|strip_tags');
-		$this->form_validation->set_rules('date_processed', 'Date Submitted', 'required|strip_tags');
-		$this->form_validation->set_rules('course_description', 'Course Description', 'required|strip_tags');
-		$this->form_validation->set_rules('time', 'Time', 'required|strip_tags');
-		$this->form_validation->set_rules('day', 'Day', 'required|strip_tags');
-		$this->form_validation->set_rules('room', 'Room', 'required|strip_tags');
-		$this->form_validation->set_rules('faculty', 'faculty', 'required|strip_tags');
-
-		$petition_ID = $this->input->post('petition_id');
-		$course_code = $this->input->post('course_code');
-		$date_processed = $this->input->post('date_processed');
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->show_petition($petition_ID, $course_code);
-		} else {
-			$this->Petition_model->approve_petition($petition_ID, $date_processed);
-			redirect('Admin/course_petitions');
-		}
-	}
-
-	public function approve_petition()
-	{
-		//fetch number of petitioners
-		//approve petition of more than or equal to 15 but less than of equal to 40
-		$petitionID = $this->input->post('petitionID');
-		$petition_unique = $this->input->post('petitionUnique');
-
-		$number_of_petitioners = $this->Petition_model->check_number_of_petitioners($petition_unique);
-
-		if ($number_of_petitioners >= 15 && $number_of_petitioners <= 40) {
-			//petition is approved
-			$recipients = $this->Petition_model->fetch_petition_recipients($petition_unique);
-			$notif_message = 'Petition approved!';
-			$message['message'] = 'Petition approved!';
-			$message['context'] = 'success';
-			$link = base_url() . "Student/petitionView/" . $petitionID . "/" . $petition_unique;
-			$this->send_notifications($recipients, $notif_message, $link);
-			$this->Petition_model->approve_petition($petition_unique);
-		} else {
-			$message['message'] = 'Insufficient number of petitioners!';
-			$message['context'] = 'failed';
-		}
-
-		echo json_encode($message);
-	}
-
-	public function decline_petition()
-	{
-		$petitionID = $this->input->post('petitionID');
-		$petition_unique = $this->input->post('petitionUnique');
-
-		//petition is declined
-		$recipients = $this->Petition_model->fetch_petition_recipients($petition_unique);
-		$notif_message = 'Petition declined!';
-		$message['message'] = 'Petition declined!';
-		$message['context'] = 'success';
-		$link = base_url() . "Student/petitionView/" . $petitionID . "/" . $petition_unique;
-		$this->send_notifications($recipients, $notif_message, $link);
-		$this->Petition_model->decline_petition($petition_unique);
-
-		echo json_encode($message);
-	}
-
-	public function show_petition($petition_ID, $petition_unique) // | Display Specific Student Account |
-	{
-		$data['petition'] = $this->Petition_model->fetchPetition($petition_ID);
-		$data['petitioners'] = $this->Petition_model->fetchPetitioners($petition_unique);
-		$data['courses'] = $this->Curriculum_model->fetchCoursesAdmin();
-		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
-		$this->load->view('includes_admin/admin_topnav');
-		$this->load->view('includes_admin/admin_sidebar');
-
-		$this->load->view('content_admin/student_petitions/show_petition', $data);
-
-		$this->load->view('includes_admin/admin_contentFooter');
-		$this->load->view('includes_admin/admin_rightnav');
-		$this->load->view('includes_admin/admin_footer');
-	}
-
-	public function save_sched()
-	{
-		echo json_encode($_POST['course_details']);
-		echo json_encode($_POST['course_sched']);
-	}
-
-	public function fetch_updated_petition_status()
-	{
-		$petition_unique = $this->input->post('petitionUnique');
-		$sample = $this->Petition_model->fetch_updated_petition_status($petition_unique);
-		echo json_encode($sample);
-	}
-
-	// =======================================================================================
-	// END OF COURSE PETITIONING MODULE
-	// =======================================================================================
-
-	// =======================================================================================
-	// SCHOOL ANNOUNCEMENT MODULE
-	// =======================================================================================
 
 	public function fetch_post($post_id)
 	{
@@ -733,32 +474,89 @@ class Admin extends CI_Controller
 	// =======================================================================================
 
 	// =======================================================================================
-	// DASHBOARD FUNCTIONS MODULE
+	// ALL CURRICULA MODULE
 	// =======================================================================================
 
-	public function petitions_number()
+	public function curricula()
 	{
-		echo json_encode($this->Real_time_model->fetchPetitions_num_rows());
-	}
+		$this->load->view('includes_admin/admin_header');
+		$this->load->view('includes_admin/notif_widget');
+		$this->load->view('includes_admin/admin_topnav');
+		$this->load->view('includes_admin/admin_sidebar');
 
-	public function underload_number()
-	{
-		echo json_encode($this->Real_time_model->fetchUnderload_num_rows());
-	}
+		$this->load->view('content_admin/curricula/curricula');
 
-	public function overload_number()
-	{
-		echo json_encode($this->Real_time_model->fetchOverload_num_rows());
-	}
-
-	public function simul_number()
-	{
-		echo json_encode($this->Real_time_model->fetchSimul_num_rows());
+		$this->load->view('includes_admin/admin_contentFooter');
+		$this->load->view('includes_admin/admin_rightnav');
+		$this->load->view('includes_admin/admin_footer');
 	}
 
 	// =======================================================================================
-	// OVERLOAD UNDERLOAD MODULE
+	// END OF ALL CURRICULA MODULE
 	// =======================================================================================
+
+	// =======================================================================================
+	// COR REVISION MODULE
+	// =======================================================================================
+
+	public function cor() // | Display all COR revision requests |
+	{
+
+		$this->load->view('includes_admin/admin_header');
+		$this->load->view('includes_admin/notif_widget');
+		$this->load->view('includes_admin/admin_topnav');
+		$this->load->view('includes_admin/admin_sidebar');
+
+		$this->load->view('content_admin/cor/cor');
+
+		$this->load->view('includes_admin/admin_contentFooter');
+		$this->load->view('includes_admin/admin_rightnav');
+		$this->load->view('includes_admin/admin_footer');
+	}
+
+	// =======================================================================================
+	// END OF COR REVISION MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// UNDERLOAD MODULE
+	// =======================================================================================
+
+	public function underload() // | Display all underload requests |
+	{
+		$data['underloads'] = $this->Overload_underload_model->fetch_all_underload();
+
+		$this->load->view('includes_admin/admin_header');
+		$this->load->view('includes_admin/notif_widget');
+		$this->load->view('includes_admin/admin_topnav');
+		$this->load->view('includes_admin/admin_sidebar');
+
+		$this->load->view('content_admin/overload_underload/underload_requests', $data);
+
+		$this->load->view('includes_admin/admin_contentFooter');
+		$this->load->view('includes_admin/admin_rightnav');
+		$this->load->view('includes_admin/admin_footer');
+	}
+
+	public function underload_view($stud_number, $term, $year) // | Display underload request view |
+	{
+		$data['cor'] = $this->Overload_underload_model->fetch_course_card_admin($stud_number, $term, $year);
+		$data['student'] = $this->Overload_underload_model->fetch_user($stud_number);
+		$data['courses'] = $this->Overload_underload_model->fetch_courses();
+		$data['offerings'] = $this->Overload_underload_model->fetchOffering();
+		$data['underload'] = $this->Overload_underload_model->fetch_underload($stud_number, $term, $year);
+
+		$this->load->view('includes_admin/admin_header');
+		$this->load->view('includes_admin/notif_widget');
+		$this->load->view('includes_admin/admin_topnav');
+		$this->load->view('includes_admin/admin_sidebar');
+
+		$this->load->view('content_admin/overload_underload/underload_view', $data);
+
+		$this->load->view('includes_admin/admin_contentFooter');
+		$this->load->view('includes_admin/admin_rightnav');
+		$this->load->view('includes_admin/admin_footer');
+	}
 
 	public function approve_underload($id, $stud_number)
 	{
@@ -780,6 +578,51 @@ class Admin extends CI_Controller
 		$this->Overload_underload_model->decline_underload($id);
 
 		redirect('Admin/underload');
+	}
+
+	// =======================================================================================
+	// END OF UNDERLOAD MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// OVERLOAD MODULE
+	// =======================================================================================
+
+	public function overload() // | Display all overload request |
+	{
+		$data['overloads'] = $this->Overload_underload_model->fetch_all_overload();
+
+		$this->load->view('includes_admin/admin_header');
+		$this->load->view('includes_admin/notif_widget');
+		$this->load->view('includes_admin/admin_topnav');
+		$this->load->view('includes_admin/admin_sidebar');
+
+		$this->load->view('content_admin/overload_underload/overload_requests', $data);
+
+		$this->load->view('includes_admin/admin_contentFooter');
+		$this->load->view('includes_admin/admin_rightnav');
+		$this->load->view('includes_admin/admin_footer');
+	}
+
+	public function overload_view($stud_number, $term, $year) // | Display overload request view |
+	{
+
+		$data['cor'] = $this->Overload_underload_model->fetch_course_card_admin($stud_number, $term, $year);
+		$data['student'] = $this->Overload_underload_model->fetch_user($stud_number);
+		$data['courses'] = $this->Overload_underload_model->fetch_courses();
+		$data['offerings'] = $this->Overload_underload_model->fetchOffering();
+		$data['overload'] = $this->Overload_underload_model->fetch_overload($stud_number, $term, $year);
+
+		$this->load->view('includes_admin/admin_header');
+		$this->load->view('includes_admin/notif_widget');
+		$this->load->view('includes_admin/admin_topnav');
+		$this->load->view('includes_admin/admin_sidebar');
+
+		$this->load->view('content_admin/overload_underload/overload_view', $data);
+
+		$this->load->view('includes_admin/admin_contentFooter');
+		$this->load->view('includes_admin/admin_rightnav');
+		$this->load->view('includes_admin/admin_footer');
 	}
 
 	public function approve_overload($id, $stud_number)
@@ -805,7 +648,207 @@ class Admin extends CI_Controller
 	}
 
 	// =======================================================================================
-	// Notification Module
+	// END OF OVERLOAD MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// SIMUL MODULE
+	// =======================================================================================
+
+	public function simul() // | Display all simul request |
+	{
+		$this->load->view('includes_admin/admin_header');
+		$this->load->view('includes_admin/notif_widget');
+		$this->load->view('includes_admin/admin_topnav');
+		$this->load->view('includes_admin/admin_sidebar');
+
+		$this->load->view('content_admin/simul/simul');
+
+		$this->load->view('includes_admin/admin_contentFooter');
+		$this->load->view('includes_admin/admin_rightnav');
+		$this->load->view('includes_admin/admin_footer');
+	}
+
+	// =======================================================================================
+	// END OF SIMUL MODULE
+	// =======================================================================================
+
+	public function admin_curriculum() // | Display All Curricula |
+	{
+		$data['labs'] = $this->Curriculum_model->fetchLab();
+		$this->load->view('includes_admin/admin_header');
+		$this->load->view('includes_admin/notif_widget');
+		$this->load->view('includes_admin/admin_topnav');
+		$this->load->view('includes_admin/admin_sidebar');
+
+		$this->load->view('content_admin/curricula/curricula', $data);
+
+		$this->load->view('includes_admin/admin_contentFooter');
+		$this->load->view('includes_admin/admin_rightnav');
+		$this->load->view('includes_admin/admin_footer');
+	}
+
+	// =======================================================================================
+	// ADMIN PROFILE MODULE
+	// =======================================================================================
+
+	public function profile() // | Display Admin Profile |
+	{
+		$data['account'] = $this->Account_model->view_user($this->session->acc_number);
+		$this->load->view('includes_admin/admin_header');
+		$this->load->view('includes_admin/notif_widget');
+		$this->load->view('includes_admin/admin_topnav');
+		$this->load->view('includes_admin/admin_sidebar');
+
+		$this->load->view('content_admin/profile/profile', $data);
+
+		$this->load->view('includes_admin/admin_contentFooter');
+		$this->load->view('includes_admin/admin_rightnav');
+		$this->load->view('includes_admin/admin_footer');
+	}
+
+	// =======================================================================================
+	// END OF PROFILE MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// CURRICULUM MODULE
+	// =======================================================================================
+
+	public function show_curriculum()
+	{
+
+		$this->form_validation->set_rules('CurriculumCode', 'Curriculum Code', 'required|strip_tags');
+		$CurriculumCode = $this->input->post('CurriculumCode');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->curricula();
+		} else {
+			$data['curr'] = $this->Curriculum_model->show_curriculum($CurriculumCode);
+			$data['currCode'] = $CurriculumCode;
+			$this->load->view('includes_admin/admin_header');
+			$this->load->view('includes_admin/notif_widget');
+			$this->load->view('includes_admin/admin_topnav');
+			$this->load->view('includes_admin/admin_sidebar');
+
+			$this->load->view('content_admin/curricula/curricula', $data);
+
+			$this->load->view('includes_admin/admin_contentFooter');
+			$this->load->view('includes_admin/admin_rightnav');
+			$this->load->view('includes_admin/admin_footer');
+		}
+	}
+
+	// =======================================================================================
+	// END OF CURRICULUM MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// COURSE PETITIONING MODULE
+	// =======================================================================================
+
+	public function process_petition()
+	{
+		$this->form_validation->set_rules('course_code', 'Course Code', 'required|strip_tags');
+		$this->form_validation->set_rules('course_section', 'Section', 'required|strip_tags');
+		$this->form_validation->set_rules('date_processed', 'Date Submitted', 'required|strip_tags');
+		$this->form_validation->set_rules('course_description', 'Course Description', 'required|strip_tags');
+		$this->form_validation->set_rules('time', 'Time', 'required|strip_tags');
+		$this->form_validation->set_rules('day', 'Day', 'required|strip_tags');
+		$this->form_validation->set_rules('room', 'Room', 'required|strip_tags');
+		$this->form_validation->set_rules('faculty', 'faculty', 'required|strip_tags');
+
+		$petition_ID = $this->input->post('petition_id');
+		$course_code = $this->input->post('course_code');
+		$date_processed = $this->input->post('date_processed');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->show_petition($petition_ID, $course_code);
+		} else {
+			$this->Petition_model->approve_petition($petition_ID, $date_processed);
+			redirect('Admin/course_petitions');
+		}
+	}
+
+	public function approve_petition()
+	{
+		//fetch number of petitioners
+		//approve petition of more than or equal to 15 but less than of equal to 40
+		$petitionID = $this->input->post('petitionID');
+		$petition_unique = $this->input->post('petitionUnique');
+
+		$number_of_petitioners = $this->Petition_model->check_number_of_petitioners($petition_unique);
+
+		if ($number_of_petitioners >= 15 && $number_of_petitioners <= 40) {
+			//petition is approved
+			$recipients = $this->Petition_model->fetch_petition_recipients($petition_unique);
+			$notif_message = 'Petition approved!';
+			$message['message'] = 'Petition approved!';
+			$message['context'] = 'success';
+			$link = base_url() . "Student/petitionView/" . $petitionID . "/" . $petition_unique;
+			$this->send_notifications($recipients, $notif_message, $link);
+			$this->Petition_model->approve_petition($petition_unique);
+		} else {
+			$message['message'] = 'Insufficient number of petitioners!';
+			$message['context'] = 'failed';
+		}
+
+		echo json_encode($message);
+	}
+
+	public function decline_petition()
+	{
+		$petitionID = $this->input->post('petitionID');
+		$petition_unique = $this->input->post('petitionUnique');
+
+		//petition is declined
+		$recipients = $this->Petition_model->fetch_petition_recipients($petition_unique);
+		$notif_message = 'Petition declined!';
+		$message['message'] = 'Petition declined!';
+		$message['context'] = 'success';
+		$link = base_url() . "Student/petitionView/" . $petitionID . "/" . $petition_unique;
+		$this->send_notifications($recipients, $notif_message, $link);
+		$this->Petition_model->decline_petition($petition_unique);
+
+		echo json_encode($message);
+	}
+
+	public function show_petition($petition_ID, $petition_unique) // | Display Specific Student Account |
+	{
+		$data['petition'] = $this->Petition_model->fetchPetition($petition_ID);
+		$data['petitioners'] = $this->Petition_model->fetchPetitioners($petition_unique);
+		$data['courses'] = $this->Curriculum_model->fetchCoursesAdmin();
+		$this->load->view('includes_admin/admin_header');
+		$this->load->view('includes_admin/notif_widget');
+		$this->load->view('includes_admin/admin_topnav');
+		$this->load->view('includes_admin/admin_sidebar');
+
+		$this->load->view('content_admin/student_petitions/show_petition', $data);
+
+		$this->load->view('includes_admin/admin_contentFooter');
+		$this->load->view('includes_admin/admin_rightnav');
+		$this->load->view('includes_admin/admin_footer');
+	}
+
+	public function save_sched()
+	{
+		echo json_encode($_POST['course_details']);
+		echo json_encode($_POST['course_sched']);
+	}
+
+	public function fetch_updated_petition_status()
+	{
+		$petition_unique = $this->input->post('petitionUnique');
+		$sample = $this->Petition_model->fetch_updated_petition_status($petition_unique);
+		echo json_encode($sample);
+	}
+
+	// =======================================================================================
+	// END OF COURSE PETITIONING MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// NOTIFICATION MODULE
 	// =======================================================================================
 
 	public function send_notifications($recipients, $message, $link)
@@ -869,8 +912,13 @@ class Admin extends CI_Controller
 		$announcement['recipient'] = $recipient;
 		$pusher->trigger('my-channel', 'client_specific', $announcement);
 	}
+
 	// =======================================================================================
-	// OTHER Module
+	// END OF NOTIFICATIONS MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// OTHER MODULE
 	// =======================================================================================
 
 	public function admin_accounts() // | Display all admin accounts |
@@ -887,4 +935,19 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_rightnav');
 		$this->load->view('includes_admin/admin_footer');
 	}
+
+	public function user_data_submit()
+	{
+		$data = array(
+			'username' => $this->input->post('name'),
+			'pwd' => $this->input->post('pwd')
+		);
+
+		//Either you can print value or you can send value to database
+		echo json_encode($data);
+	}
+
+	// =======================================================================================
+	// END OF OTHER MODULE
+	// =======================================================================================
 }

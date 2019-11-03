@@ -3,18 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Account_model extends CI_Model
 {
-    // call debug
-    // $this->inputDebug($users);
-
-
-    // public function fetchStudentAccounts()
-    // {
-    //     $query = $this->db->get_where('accounts_tbl', array('acc_access_level' => 3));
-    //     $students = $query->result();
-    //     return $students;
-    // }
-
-    public function fetchStudentAccounts($per_page, $end_page)
+    public function fetch_student_accounts($per_page, $end_page)
     {
         $this->db->limit($per_page, $end_page);
         $query = $this->db->get_where('accounts_tbl', array('acc_access_level' => 3));

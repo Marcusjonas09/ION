@@ -38,7 +38,8 @@ class User_model extends CI_Model
                 $this->session->set_userdata('curr_term', $settings->school_term);
                 $this->session->set_userdata('curr_year', $settings->school_year);
                 $this->session->set_userdata('access', 'admin');
-            } else { // IF STUDENT
+            } else {
+                // IF STUDENT
                 $this->session->set_userdata('login', true);
                 $this->session->set_userdata('acc_status', $user->acc_status);
                 $this->session->set_userdata('acc_number', $user->acc_number);
@@ -59,15 +60,8 @@ class User_model extends CI_Model
                 'log_time' => time()
             );
             $this->db->insert('account_logs', $log_details);
+        } else {
+            return false;
         }
-        // else {
-        //     // $log_details = array(
-        //     //     'log_user' => $user->acc_number,
-        //     //     'log_type' => 'logout',
-        //     //     'log_time' => time()
-        //     // );
-        //     // $this->db->insert('account_logs', $log_details);
-        //     session_destroy();
-        // }
     }
 }

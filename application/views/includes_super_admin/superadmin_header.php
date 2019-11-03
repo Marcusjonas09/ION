@@ -10,6 +10,7 @@ if ($this->session->access == 'admin') {
 } else if ($this->session->access == 'superadmin') { } else {
       redirect('UserAuth');
 }
+
 ?>
 
 <!DOCTYPE html>

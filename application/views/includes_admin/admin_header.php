@@ -4,7 +4,7 @@ if (!$this->session->login) {
       redirect('UserAuth');
 }
 if ($this->session->access == 'admin') { } else if ($this->session->access == 'student') {
-      redirect('Student');
+      rediredc('Student');
 } else if ($this->session->access == 'superadmin') {
       redirect('SuperAdmin');
 } else {
@@ -13,10 +13,6 @@ if ($this->session->access == 'admin') { } else if ($this->session->access == 's
 ?>
 
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html>
 
 <head>

@@ -13,8 +13,8 @@ class UserAuth extends CI_Controller
 
     public function index()
     {
-        $data['error'] = "0";
-        $this->load->view('UserAuth/login', $data);
+        $error['error'] = "";
+        $this->load->view('UserAuth/login', $error);
     }
 
     public function login()
@@ -25,9 +25,9 @@ class UserAuth extends CI_Controller
         );
 
         $this->User_model->login($data);
-        $data['error'] = "";
-        if ($this->session->login) {
-            if ($this->session->acc_status) {
+        $error['error'] = "";
+        if ($this->session->acc_status) {
+            if ($this->session->login) {
                 if ($this->session->access == 'admin') {
                     redirect('Admin');
                 } else if ($this->session->access == 'superadmin') {
@@ -36,12 +36,12 @@ class UserAuth extends CI_Controller
                     redirect('Student');
                 }
             } else {
-                $data['error'] = "Your Account has been blocked. Please contact your administrator for details";
-                $this->load->view('UserAuth/login', $data);
+                $error['error'] = "Invalid login credentials";
+                $this->load->view('UserAuth/login', $error);
             }
         } else {
-            $data['error'] = "Invalid login credentials";
-            $this->load->view('UserAuth/login', $data);
+            $error['error'] = "Your Account has been blocked. Please contact your administrator for details";
+            $this->load->view('UserAuth/login', $error);
         }
     }
 

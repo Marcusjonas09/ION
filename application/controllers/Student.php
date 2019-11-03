@@ -49,12 +49,9 @@ class Student extends CI_Controller
 	}
 
 	// =======================================================================================
-	// MAIN LINKS
+	// DASHBOARD MODULE
 	// =======================================================================================
 
-	// | SIDEBAR LINKS |
-
-	//DASHBOARD LINK
 	public function index()
 	{
 		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
@@ -70,7 +67,14 @@ class Student extends CI_Controller
 		$this->load->view('includes_student/student_footer');
 	}
 
-	//ANNOUNCEMENT LINK
+	// =======================================================================================
+	// END OF DASHBOARD MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// ANNOUNCEMENTS MODULE
+	// =======================================================================================
+
 	public function announcements()
 	{
 		$data['announcements'] = $this->Post_model->fetch_posts();
@@ -82,7 +86,14 @@ class Student extends CI_Controller
 		$this->load->view('includes_student/student_footer');
 	}
 
-	//CALENDAR LINK
+	// =======================================================================================
+	// END OF ANNOUNCEMENTS MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// CALENDAR MODULE
+	// =======================================================================================
+
 	public function calendar()
 	{
 		$year = $this->uri->segment(3);
@@ -147,10 +158,13 @@ class Student extends CI_Controller
 	}
 
 	// =======================================================================================
-	// MY ACCOUNT LINKS
+	// END OF CALENDAR MODULE
 	// =======================================================================================
 
-	//PROFILE LINK
+	// =======================================================================================
+	// PROFILE MODULE
+	// =======================================================================================
+
 	public function Profile()
 	{
 		$data['account'] = $this->Account_model->view_user($this->session->acc_number);
@@ -167,7 +181,14 @@ class Student extends CI_Controller
 		$this->load->view('includes_student/student_footer');
 	}
 
-	//CURRICULUM LINK
+	// =======================================================================================
+	// END OF PROFILE MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// CURRICULUM MODULE
+	// =======================================================================================
+
 	public function curriculum()
 	{
 		$data['curr'] = $this->Curriculum_model->fetch_curriculum();
@@ -180,7 +201,14 @@ class Student extends CI_Controller
 		$this->load->view('includes_student/student_footer');
 	}
 
-	//COURSE CARD LINK
+	// =======================================================================================
+	// END OF CURRICULUM MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// COURSE CARD MODULE
+	// =======================================================================================
+
 	public function course_card()
 	{
 		$term = $this->input->post('school_term');
@@ -190,8 +218,6 @@ class Student extends CI_Controller
 		$data['course_card'] = $this->CourseCard_model->fetch_course_card($year, $term);
 		$data['courses'] = $this->CourseCard_model->fetch_courses();
 
-		// echo json_encode($data);
-
 		$this->load->view('content_student/student_course_card', $data);
 
 		$this->load->view('includes_student/student_contentFooter');
@@ -199,7 +225,14 @@ class Student extends CI_Controller
 		$this->load->view('includes_student/student_footer');
 	}
 
-	//COR LINK
+	// =======================================================================================
+	// END OF COURSE CARD MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// COR MODULE
+	// =======================================================================================
+
 	public function cor()
 	{
 		$term = $this->input->post('school_term');
@@ -217,7 +250,14 @@ class Student extends CI_Controller
 		$this->load->view('includes_student/student_footer');
 	}
 
-	//BALANCE INQUIRY LINK
+	// =======================================================================================
+	// END OF COR MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// BALANCE INQUIRY MODULE
+	// =======================================================================================
+
 	public function assessment($term, $year)
 	{
 		$data['balances'] = $this->Assessment_model->get_balance();
@@ -232,10 +272,13 @@ class Student extends CI_Controller
 	}
 
 	// =======================================================================================
-	// ACADEMICS LINKS
+	// END OF BALANCE INQUIRY MODULE
 	// =======================================================================================
 
-	//BALANCE INQUIRY LINK
+	// =======================================================================================
+	// PARELLEL MODULE
+	// =======================================================================================
+
 	public function parallel()
 	{
 		$data['parallel'] = $this->Academics_model->fetchParallel();
@@ -248,7 +291,14 @@ class Student extends CI_Controller
 		$this->load->view('includes_student/student_footer');
 	}
 
-	//BALANCE INQUIRY LINK
+	// =======================================================================================
+	// END OF PARALLEL MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// OFFERING MODULE
+	// =======================================================================================
+
 	public function offerings()
 	{
 		$term = $this->input->post('term');
@@ -266,10 +316,138 @@ class Student extends CI_Controller
 	}
 
 	// =======================================================================================
-	// SERVICES LINKS
+	// END OF OFFERING MODULE
 	// =======================================================================================
 
-	//COURSE PETITIONING SYSTEM LINK
+	// =======================================================================================
+	// REVISION
+	// =======================================================================================
+
+	public function revisions()
+	{
+		$data['offerings'] = $this->Dashboard_model->fetchOffering();
+		$data['cor'] = $this->CourseCard_model->fetch_current_COR();
+
+		$this->load->view('content_student/student_revision', $data);
+
+		$this->load->view('includes_student/student_contentFooter');
+		$this->load->view('includes_student/student_rightnav');
+		$this->load->view('includes_student/student_footer');
+	}
+
+	// =======================================================================================
+	// END OF REVISION
+	// =======================================================================================
+
+	// =======================================================================================
+	// UNDERLOAD
+	// =======================================================================================
+
+	public function underload_request($stud_number)
+	{
+		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
+		$data['grades'] = $this->Dashboard_model->fetchProgress();
+		$data['cor'] = $this->CourseCard_model->fetch_course_card_admin($stud_number);
+		$data['courses'] = $this->CourseCard_model->fetch_courses();
+		$data['offerings'] = $this->Dashboard_model->fetchOffering();
+		$data['underload'] = $this->Overload_underload_model->fetch_underload($stud_number, $this->session->curr_term, $this->session->curr_year);
+
+		$this->load->view('content_student/student_underload', $data);
+
+		$this->load->view('includes_student/student_contentFooter');
+		$this->load->view('includes_student/student_rightnav');
+		$this->load->view('includes_student/student_footer');
+	}
+
+	public function submit_underload()
+	{
+		$stud_number = $this->session->acc_number;
+		$curr_year = $this->session->curr_year;
+		$curr_term = $this->session->curr_term;
+		$type = 'underload';
+		$this->Overload_underload_model->submit_ou($stud_number, $curr_year, $curr_term, $type);
+
+		$recipients = $this->Overload_underload_model->fetch_coordinator();
+		$message = 'Sent an underload request';
+
+		$link = base_url() . "Admin/underload_view/" . $stud_number . "/" . $curr_term . "/" . $curr_year . "/";
+
+		$this->send_notifications($recipients, $message, $link);
+		$this->underload_request($stud_number);
+	}
+	// =======================================================================================
+	// END OF UNDERLOAD
+	// =======================================================================================
+
+	// =======================================================================================
+	// OVERLOAD
+	// =======================================================================================
+
+	public function overload_request($stud_number)
+	{
+		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
+		$data['grades'] = $this->Dashboard_model->fetchProgress();
+		$data['cor'] = $this->CourseCard_model->fetch_course_card_admin($stud_number);
+		$data['courses'] = $this->CourseCard_model->fetch_courses();
+		$data['offerings'] = $this->Dashboard_model->fetchOffering();
+		$data['overload'] = $this->Overload_underload_model->fetch_overload($stud_number, $this->session->curr_term, $this->session->curr_year);
+
+		$this->load->view('content_student/student_overload', $data);
+
+		$this->load->view('includes_student/student_contentFooter');
+		$this->load->view('includes_student/student_rightnav');
+		$this->load->view('includes_student/student_footer');
+	}
+
+	public function submit_overload()
+	{
+		$stud_number = $this->session->acc_number;
+		$curr_year = $this->session->curr_year;
+		$curr_term = $this->session->curr_term;
+		$type = 'overload';
+		$this->Overload_underload_model->submit_ou($stud_number, $curr_year, $curr_term, $type);
+
+		$recipients = $this->Overload_underload_model->fetch_coordinator();
+		$message = 'Sent an overload request';
+
+		$link = base_url() . "Admin/overload_view/" . $stud_number . "/" . $curr_term . "/" . $curr_year . "/";
+
+		$this->send_notifications($recipients, $message, $link);
+		$this->overload_request($stud_number);
+	}
+
+	// =======================================================================================
+	// END OF OVERLOAD
+	// =======================================================================================
+
+	// =======================================================================================
+	// SIMUL MODULE
+	// =======================================================================================
+
+	//SIMUL REQUEST LINK
+	public function simulRequest()
+	{
+		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
+		$data['grades'] = $this->Dashboard_model->fetchProgress();
+		$data['courses'] = $this->CourseCard_model->fetch_courses();
+		$data['offerings'] = $this->Dashboard_model->fetchOffering();
+		$data['cor'] = $this->CourseCard_model->fetch_current_COR();
+
+		$this->load->view('content_student/student_simul', $data);
+
+		$this->load->view('includes_student/student_contentFooter');
+		$this->load->view('includes_student/student_rightnav');
+		$this->load->view('includes_student/student_footer');
+	}
+
+	// =======================================================================================
+	// EBD OF SIMUL
+	// =======================================================================================
+
+	// =======================================================================================
+	// PETITIONING MODULE
+	// =======================================================================================
+
 	public function petitions()
 	{
 
@@ -315,174 +493,6 @@ class Student extends CI_Controller
 		$this->load->view('includes_student/student_footer');
 	}
 
-	//LOAD REVISION LINK
-	public function revisions()
-	{
-		$data['offerings'] = $this->Dashboard_model->fetchOffering();
-		$data['cor'] = $this->CourseCard_model->fetch_current_COR();
-
-		$this->load->view('content_student/student_revision', $data);
-
-		$this->load->view('includes_student/student_contentFooter');
-		$this->load->view('includes_student/student_rightnav');
-		$this->load->view('includes_student/student_footer');
-	}
-
-	//OVERLOAD REQUEST LINK
-	public function check_units($stud_number)
-	// public function check_units()
-	{
-		$totalunits = 0;
-		$data = $this->CourseCard_model->fetch_course_card_admin($stud_number);
-		$array = json_decode(json_encode($data));
-		foreach ($array as $arr) {
-			$totalunits += ($arr->course_units + $arr->laboratory_units);
-		}
-		// echo $totalunits;
-		if ($totalunits < 12 && $totalunits > 0) {
-			$this->underload_request($stud_number);
-		} else if ($totalunits > 0 && $totalunits > 21 && $totalunits <= 24) {
-			$this->overload_request($stud_number);
-		} else {
-			$this->load->view('content_student/not_qualified');
-
-			$this->load->view('includes_student/student_contentFooter');
-			$this->load->view('includes_student/student_rightnav');
-			$this->load->view('includes_student/student_footer');
-		}
-	}
-
-	public function check_graduating()
-	{
-		$totalunits = 0.0;
-		$totalunitspassed = 0.0;
-		$course_units = 0.0;
-		$lab_units = 0.0;
-		$coursepassed = 0.0;
-		$labpassed = 0.0;
-
-		$curriculum = $this->Dashboard_model->fetch_curriculum();
-		$progress = $this->Dashboard_model->fetchProgress();
-		$curr = json_decode(json_encode($curriculum));
-		$grades = json_decode(json_encode($progress));
-
-		foreach ($curr as $unit) {
-			$course_units += $unit->course_units;
-			$lab_units += $unit->laboratory_units;
-			foreach ($grades as $grade) {
-				if ($unit->course_code == $grade->cc_course && ($grade->cc_status == "finished" || $grade->cc_status == "credited") && $grade->cc_final >= 1.0) {
-					$coursepassed += $unit->course_units;
-				}
-				if (strtoupper($unit->laboratory_code) == strtoupper($grade->cc_course) && ($grade->cc_final > 1.0 && $grade->cc_final <= 4.0)) {
-					$labpassed += $unit->laboratory_units;
-				}
-			}
-		}
-		$totalunits = $course_units + $lab_units;
-		$totalunitspassed = $coursepassed + $labpassed;
-
-		// echo json_encode($totalunits - $totalunitspassed);
-		// die();
-
-		if (($totalunits - $totalunitspassed) <= 18) {
-			redirect('Student/simulRequest');
-		} else {
-			$this->load->view('content_student/not_qualified');
-
-			$this->load->view('includes_student/student_contentFooter');
-			$this->load->view('includes_student/student_rightnav');
-			$this->load->view('includes_student/student_footer');
-		}
-	}
-
-	//OVERLOAD REQUEST LINK
-	public function overload_request($stud_number)
-	{
-		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
-		$data['grades'] = $this->Dashboard_model->fetchProgress();
-		$data['cor'] = $this->CourseCard_model->fetch_course_card_admin($stud_number);
-		$data['courses'] = $this->CourseCard_model->fetch_courses();
-		$data['offerings'] = $this->Dashboard_model->fetchOffering();
-		$data['overload'] = $this->Overload_underload_model->fetch_overload($stud_number, $this->session->curr_term, $this->session->curr_year);
-
-		$this->load->view('content_student/student_overload', $data);
-
-		$this->load->view('includes_student/student_contentFooter');
-		$this->load->view('includes_student/student_rightnav');
-		$this->load->view('includes_student/student_footer');
-	}
-
-	//UNDERLOAD REQUEST LINK
-	public function underload_request($stud_number)
-	{
-		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
-		$data['grades'] = $this->Dashboard_model->fetchProgress();
-		$data['cor'] = $this->CourseCard_model->fetch_course_card_admin($stud_number);
-		$data['courses'] = $this->CourseCard_model->fetch_courses();
-		$data['offerings'] = $this->Dashboard_model->fetchOffering();
-		$data['underload'] = $this->Overload_underload_model->fetch_underload($stud_number, $this->session->curr_term, $this->session->curr_year);
-
-		$this->load->view('content_student/student_underload', $data);
-
-		$this->load->view('includes_student/student_contentFooter');
-		$this->load->view('includes_student/student_rightnav');
-		$this->load->view('includes_student/student_footer');
-	}
-
-	public function submit_underload()
-	{
-		$stud_number = $this->session->acc_number;
-		$curr_year = $this->session->curr_year;
-		$curr_term = $this->session->curr_term;
-		$type = 'underload';
-		$this->Overload_underload_model->submit_ou($stud_number, $curr_year, $curr_term, $type);
-
-		$recipients = $this->Overload_underload_model->fetch_coordinator();
-		$message = 'Sent an underload request';
-
-		$link = base_url() . "Admin/underload_view/" . $stud_number . "/" . $curr_term . "/" . $curr_year . "/";
-
-		$this->send_notifications($recipients, $message, $link);
-		$this->underload_request($stud_number);
-	}
-
-	public function submit_overload()
-	{
-		$stud_number = $this->session->acc_number;
-		$curr_year = $this->session->curr_year;
-		$curr_term = $this->session->curr_term;
-		$type = 'overload';
-		$this->Overload_underload_model->submit_ou($stud_number, $curr_year, $curr_term, $type);
-
-		$recipients = $this->Overload_underload_model->fetch_coordinator();
-		$message = 'Sent an overload request';
-
-		$link = base_url() . "Admin/overload_view/" . $stud_number . "/" . $curr_term . "/" . $curr_year . "/";
-
-		$this->send_notifications($recipients, $message, $link);
-		$this->overload_request($stud_number);
-	}
-
-	//SIMUL REQUEST LINK
-	public function simulRequest()
-	{
-		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
-		$data['grades'] = $this->Dashboard_model->fetchProgress();
-		$data['courses'] = $this->CourseCard_model->fetch_courses();
-		$data['offerings'] = $this->Dashboard_model->fetchOffering();
-		$data['cor'] = $this->CourseCard_model->fetch_current_COR();
-
-		$this->load->view('content_student/student_simul', $data);
-
-		$this->load->view('includes_student/student_contentFooter');
-		$this->load->view('includes_student/student_rightnav');
-		$this->load->view('includes_student/student_footer');
-	}
-
-	// =======================================================================================
-	// VIEWLESS FUNCTIONS LINKS
-	// =======================================================================================
-
 	public function submitPetition()
 	{
 		$course_code = $this->input->post('course_code');
@@ -496,12 +506,6 @@ class Student extends CI_Controller
 		);
 
 		if ($result) {
-			// $recipients = $this->Overload_underload_model->fetch_potential_petitioner($course_code);
-			// $message = 'New petition suggestions!';
-
-			// $link = base_url() . "Student/petitions/";
-
-			// $this->send_notifications($recipients, $message, $link);
 			$this->Petition_model->submitPetition($petition_details);
 			redirect('Student/petitions');
 		} else {
@@ -516,8 +520,6 @@ class Student extends CI_Controller
 		$data['petitioners'] = $this->Petition_model->fetchPetitioners($petition_unique);
 		$data['courses'] = $this->Petition_model->fetchCourses();
 		$data['number'] = $this->Petition_model->check_if_you_petitioned($petition_unique);
-
-		// echo json_encode($data);
 
 		$this->load->view('content_student/student_petitionView', $data);
 
@@ -549,6 +551,10 @@ class Student extends CI_Controller
 		// 	}
 		// }
 	}
+
+	// =======================================================================================
+	// END OF PETITIONING MODULE
+	// =======================================================================================
 
 	// =======================================================================================
 	// NOTIFICATIONS
@@ -653,5 +659,75 @@ class Student extends CI_Controller
 		$announcement['recipient'] = $recipient;
 		$pusher->trigger('my-channel', 'client_specific', $announcement);
 		$pusher->trigger('my-channel', 'update_dashboard_admin', null);
+	}
+
+	// =======================================================================================
+	// END OF NOTIFICATIONS
+	// =======================================================================================
+
+	// =======================================================================================
+	// OTHER
+	// =======================================================================================
+
+	public function check_units($stud_number)
+	{
+		$totalunits = 0;
+		$data = $this->CourseCard_model->fetch_course_card_admin($stud_number);
+		$array = json_decode(json_encode($data));
+		foreach ($array as $arr) {
+			$totalunits += ($arr->course_units + $arr->laboratory_units);
+		}
+		// echo $totalunits;
+		if ($totalunits < 12 && $totalunits > 0) {
+			$this->underload_request($stud_number);
+		} else if ($totalunits > 0 && $totalunits > 21 && $totalunits <= 24) {
+			$this->overload_request($stud_number);
+		} else {
+			$this->load->view('content_student/not_qualified');
+
+			$this->load->view('includes_student/student_contentFooter');
+			$this->load->view('includes_student/student_rightnav');
+			$this->load->view('includes_student/student_footer');
+		}
+	}
+
+	public function check_graduating()
+	{
+		$totalunits = 0.0;
+		$totalunitspassed = 0.0;
+		$course_units = 0.0;
+		$lab_units = 0.0;
+		$coursepassed = 0.0;
+		$labpassed = 0.0;
+
+		$curriculum = $this->Dashboard_model->fetch_curriculum();
+		$progress = $this->Dashboard_model->fetchProgress();
+		$curr = json_decode(json_encode($curriculum));
+		$grades = json_decode(json_encode($progress));
+
+		foreach ($curr as $unit) {
+			$course_units += $unit->course_units;
+			$lab_units += $unit->laboratory_units;
+			foreach ($grades as $grade) {
+				if ($unit->course_code == $grade->cc_course && ($grade->cc_status == "finished" || $grade->cc_status == "credited") && $grade->cc_final >= 1.0) {
+					$coursepassed += $unit->course_units;
+				}
+				if (strtoupper($unit->laboratory_code) == strtoupper($grade->cc_course) && ($grade->cc_final > 1.0 && $grade->cc_final <= 4.0)) {
+					$labpassed += $unit->laboratory_units;
+				}
+			}
+		}
+		$totalunits = $course_units + $lab_units;
+		$totalunitspassed = $coursepassed + $labpassed;
+
+		if (($totalunits - $totalunitspassed) <= 18) {
+			redirect('Student/simulRequest');
+		} else {
+			$this->load->view('content_student/not_qualified');
+
+			$this->load->view('includes_student/student_contentFooter');
+			$this->load->view('includes_student/student_rightnav');
+			$this->load->view('includes_student/student_footer');
+		}
 	}
 }
