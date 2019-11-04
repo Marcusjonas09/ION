@@ -127,11 +127,12 @@ class Admin extends CI_Controller
 	public function show_account($studNumber, $curriculum_code) // | Display Specific Student Account |
 	{
 		$data['account'] = $this->Account_model->view_user($studNumber);
-		$data['curr'] = $this->Academics_model->fetch_curriculum($curriculum_code);
+		$data['curr'] = $this->Academics_model->fetch_curriculum($studNumber, $curriculum_code);
 		$data['grades'] = $this->Academics_model->fetchProgress($studNumber);
 		$data['offerings'] = $this->Academics_model->fetchCurrentOffering();
-		$data['courses'] = $this->Academics_model->fetch_courses($curriculum_code);
 		$data['cor'] = $this->Academics_model->fetch_current_COR($studNumber);
+
+		// echo json_encode($data);
 
 		$this->load->view('includes_admin/admin_header');
 		$this->load->view('includes_admin/notif_widget');

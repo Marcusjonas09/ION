@@ -218,6 +218,8 @@ class Student extends CI_Controller
 		$data['course_card'] = $this->CourseCard_model->fetch_course_card($year, $term);
 		$data['courses'] = $this->CourseCard_model->fetch_courses();
 
+		// echo json_encode($data);
+
 		$this->load->view('content_student/student_course_card', $data);
 
 		$this->load->view('includes_student/student_contentFooter');
@@ -242,6 +244,8 @@ class Student extends CI_Controller
 		$data['cor'] = $this->COR_model->fetch_course_card($year, $term);
 		$data['courses'] = $this->COR_model->fetch_courses();
 		$data['offerings'] = $this->COR_model->fetchOffering($year, $term);
+
+		// echo json_encode($data);
 
 		$this->load->view('content_student/student_COR', $data);
 

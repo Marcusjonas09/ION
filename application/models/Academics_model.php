@@ -44,12 +44,16 @@ class Academics_model extends CI_Model
         return $query->result();
     }
 
-    public function fetch_curriculum($curriculum_code)
+    public function fetch_curriculum($studNumber, $curriculum_code)
     {
         $this->db->select('*');
-        $this->db->where(array('courses_tbl.curriculum_code' => $curriculum_code));
+        $this->db->where(array(
+            'courses_tbl.curriculum_code' => $curriculum_code,
+            'course_card_tbl.cc_stud_number' => $studNumber
+        ));
         $this->db->from('courses_tbl');
         $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = courses_tbl.laboratory_code', 'LEFT');
+        $this->db->join('course_card_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'LEFT');
         $this->db->order_by('courses_tbl.course_code', 'ASC');
         $query = $this->db->get();
         return $query->result();

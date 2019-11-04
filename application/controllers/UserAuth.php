@@ -26,8 +26,9 @@ class UserAuth extends CI_Controller
 
         $this->User_model->login($data);
         $error['error'] = "";
-        if ($this->session->acc_status) {
-            if ($this->session->login) {
+
+        if ($this->session->login) {
+            if ($this->session->acc_status) {
                 if ($this->session->access == 'admin') {
                     redirect('Admin');
                 } else if ($this->session->access == 'superadmin') {
@@ -36,11 +37,11 @@ class UserAuth extends CI_Controller
                     redirect('Student');
                 }
             } else {
-                $error['error'] = "Invalid login credentials";
+                $error['error'] = "Your Account has been blocked. Please contact your administrator for details";
                 $this->load->view('UserAuth/login', $error);
             }
         } else {
-            $error['error'] = "Your Account has been blocked. Please contact your administrator for details";
+            $error['error'] = "Invalid login credentials";
             $this->load->view('UserAuth/login', $error);
         }
     }

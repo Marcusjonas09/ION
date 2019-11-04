@@ -12,7 +12,6 @@ class User_model extends CI_Model
 
         $query = $this->db->get_where('accounts_tbl', $data);
         $user = $query->row();
-        // print_r($query); die();
         if ($query->num_rows() > 0) {
             if ($user->acc_access_level == 1) { // IF SUPER ADMIN
                 $this->session->set_userdata('login', true);
@@ -38,8 +37,7 @@ class User_model extends CI_Model
                 $this->session->set_userdata('curr_term', $settings->school_term);
                 $this->session->set_userdata('curr_year', $settings->school_year);
                 $this->session->set_userdata('access', 'admin');
-            } else {
-                // IF STUDENT
+            } else if ($user->acc_access_level == 3) {
                 $this->session->set_userdata('login', true);
                 $this->session->set_userdata('acc_status', $user->acc_status);
                 $this->session->set_userdata('acc_number', $user->acc_number);
@@ -53,6 +51,8 @@ class User_model extends CI_Model
                 $this->session->set_userdata('curr_term', $settings->school_term);
                 $this->session->set_userdata('curr_year', $settings->school_year);
                 $this->session->set_userdata('access', 'student');
+            } else {
+                session_destroy();
             }
             $log_details = array(
                 'log_user' => $user->acc_number,
