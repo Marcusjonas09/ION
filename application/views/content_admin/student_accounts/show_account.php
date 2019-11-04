@@ -179,16 +179,12 @@ $totalunitspassed = $coursepassed + $labpassed;
 
                                         <?php foreach ($curr as $cur) : ?>
                                             <?php if ($cur->Year == $y && $cur->Term == $t) : ?>
-                                                <!-- <tr class="<?php foreach ($grades as $grade) {
-                                                                                    if ($grade->cc_course == $cur->course_code) {
-                                                                                        echo "bg-success";
-                                                                                        break;
-                                                                                    } else {
-                                                                                        echo "bg-default";
-                                                                                        break;
-                                                                                    }
-                                                                                } ?>"> -->
-                                                <tr>    
+                                                <tr class="<?php foreach ($grades as $grade) {
+                                                                                if ($grade->cc_course == $cur->course_code) {
+                                                                                    echo "bg-success";
+                                                                                    break;
+                                                                                }
+                                                                            } ?>">
                                                     <td><?= $cur->course_code ?></td>
                                                     <td><?= $cur->course_title ?></td>
                                                     <td class="text-center"><?= $cur->course_units ?></td>

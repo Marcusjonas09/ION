@@ -11,7 +11,7 @@
     <section class="content container-fluid">
         <div class="box box-success">
             <div class="box-header with-border">
-                <form action="<?= base_url() ?>Student/offerings" method="POST">
+                <form action="<?= base_url() ?>Admin/offerings" method="POST">
                     <div class="row container">
                         <h3 class="box-title pull-left"><strong>School Year: </strong></h3>
                         <div class="form-group col-md-2">

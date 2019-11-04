@@ -180,10 +180,9 @@ $totalunitspassed = $coursepassed + $labpassed;
                                         <?php foreach ($curr as $cur) : ?>
                                             <?php if ($cur->Year == $y && $cur->Term == $t) : ?>
                                                 <tr class="<?php foreach ($grades as $grade) {
-                                                                                if (($grade->cc_status == "credited" || $grade->cc_status == "finished") && $grade->cc_stud_number == $this->session->acc_number) {
+                                                                                if ($grade->cc_course == $cur->course_code) {
                                                                                     echo "bg-success";
-                                                                                } else {
-                                                                                    echo "bg-default";
+                                                                                    break;
                                                                                 }
                                                                             } ?>">
                                                     <td><?= $cur->course_code ?></td>

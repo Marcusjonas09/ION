@@ -25,11 +25,35 @@
        <li><a href="<?= base_url() ?>Admin/school_announcements"><i class="fa fa-bullhorn"></i><span>School Announcements</span>
        <li><a href="<?= base_url() ?>Admin/academic_calendar"><i class="fa fa-bullhorn"></i><span>School Calendar</span></a></li>
        <li><a href="<?= base_url() ?>Admin/curricula"><i class="fa fa-file-text-o"></i><span>All Curricula</span></a></li>
-       <li><a href="<?= base_url() ?>Admin/course_petitions"><i class="fa fa-file-text-o"></i><span>Course Petitions</span></a></li>
-       <li><a href="<?= base_url() ?>Admin/cor"><i class="fa fa-file-text-o"></i><span>COR Revision</span></a></li>
-       <li><a href="<?= base_url() ?>Admin/underload"><i class="fa fa-file-text-o"></i><span>Underload Requests</span></a></li>
-       <li><a href="<?= base_url() ?>Admin/overload"><i class="fa fa-file-text-o"></i><span>Overload Requests</span></a></li>
-       <li><a href="<?= base_url() ?>Admin/simul"><i class="fa fa-file-text-o"></i><span>Simul Requests</span></a></li>
+       <li class="treeview">
+         <a href="#">
+           <i class="fa fa-share"></i> <span>Academics</span>
+           <span class="pull-right-container">
+             <i class="fa fa-angle-left pull-right"></i>
+           </span>
+         </a>
+         <ul class="treeview-menu">
+           <li><a href="<?= base_url() ?>Admin/parallel"><i class="fa fa-file-text-o"></i> <span>Parallel Courses</span></a></li>
+           <li><a href="<?= base_url() ?>Admin/offerings"><i class="fa fa-file-text-o"></i> <span>Course Offerings</span></a></li>
+         </ul>
+       </li>
+
+       <li class="treeview">
+         <a href="#">
+           <i class="fa fa-share"></i> <span>Services</span>
+           <span class="pull-right-container">
+             <i class="fa fa-angle-left pull-right"></i>
+           </span>
+         </a>
+         <ul class="treeview-menu">
+           <li><a href="<?= base_url() ?>Admin/course_petitions"><i class="fa fa-file-text-o"></i><span>Course Petitions</span></a></li>
+           <li><a href="<?= base_url() ?>Admin/cor"><i class="fa fa-file-text-o"></i><span>COR Revision</span></a></li>
+           <li><a href="<?= base_url() ?>Admin/underload"><i class="fa fa-file-text-o"></i><span>Underload Requests</span></a></li>
+           <li><a href="<?= base_url() ?>Admin/overload"><i class="fa fa-file-text-o"></i><span>Overload Requests</span></a></li>
+           <li><a href="<?= base_url() ?>Admin/simul"><i class="fa fa-file-text-o"></i><span>Simul Requests</span></a></li>
+         </ul>
+       </li>
+
      </ul>
      <!-- /.sidebar-menu -->
    </section>

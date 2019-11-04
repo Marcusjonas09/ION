@@ -127,8 +127,8 @@ class Admin extends CI_Controller
 	public function show_account($studNumber, $curriculum_code) // | Display Specific Student Account |
 	{
 		$data['account'] = $this->Account_model->view_user($studNumber);
-		$data['curr'] = $this->Academics_model->fetch_curriculum($studNumber, $curriculum_code);
-		$data['grades'] = $this->Academics_model->fetchProgress($studNumber);
+		$data['curr'] = $this->Academics_model->fetch_curriculum_admin($curriculum_code);
+		$data['grades'] = $this->Academics_model->fetch_progress_admin($studNumber);
 		$data['offerings'] = $this->Academics_model->fetchCurrentOffering();
 		$data['cor'] = $this->Academics_model->fetch_current_COR($studNumber);
 
@@ -148,6 +148,59 @@ class Admin extends CI_Controller
 
 	// =======================================================================================
 	// END OF STUDENT ACCOUNT MANAGEMENT MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// PARALLEL MODULE
+	// =======================================================================================
+
+	public function parallel()
+	{
+		$data['parallel'] = $this->Academics_model->fetchParallel();
+		$data['parallelCourse'] = $this->Academics_model->fetchParallelCourse();
+
+		$this->load->view('includes_admin/admin_header');
+		$this->load->view('includes_admin/notif_widget');
+		$this->load->view('includes_admin/admin_topnav');
+		$this->load->view('includes_admin/admin_sidebar');
+
+		$this->load->view('content_admin/parallel_courses/parallel_courses', $data);
+
+		$this->load->view('includes_admin/admin_contentFooter');
+		$this->load->view('includes_admin/admin_rightnav');
+		$this->load->view('includes_admin/admin_footer');
+	}
+
+	// =======================================================================================
+	// END OF PARALLEL MODULE
+	// =======================================================================================
+
+	// =======================================================================================
+	// OFFERING MODULE
+	// =======================================================================================
+
+	public function offerings()
+	{
+		$term = $this->input->post('term');
+		$year = $this->input->post('year');
+		$data['years'] = $this->Academics_model->fetch_year();
+		$data['terms'] = $this->Academics_model->fetch_term();
+		$data['offering'] = $this->Academics_model->fetchOffering($year, $term);
+
+		$this->load->view('includes_admin/admin_header');
+		$this->load->view('includes_admin/notif_widget');
+		$this->load->view('includes_admin/admin_topnav');
+		$this->load->view('includes_admin/admin_sidebar');
+
+		$this->load->view('content_admin/course_offering/course_offering', $data);
+
+		$this->load->view('includes_admin/admin_contentFooter');
+		$this->load->view('includes_admin/admin_rightnav');
+		$this->load->view('includes_admin/admin_footer');
+	}
+
+	// =======================================================================================
+	// END OF OFFERING MODULE
 	// =======================================================================================
 
 	// =======================================================================================
@@ -725,7 +778,7 @@ class Admin extends CI_Controller
 		if ($this->form_validation->run() == FALSE) {
 			$this->curricula();
 		} else {
-			$data['curr'] = $this->Curriculum_model->show_curriculum($CurriculumCode);
+			$data['curr'] = $this->Academics_model->fetch_curriculum_admin($CurriculumCode);
 			$data['currCode'] = $CurriculumCode;
 			$this->load->view('includes_admin/admin_header');
 			$this->load->view('includes_admin/notif_widget');

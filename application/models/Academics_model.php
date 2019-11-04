@@ -4,6 +4,40 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Academics_model extends CI_Model
 {
 
+    // =======================================================================================
+    // ADMIN QUERIES
+    // =======================================================================================
+
+    public function fetch_curriculum_admin($curriculum_code)
+    {
+        $this->db->select('*');
+        $this->db->where(array(
+            'courses_tbl.curriculum_code' => $curriculum_code,
+        ));
+        $this->db->from('courses_tbl');
+        $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = courses_tbl.laboratory_code', 'LEFT');
+        $this->db->order_by('courses_tbl.course_code', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function fetch_progress_admin($stud_number)
+    {
+        $this->db->select('cc_status,cc_course,cc_final');
+        $this->db->where(array(
+            'course_card_tbl.cc_stud_number' => $stud_number,
+            'course_card_tbl.cc_final > ' => 0.5,
+            'course_card_tbl.cc_final <= ' => 4.0,
+        ));
+        $this->db->from('course_card_tbl');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    // =======================================================================================
+    // STUDENT QUERIES
+    // =======================================================================================
+
     public function fetchParallel()
     {
         $query = $this->db->get('parallel_tbl');
@@ -34,35 +68,32 @@ class Academics_model extends CI_Model
     {
         $this->db->distinct();
         $this->db->select('offering_year');
+        $this->db->order_by('offering_year', 'DESC');
         $query = $this->db->get('offering_tbl');
         return $query->result();
     }
 
-    public function fetchOfferingSched()
-    {
-        $query = $this->db->get('offering_sched_tbl');
-        return $query->result();
-    }
-
-    public function fetch_curriculum($studNumber, $curriculum_code)
+    public function fetch_curriculum_student()
     {
         $this->db->select('*');
         $this->db->where(array(
-            'courses_tbl.curriculum_code' => $curriculum_code,
-            'course_card_tbl.cc_stud_number' => $studNumber
+            'courses_tbl.curriculum_code' => $this->session->Curriculum_code,
         ));
         $this->db->from('courses_tbl');
         $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = courses_tbl.laboratory_code', 'LEFT');
-        $this->db->join('course_card_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'LEFT');
         $this->db->order_by('courses_tbl.course_code', 'ASC');
         $query = $this->db->get();
         return $query->result();
     }
 
-    public function fetchProgress($stud_number)
+    public function fetch_progress_student()
     {
-        $this->db->select('*');
-        $this->db->where(array('course_card_tbl.cc_stud_number' => $stud_number));
+        $this->db->select('cc_status,cc_course,cc_final');
+        $this->db->where(array(
+            'course_card_tbl.cc_stud_number' => $this->session->acc_number,
+            'course_card_tbl.cc_final > ' => 0.5,
+            'course_card_tbl.cc_final <= ' => 4.0,
+        ));
         $this->db->from('course_card_tbl');
         $query = $this->db->get();
         return $query->result();

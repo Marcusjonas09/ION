@@ -17,8 +17,12 @@ class Dashboard_model extends CI_Model
 
     public function fetchProgress()
     {
-        $this->db->select('*');
-        $this->db->where(array('course_card_tbl.cc_stud_number' => $this->session->acc_number));
+        $this->db->select('cc_status,cc_course,cc_final');
+        $this->db->where(array(
+            'course_card_tbl.cc_stud_number' => $this->session->acc_number,
+            'course_card_tbl.cc_final > ' => 0.5,
+            'course_card_tbl.cc_final <= ' => 4.0,
+        ));
         $this->db->from('course_card_tbl');
         $query = $this->db->get();
         return $query->result();

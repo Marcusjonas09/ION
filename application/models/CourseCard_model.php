@@ -44,8 +44,6 @@ class CourseCard_model extends CI_Model
             'course_card_tbl.cc_stud_number' => $this->session->acc_number,
             'course_card_tbl.cc_year' => $year,
             'course_card_tbl.cc_term' => $term,
-            'course_card_tbl.cc_status' => 'finished',
-            'course_card_tbl.cc_is_enrolled' => true
         ));
         $this->db->from('course_card_tbl');
         $this->db->join('courses_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'LEFT');
