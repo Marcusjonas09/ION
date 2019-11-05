@@ -10,7 +10,7 @@
       <!-- Main content -->
       <section class="content container-fluid">
 
-          <div class="col-md-6">
+          <div class="col-md-7 pre-scrollable" style="max-height:800px;">
               <?php if ($announcements) : ?>
                   <?php foreach ($announcements as $announcement) : ?>
                       <div class="row">
@@ -48,6 +48,17 @@
                   <h3>No Announcements for Today</h3>
               <?php endif; ?>
           </div>
+          <div class="col-md-5">
+              <div class="box box-primary">
+                  <div class="box-body no-padding">
+                      <!-- THE CALENDAR -->
+                      <div id="calendar"></div>
+                  </div>
+                  <!-- /.box-body -->
+              </div>
+              <!-- /. box -->
+          </div>
+          <!-- /.col -->
       </section>
       <!-- /.content -->
   </div>

@@ -9,13 +9,7 @@
 
     <!-- Main content -->
     <section class="content container-fluid">
-        <div class="col-md-8">
-            <div class="box box-success">
-                <div class="box-body">
-                    <?= $my_calendar ?>
-                </div>
-            </div>
-        </div>
+        
     </section>
     <!-- /.content -->
 </div>
