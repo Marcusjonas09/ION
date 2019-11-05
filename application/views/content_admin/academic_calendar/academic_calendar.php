@@ -12,29 +12,7 @@
     <section class="content container-fluid">
       <div class="row">
         <div class="col-md-3">
-          <div class="box box-solid">
-            <div class="box-header with-border">
-              <h4 class="box-title">Draggable Events</h4>
-            </div>
-            <div class="box-body">
-              <!-- the events -->
-              <div id="external-events">
-                <div class="external-event bg-green">Lunch</div>
-                <div class="external-event bg-yellow">Go home</div>
-                <div class="external-event bg-aqua">Do homework</div>
-                <div class="external-event bg-light-blue">Work on UI design</div>
-                <div class="external-event bg-red">Sleep tight</div>
-                <div class="checkbox">
-                  <label for="drop-remove">
-                    <input type="checkbox" id="drop-remove">
-                    remove after drop
-                  </label>
-                </div>
-              </div>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /. box -->
+
           <div class="box box-solid">
             <div class="box-header with-border">
               <h3 class="box-title">Create Event</h3>
@@ -58,16 +36,40 @@
                   <li><a class="text-navy" href="#"><i class="fa fa-square"></i></a></li>
                 </ul>
               </div>
-              <!-- /btn-group -->
-              <div class="input-group">
-                <input id="new-event" type="text" class="form-control" placeholder="Event Title">
 
-                <div class="input-group-btn">
-                  <button id="add-new-event" type="button" class="btn btn-primary btn-flat">Add</button>
+              <div class="form-group">
+
+
+                <div class="input-group">
+                  <label>Event Title:</label>
+                  <input id="new-event" type="text" class="form-control" placeholder="Event Title">
                 </div>
-                <!-- /btn-group -->
+
+                <label>Start Date:</label>
+
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input id="start_date" type="text" class="form-control pull-right" id="datepicker">
+                </div>
+                <!-- /.input group -->
+
+                <label>End Date:</label>
+
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input id="end_date" type="text" class="form-control pull-right" id="datepicker">
+                </div>
+                <!-- /.input group -->
+
               </div>
-              <!-- /input-group -->
+              <!-- /.form group -->
+              <button id="add-new-event" type="button" class="btn btn-primary btn-flat col-md-12">Add</button>
+              <!-- /.input group -->
+
             </div>
           </div>
         </div>

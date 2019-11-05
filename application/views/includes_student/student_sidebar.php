@@ -20,8 +20,8 @@
      <ul id="sidenav" class="sidebar-menu" data-widget="tree">
        <li class="header">MAIN NAVIGATION</li>
        <li class="active"><a href="<?= base_url() ?>Student/"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-       <li><a href="<?= base_url() ?>Student/announcements"><i class="fa fa-bullhorn"></i><span>Announcements</span>
-       <li><a href="<?= base_url() ?>Student/calendar"><i class="fa fa-calendar"></i><span>Calendar</span></a></li>
+       <li><a href="<?= base_url() ?>Student/announcements"><i class="fa fa-bullhorn"></i><span>Announcements</span></a></li>
+       <!-- <li><a href="<?= base_url() ?>Student/calendar"><i class="fa fa-calendar"></i><span>Calendar</span></a></li> -->
 
        <!--=======================================================================================-->
        <!--=======================================================================================-->

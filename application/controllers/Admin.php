@@ -23,6 +23,7 @@ class Admin extends CI_Controller
 		$this->load->model('Notification_model');
 		$this->load->model('Overload_underload_model');
 		$this->load->model('Real_time_model');
+		$this->load->model('Events_model');
 
 		$this->load->helper('date');
 		$this->load->helper('text');
@@ -327,6 +328,27 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_contentFooter');
 		$this->load->view('includes_admin/admin_rightnav');
 		$this->load->view('includes_admin/admin_footer');
+	}
+
+	public function fetch_events()
+	{
+		$data = $this->Events_model->fetch_events();
+		echo json_encode($data);
+	}
+
+	public function create_event()
+	{
+		$title = $this->input->post('title');
+		$start = $this->input->post('start');
+		$end = $this->input->post('end');
+		$event_details = array(
+			'title' => $title,
+			'start' => $start,
+			'end' => $end
+		);
+		$this->Events_model->create_event($event_details);
+
+		echo json_encode($start);
 	}
 
 	// =======================================================================================
