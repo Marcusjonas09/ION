@@ -49,7 +49,7 @@
               <?php endif; ?>
           </div>
           <div class="col-md-5">
-              <div class="box box-primary">
+              <div class="box box-solid">
                   <div class="box-body no-padding">
                       <!-- THE CALENDAR -->
                       <div id="calendar"></div>
