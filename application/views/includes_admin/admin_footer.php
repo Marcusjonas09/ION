@@ -339,7 +339,7 @@
 
         $.get("<?= base_url() ?>Admin/fetch_events", function(data) {
             calendar_events = data;
-            swal(data);
+            // swal(data);
         });
 
         /* initialize the external events

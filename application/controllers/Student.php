@@ -288,6 +288,8 @@ class Student extends CI_Controller
 		$data['parallel'] = $this->Academics_model->fetchParallel();
 		$data['parallelCourse'] = $this->Academics_model->fetchParallelCourse();
 
+		// echo json_encode($data);
+
 		$this->load->view('content_student/student_parallel_courses', $data);
 
 		$this->load->view('includes_student/student_contentFooter');
@@ -310,7 +312,7 @@ class Student extends CI_Controller
 		$data['years'] = $this->Academics_model->fetch_year();
 		$data['terms'] = $this->Academics_model->fetch_term();
 		$data['offering'] = $this->Academics_model->fetchOffering($year, $term);
-		$data['offeringSched'] = $this->Academics_model->fetchOfferingSched();
+		// $data['offeringSched'] = $this->Academics_model->fetchOfferingSched();
 
 		$this->load->view('content_student/student_course_offerings', $data);
 

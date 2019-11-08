@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Events_model extends CI_Model
 {
-
     public function fetch_events()
     {
         $this->db->select('title,start,end');
