@@ -22,16 +22,16 @@
                     <tbody>
                         <?php foreach ($parallel as $pl) : ?>
                             <tr>
-                                <td class="text-center"><?= $pl->pl_course_code ?></td>
+                                <td class="text-center"><?= $pl->parallel_root_course ?></td>
                                 <td>
                                     <?php foreach ($parallelCourse as $plc) : ?>
-                                        <?php if ($pl->pl_course_code == $plc->root_course) : ?>
+                                        <?php if ($pl->parallel_root_course == $plc->parallel_root_course) : ?>
                                             <div class="row">
                                                 <div class="col-md-2">
-                                                    <?= $plc->course_code ?>
+                                                    <?= $plc->parallel_course ?>
                                                 </div>
                                                 <div class="col-md-10">
-                                                    <?= $plc->course_title ?><br />
+                                                    <?= $plc->parallel_description ?><br />
                                                 </div>
                                             </div>
                                         <?php endif; ?>
