@@ -20,7 +20,9 @@
                   <div class="box-body table-responsive no-padding">
                       <table id="petitionTable" class="table table-striped">
                           <thead>
-                              <th>Student_number</th>
+                              <th>Student Number</th>
+                              <th>Student Name</th>
+                              <th>Date Submitted</th>
                               <th>Status</th>
                               <th>Action</th>
                           </thead>
@@ -29,6 +31,8 @@
                               <?php foreach ($overloads as $overload) : ?>
                                   <tr>
                                       <td><?= $overload->ou_stud_number ?></td>
+                                      <td><?= $overload->acc_fname . ' ' . $overload->acc_mname . ' ' . $overload->acc_lname ?></td>
+                                      <td><?= date("F j, Y, g:i a", $overload->ou_date_posted) ?></td>
                                       <td>
                                           <?php if ($overload->ou_status == 1) {
                                                     echo "<span class='label label-success'>Approved</span>";
@@ -38,7 +42,7 @@
                                                     echo "<span class='label label-danger'>Denied</span>";
                                                 } ?>
                                       </td>
-                                      <td><a href="<?= base_url() ?>Admin/overload_view/<?= $overload->ou_stud_number ?>/<?= $overload->ou_term ?>/<?= $overload->ou_year ?>" class="btn btn-warning btn-sm"><span class="fa fa-eye"></span> View</a></td>
+                                      <td><a href="<?= base_url() ?>Admin/underload_view/<?= $overload->ou_stud_number ?>/<?= $overload->ou_term ?>/<?= $overload->ou_year ?>" class="btn btn-warning btn-sm"><span class="fa fa-eye"></span> View</a></td>
                                   </tr>
                               <?php endforeach; ?>
                           </tbody>

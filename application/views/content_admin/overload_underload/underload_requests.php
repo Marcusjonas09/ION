@@ -20,15 +20,18 @@
                   <div class="box-body table-responsive no-padding">
                       <table id="petitionTable" class="table table-striped">
                           <thead>
-                              <th>Student_number</th>
+                              <th>Student Number</th>
+                              <th>Student Name</th>
+                              <th>Date Submitted</th>
                               <th>Status</th>
                               <th>Action</th>
                           </thead>
                           <tbody>
-
                               <?php foreach ($underloads as $underload) : ?>
                                   <tr>
                                       <td><?= $underload->ou_stud_number ?></td>
+                                      <td><?= $underload->acc_fname . ' ' . $underload->acc_mname . ' ' . $underload->acc_lname ?></td>
+                                      <td><?= date("F j, Y, g:i a", $underload->ou_date_posted) ?></td>
                                       <td>
                                           <?php if ($underload->ou_status == 1) {
                                                     echo "<span class='label label-success'>Approved</span>";

@@ -46,7 +46,9 @@ class Overload_underload_model extends CI_Model
         $this->db->where(array(
             'ou_type' => 'underload'
         ));
-        $query = $this->db->get('overload_underload_tbl');
+        $this->db->from('overload_underload_tbl');
+        $this->db->join('accounts_tbl', 'accounts_tbl.acc_number = overload_underload_tbl.ou_stud_number');
+        $query = $this->db->get();
         return $query->result();
     }
 
@@ -173,7 +175,6 @@ class Overload_underload_model extends CI_Model
         return $query->result();
     }
 
-    public function fetch_potential_petitioner(){
-        
-    }
+    public function fetch_potential_petitioner()
+    { }
 }

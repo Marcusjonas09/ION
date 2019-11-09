@@ -22,14 +22,14 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table class="table table-striped text-center">
+                <table class="table table-striped">
                     <thead>
                         <th>Course</th>
                         <th>Course Title</th>
                         <th>Date Posted</th>
-                        <th>Signees</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                        <th class="text-center">Signees</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Action</th>
                     </thead>
                     <tbody>
                         <?php foreach ($petitions as $petition) : ?>
@@ -43,7 +43,7 @@
                                     <?php endforeach; ?>
                                 </td>
                                 <td><?= date("F j, Y - g:i a", $petition->date_submitted) ?></td>
-                                <td>
+                                <td class="text-center">
                                     <?php $i = 0; ?>
                                     <?php foreach ($petitioners as $petitioner) {
                                             if ($petitioner->petition_unique == $petition->petition_unique) {
@@ -52,7 +52,7 @@
                                         } ?>
                                     <?= $i ?>
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <?php if ($petition->petition_status == 1) {
                                             echo "<span class='label label-success'>Approved</span>";
                                         } elseif ($petition->petition_status == 2) {
@@ -61,7 +61,7 @@
                                             echo "<span class='label label-danger'>Denied</span>";
                                         } ?>
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <a href="<?= base_url() ?>Admin/show_petition/<?= $petition->petition_ID ?>/<?= $petition->petition_unique ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i> View</a>
                                 </td>
                             </tr>
