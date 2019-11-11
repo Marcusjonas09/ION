@@ -382,13 +382,15 @@ class Mobile_model extends CI_Model
 
     public function fetchParallel()
     {
+        $this->db->distinct();
+        $this->db->select('parallel_root_course');
         $query = $this->db->get('parallel_tbl');
         return $query->result();
     }
 
     public function fetchParallelCourse()
     {
-        $query = $this->db->get('parallel_course_tbl');
+        $query = $this->db->get('parallel_tbl');
         return $query->result();
     }
 

@@ -220,11 +220,10 @@ class Courseflow_model extends CI_Model
 
     public function check_petition($course_code)
     {
-        $conditions = array(
-            'course_code' => $course_code
-        );
-        // $this->db->select('*');
-        $query = $this->db->get_where('petitions_tbl', $conditions);
+        $this->db->where(array(
+            'course_code' => $course_code,
+        ));
+        $query = $this->db->get_where('petitions_tbl');
         $petition_count = $query->num_rows();
         // $petition = $query->result();
 

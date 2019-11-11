@@ -27,10 +27,10 @@
                                     <?php foreach ($parallelCourse as $plc) : ?>
                                         <?php if ($pl->parallel_root_course == $plc->parallel_root_course) : ?>
                                             <div class="row">
-                                                <div class="col-md-2">
+                                                <div class="col-md-3">
                                                     <?= $plc->parallel_course ?>
                                                 </div>
-                                                <div class="col-md-10">
+                                                <div class="col-md-9">
                                                     <?= $plc->parallel_description ?><br />
                                                 </div>
                                             </div>

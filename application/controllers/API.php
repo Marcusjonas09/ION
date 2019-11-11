@@ -175,7 +175,7 @@ class API extends CI_Controller
 		echo json_encode($data);
 	}
 
-	public function fetchParallelCourses()
+	public function fetchParallelCourse()
 	{
 		$data = $this->Mobile_model->fetchParallelCourse();
 		echo json_encode($data);

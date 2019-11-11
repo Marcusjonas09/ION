@@ -432,18 +432,17 @@
         $('#add-new-event').click(function(e) {
             e.preventDefault()
             //Get value and make sure it is not null
-            var title = $('#new-event').val()
-            var start = $("#start_date").val();
-            var end = $("#end_date").val();
+            var inputtitle = $('#new-event').val()
+            var inputstart = $("#start_date").val();
+            var inputend = $("#end_date").val();
             // if (title.length == 0 || start.length == 0 || end.length == 0) {
             //     return
             // }
 
-
             $.post('<?= base_url() ?>Admin/create_event', {
-                    title: title,
-                    start: start,
-                    end: end
+                    title: inputtitle,
+                    start: inputstart,
+                    end: inputend
                 }).done(function(data) {
                     swal(data);
                 })
@@ -473,7 +472,6 @@
         })
     });
 </script>
-
 
 </body>
 

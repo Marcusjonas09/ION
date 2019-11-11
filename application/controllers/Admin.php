@@ -346,7 +346,8 @@ class Admin extends CI_Controller
 			'start' => $start,
 			'end' => $end
 		);
-		$this->Events_model->create_event($event_details);
+
+		// $this->Events_model->create_event($event_details);
 
 		echo json_encode($start);
 	}
@@ -855,7 +856,7 @@ class Admin extends CI_Controller
 
 		$number_of_petitioners = $this->Petition_model->check_number_of_petitioners($petition_unique);
 
-		if ($number_of_petitioners >= 15 && $number_of_petitioners <= 40) {
+		if ($number_of_petitioners >= 1 && $number_of_petitioners <= 40) {
 			//petition is approved
 			$recipients = $this->Petition_model->fetch_petition_recipients($petition_unique);
 			$notif_message = 'Petition approved!';
