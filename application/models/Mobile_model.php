@@ -33,12 +33,13 @@ class Mobile_model extends CI_Model
                 //     'Curriculum_code' => $user->curriculum_code
                 // );
                 $credentials = array(
-                    'login' => $user->acc_status,
+                    'login' => true,
                     'acc_status' => $user->acc_status,
                     'acc_number' => $user->acc_number,
                     'Firstname' => $user->acc_fname,
                     'Middlename' => $user->acc_mname,
                     'Lastname' => $user->acc_lname,
+                    'Citizenship' => $user->acc_citizenship,
                     'College' => $user->acc_college,
                     'Program' => $user->acc_program,
                     'Curriculum_code' => $user->curriculum_code,
