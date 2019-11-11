@@ -189,7 +189,7 @@ class API extends CI_Controller
 
 	public function fetchCurrentOffering()
 	{
-		$data = $this->Mobile_model->fetchOffering();
+		$data = $this->Mobile_model->fetchCurrentOffering();
 		echo json_encode($data);
 	}
 
