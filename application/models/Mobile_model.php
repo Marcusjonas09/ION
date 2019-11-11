@@ -394,29 +394,33 @@ class Mobile_model extends CI_Model
         return $query->result();
     }
 
-    public function fetchOffering($year, $term)
+    public function fetchCurrentOffering()
     {
-        $query = $this->db->get_where('offering_tbl', array('offering_year' => $year, 'offering_term' => $term));
+        $this->db->order_by('settings_tbl.settings_ID', 'DESC');
+        $settings_query = $this->db->get('settings_tbl');
+        $settings = $settings_query->row();
+
+        $query = $this->db->get_where('offering_tbl', array('offering_year' => $settings->school_year, 'offering_term' => $settings->school_term));
         return $query->result();
     }
 
-    public function fetch_term()
-    {
-        $this->db->distinct();
-        $this->db->select('offering_term');
-        $this->db->order_by('offering_term', 'DESC');
-        $query = $this->db->get('offering_tbl');
-        return $query->result();
-    }
+    // public function fetch_term()
+    // {
+    //     $this->db->distinct();
+    //     $this->db->select('offering_term');
+    //     $this->db->order_by('offering_term', 'DESC');
+    //     $query = $this->db->get('offering_tbl');
+    //     return $query->result();
+    // }
 
-    public function fetch_year()
-    {
-        $this->db->distinct();
-        $this->db->select('offering_year');
-        $this->db->order_by('offering_year', 'DESC');
-        $query = $this->db->get('offering_tbl');
-        return $query->result();
-    }
+    // public function fetch_year()
+    // {
+    //     $this->db->distinct();
+    //     $this->db->select('offering_year');
+    //     $this->db->order_by('offering_year', 'DESC');
+    //     $query = $this->db->get('offering_tbl');
+    //     return $query->result();
+    // }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     // OTHER FUNCTIONS
