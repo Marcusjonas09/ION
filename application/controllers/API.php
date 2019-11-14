@@ -48,6 +48,7 @@ class API extends CI_Controller
 	}
 
 	public function fetchStudProgress($curriculum_code, $stud_number)
+	// public function fetchStudProgress()
 	{
 		// $curriculum_code = file_get_contents("php://input");
 		$curr = $this->Mobile_model->fetch_curriculum($curriculum_code);
@@ -61,6 +62,7 @@ class API extends CI_Controller
 		$lab_units = 0.0;
 		$coursepassed = 0.0;
 		$labpassed = 0.0;
+		$year_level = '';
 
 		foreach ($curr as $unit) {
 			$course_units += $unit->course_units;
@@ -77,8 +79,27 @@ class API extends CI_Controller
 		$totalunits = $course_units + $lab_units;
 		$totalunitspassed = $coursepassed + $labpassed;
 
-		$result = ($totalunitspassed / $totalunits) * 100;
-		echo json_encode(number_format($result, 0));
+		if ($totalunitspassed >= 3 && $totalunitspassed <= 56) {
+			$year_level = "1st Year";
+		} else if ($totalunitspassed >= 57 && $totalunitspassed <= 116) {
+			$year_level = "2nd Year";
+		} else if ($totalunitspassed >= 117 && $totalunitspassed <= 173) {
+			$year_level = "3rd Year";
+		} else if ($totalunitspassed >= 174 && $totalunitspassed <= ($totalunits - 18)) {
+			$year_level = "4th Year";
+		} else if (($totalunits - $totalunitspassed) <= 18) {
+			$year_level = "GRADUATING";
+		} else { }
+
+		$result = number_format(($totalunitspassed / $totalunits) * 100, 0);
+
+		$progress = array(
+			'progress' => $result,
+			'year_level' => $year_level
+		);
+
+
+		echo json_encode($progress);
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////
