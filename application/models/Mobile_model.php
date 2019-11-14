@@ -77,6 +77,30 @@ class Mobile_model extends CI_Model
         return $query->result();
     }
 
+    public function fetch_curriculum($curriculum_code)
+    {
+        $this->db->select('*');
+        $this->db->where(array('courses_tbl.curriculum_code' => $curriculum_code));
+        $this->db->from('courses_tbl');
+        $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = courses_tbl.laboratory_code', 'LEFT');
+        $this->db->order_by('courses_tbl.course_code', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function fetchProgress($stud_number)
+    {
+        $this->db->select('cc_status,cc_course,cc_final');
+        $this->db->where(array(
+            'course_card_tbl.cc_stud_number' => $stud_number,
+            'course_card_tbl.cc_final > ' => 0.5,
+            'course_card_tbl.cc_final <= ' => 4.0,
+        ));
+        $this->db->from('course_card_tbl');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////
     // COURSE CARD FUNCTIONS
     ///////////////////////////////////////////////////////////////////////////////////////////

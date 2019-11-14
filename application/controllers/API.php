@@ -47,6 +47,40 @@ class API extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function fetchStudProgress($curriculum_code, $stud_number)
+	{
+		// $curriculum_code = file_get_contents("php://input");
+		$curr = $this->Mobile_model->fetch_curriculum($curriculum_code);
+		$grades = $this->Mobile_model->fetchProgress($stud_number);
+		// $curr = $this->Mobile_model->fetch_curriculum("BSITWMA2015");
+		// $grades = $this->Mobile_model->fetchProgress("201610185");
+
+		$totalunits = 0.0;
+		$totalunitspassed = 0.0;
+		$course_units = 0.0;
+		$lab_units = 0.0;
+		$coursepassed = 0.0;
+		$labpassed = 0.0;
+
+		foreach ($curr as $unit) {
+			$course_units += $unit->course_units;
+			$lab_units += $unit->laboratory_units;
+			foreach ($grades as $grade) {
+				if ($unit->course_code == $grade->cc_course && ($grade->cc_status == "finished" || $grade->cc_status == "credited") && $grade->cc_final >= 1.0) {
+					$coursepassed += $unit->course_units;
+				}
+				if (strtoupper($unit->laboratory_code) == strtoupper($grade->cc_course) && ($grade->cc_final > 1.0 && $grade->cc_final <= 4.0)) {
+					$labpassed += $unit->laboratory_units;
+				}
+			}
+		}
+		$totalunits = $course_units + $lab_units;
+		$totalunitspassed = $coursepassed + $labpassed;
+
+		$result = ($totalunitspassed / $totalunits) * 100;
+		echo json_encode(number_format($result, 0));
+	}
+
 	///////////////////////////////////////////////////////////////////////////////////////////
 	// COURSE CARD FUNCTIONS
 	///////////////////////////////////////////////////////////////////////////////////////////
