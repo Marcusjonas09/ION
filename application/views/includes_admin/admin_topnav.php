@@ -1,6 +1,6 @@
 <li class="dropdown user user-menu">
   <!-- Menu Toggle Button -->
-  <a href="<?= base_url() ?>/Admin/profile">
+  <a href="<?= base_url() ?>Admin/profile">
 
     <img src="<?= base_url() ?>dist/img/default_avatar.png" class="user-image" alt="User Image">
 
@@ -9,9 +9,9 @@
 
 </li>
 
-<li class="dropdown user user-menu">
+<li>
   <!-- Menu Toggle Button -->
-  <a href="<?= base_url() ?>UserAuth/logout"><span class="fa fa-sign-out"></span>&nbsp&nbsp Logout</a>
+  <a href="<?= base_url() ?>UserAuth/logout"><span class="fa fa-sign-out"></span></a>
 </li>
 
 <!-- Control Sidebar Toggle Button -->
