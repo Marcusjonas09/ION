@@ -108,7 +108,7 @@ desired effect
     <!-- Main Header -->
     <header class="main-header">
       <!-- Logo -->
-      <a href="<?= base_url() ?>Admin" class="logo">
+      <a href="<?= base_url() ?>Student" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>FIT</b></span>
         <!-- logo for regular state and mobile devices -->
