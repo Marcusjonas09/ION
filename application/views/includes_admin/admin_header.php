@@ -4,7 +4,7 @@ if (!$this->session->login) {
       redirect('UserAuth');
 }
 if ($this->session->access == 'admin') { } else if ($this->session->access == 'student') {
-      rediredc('Student');
+      redirect('Student');
 } else if ($this->session->access == 'superadmin') {
       redirect('SuperAdmin');
 } else {
