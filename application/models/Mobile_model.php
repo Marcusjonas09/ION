@@ -142,6 +142,39 @@ class Mobile_model extends CI_Model
         return $query->result();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    // END
+    ///////////////////////////////////////////////////////////////////////////////////////////
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    // COURSE CARD FUNCTIONS
+    ///////////////////////////////////////////////////////////////////////////////////////////
+
+    public function get_final_balance()
+    {
+        $this->db->select_sum('payment');
+        $this->db->from('payments_tbl');
+        $this->db->where(array('pay_stud_number' => 201610515));
+        $total_payments_query = $this->db->get();
+
+        $this->db->select_sum('bal_total_assessment');
+        $this->db->from('balance_tbl');
+        $this->db->where(array('bal_stud_number' => 201610515));
+        $total_balance_query = $this->db->get();
+
+        $total_balance = $total_balance_query->row();
+        $total_payment = $total_payments_query->row();
+
+        // $this->db->select_sum('payment');
+        // $this->db->from('payments_tbl');
+        // $this->db->where(array('bal_stud_number' => 201511922));
+        // $total_balance_query = $this->db->get('balance_tbl');
+
+        // $total_payment_query = $this->db->get_where('payments_tbl', array('pay_stud_number' => 201511922));
+        return $total_balance->bal_total_assessment - $total_payment->payment;
+    }
+
     public function get_balance($stud_number)
     {
         $this->db->order_by('bal_year', 'ASC');

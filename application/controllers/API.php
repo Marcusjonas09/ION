@@ -134,6 +134,13 @@ class API extends CI_Controller
 	// BALANCE FUNCTIONS
 	///////////////////////////////////////////////////////////////////////////////////////////
 
+	public function get_final_balance()
+	{
+		$data = $this->Mobile_model->get_final_balance();
+		$final_balance['final_balance'] = number_format($data, 2);
+		echo json_encode($final_balance);
+	}
+
 	public function get_balance()
 	{
 		$stud_number = file_get_contents("php://input");
