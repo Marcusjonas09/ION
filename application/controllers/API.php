@@ -136,7 +136,8 @@ class API extends CI_Controller
 
 	public function get_final_balance()
 	{
-		$data = $this->Mobile_model->get_final_balance();
+		$stud_number = file_get_contents("php://input");
+		$data = $this->Mobile_model->get_final_balance($stud_number);
 		$final_balance['final_balance'] = number_format($data, 2);
 		echo json_encode($final_balance);
 	}
