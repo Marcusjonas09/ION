@@ -11,7 +11,6 @@
     <section class="content container-fluid">
         <!-- Table showing all petitions related to this student account -->
 
-
         <div class="col-md-7">
             <div class="box box-success">
                 <div class="box-header">

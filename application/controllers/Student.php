@@ -30,11 +30,6 @@ class Student extends CI_Controller
 
 		$this->load->helper('date');
 		$this->load->helper('text');
-
-		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
-		$this->load->view('includes_student/student_topnav');
-		$this->load->view('includes_student/student_sidebar');
 	}
 
 	public function user_data_submit()
@@ -54,6 +49,12 @@ class Student extends CI_Controller
 
 	public function index()
 	{
+
+		$this->load->view('includes_student/student_header');
+		$this->load->view('includes_student/notif_widget');
+		$this->load->view('includes_student/student_topnav');
+		$this->load->view('includes_student/student_sidebar');
+
 		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
 		$data['grades'] = $this->Dashboard_model->fetchProgress();
 		$data['courses'] = $this->CourseCard_model->fetch_courses();
@@ -77,6 +78,11 @@ class Student extends CI_Controller
 
 	public function announcements()
 	{
+		$this->load->view('includes_student/student_header');
+		$this->load->view('includes_student/notif_widget');
+		$this->load->view('includes_student/student_topnav');
+		$this->load->view('includes_student/student_sidebar');
+
 		$data['announcements'] = $this->Post_model->fetch_posts();
 
 		$this->load->view('content_student/student_announcements', $data);
@@ -96,6 +102,11 @@ class Student extends CI_Controller
 
 	public function calendar()
 	{
+		$this->load->view('includes_student/student_header');
+		$this->load->view('includes_student/notif_widget');
+		$this->load->view('includes_student/student_topnav');
+		$this->load->view('includes_student/student_sidebar');
+
 		$year = $this->uri->segment(3);
 		$month = $this->uri->segment(4);
 		$prefs = array(
@@ -167,6 +178,11 @@ class Student extends CI_Controller
 
 	public function Profile()
 	{
+		$this->load->view('includes_student/student_header');
+		$this->load->view('includes_student/notif_widget');
+		$this->load->view('includes_student/student_topnav');
+		$this->load->view('includes_student/student_sidebar');
+
 		$data['account'] = $this->Account_model->view_user($this->session->acc_number);
 		$data['curr'] = $this->Academics_model->fetch_curriculum_student();
 		$data['grades'] = $this->Academics_model->fetch_progress_student();
@@ -191,6 +207,11 @@ class Student extends CI_Controller
 
 	public function curriculum()
 	{
+		$this->load->view('includes_student/student_header');
+		$this->load->view('includes_student/notif_widget');
+		$this->load->view('includes_student/student_topnav');
+		$this->load->view('includes_student/student_sidebar');
+
 		$data['curr'] = $this->Academics_model->fetch_curriculum_student();
 		$data['grades'] = $this->Academics_model->fetch_progress_student();
 
@@ -211,6 +232,11 @@ class Student extends CI_Controller
 
 	public function course_card()
 	{
+		$this->load->view('includes_student/student_header');
+		$this->load->view('includes_student/notif_widget');
+		$this->load->view('includes_student/student_topnav');
+		$this->load->view('includes_student/student_sidebar');
+
 		$term = $this->input->post('school_term');
 		$year = $this->input->post('school_year');
 		$data['terms'] = $this->CourseCard_model->fetch_term();
@@ -237,6 +263,11 @@ class Student extends CI_Controller
 
 	public function cor()
 	{
+		$this->load->view('includes_student/student_header');
+		$this->load->view('includes_student/notif_widget');
+		$this->load->view('includes_student/student_topnav');
+		$this->load->view('includes_student/student_sidebar');
+
 		$term = $this->input->post('school_term');
 		$year = $this->input->post('school_year');
 		$data['terms'] = $this->COR_model->fetch_term();
@@ -264,6 +295,11 @@ class Student extends CI_Controller
 
 	public function assessment($term, $year)
 	{
+		$this->load->view('includes_student/student_header');
+		$this->load->view('includes_student/notif_widget');
+		$this->load->view('includes_student/student_topnav');
+		$this->load->view('includes_student/student_sidebar');
+
 		$data['balances'] = $this->Assessment_model->get_balance();
 		$data['bal'] = $this->Assessment_model->get_balance_single($term, $year);
 		$data['payments'] = $this->Assessment_model->get_payments($term, $year);
@@ -285,6 +321,11 @@ class Student extends CI_Controller
 
 	public function parallel()
 	{
+		$this->load->view('includes_student/student_header');
+		$this->load->view('includes_student/notif_widget');
+		$this->load->view('includes_student/student_topnav');
+		$this->load->view('includes_student/student_sidebar');
+
 		$data['parallel'] = $this->Academics_model->fetchParallel();
 		$data['parallelCourse'] = $this->Academics_model->fetchParallelCourse();
 
@@ -307,6 +348,11 @@ class Student extends CI_Controller
 
 	public function offerings()
 	{
+		$this->load->view('includes_student/student_header');
+		$this->load->view('includes_student/notif_widget');
+		$this->load->view('includes_student/student_topnav');
+		$this->load->view('includes_student/student_sidebar');
+
 		$term = $this->input->post('term');
 		$year = $this->input->post('year');
 		$data['years'] = $this->Academics_model->fetch_year();
@@ -331,6 +377,11 @@ class Student extends CI_Controller
 
 	public function revisions()
 	{
+		$this->load->view('includes_student/student_header');
+		$this->load->view('includes_student/notif_widget');
+		$this->load->view('includes_student/student_topnav');
+		$this->load->view('includes_student/student_sidebar');
+
 		$data['offerings'] = $this->Dashboard_model->fetchOffering();
 		$data['cor'] = $this->CourseCard_model->fetch_current_COR();
 
@@ -351,6 +402,11 @@ class Student extends CI_Controller
 
 	public function underload_request($stud_number)
 	{
+		$this->load->view('includes_student/student_header');
+		$this->load->view('includes_student/notif_widget');
+		$this->load->view('includes_student/student_topnav');
+		$this->load->view('includes_student/student_sidebar');
+
 		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
 		$data['grades'] = $this->Dashboard_model->fetchProgress();
 		$data['cor'] = $this->CourseCard_model->fetch_course_card_admin($stud_number);
@@ -391,6 +447,11 @@ class Student extends CI_Controller
 
 	public function overload_request($stud_number)
 	{
+		$this->load->view('includes_student/student_header');
+		$this->load->view('includes_student/notif_widget');
+		$this->load->view('includes_student/student_topnav');
+		$this->load->view('includes_student/student_sidebar');
+
 		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
 		$data['grades'] = $this->Dashboard_model->fetchProgress();
 		$data['cor'] = $this->CourseCard_model->fetch_course_card_admin($stud_number);
@@ -433,6 +494,11 @@ class Student extends CI_Controller
 	//SIMUL REQUEST LINK
 	public function simulRequest()
 	{
+		$this->load->view('includes_student/student_header');
+		$this->load->view('includes_student/notif_widget');
+		$this->load->view('includes_student/student_topnav');
+		$this->load->view('includes_student/student_sidebar');
+
 		$data['curr'] = $this->Dashboard_model->fetch_curriculum();
 		$data['grades'] = $this->Dashboard_model->fetchProgress();
 		$data['courses'] = $this->CourseCard_model->fetch_courses();
@@ -456,6 +522,10 @@ class Student extends CI_Controller
 
 	public function petitions()
 	{
+		$this->load->view('includes_student/student_header');
+		$this->load->view('includes_student/notif_widget');
+		$this->load->view('includes_student/student_topnav');
+		$this->load->view('includes_student/student_sidebar');
 
 		$per_page = 5;
 		$end_page = $this->uri->segment(3);
@@ -501,27 +571,50 @@ class Student extends CI_Controller
 
 	public function submitPetition()
 	{
+
+		// get course code
 		$course_code = $this->input->post('course_code');
-		$result = $this->Courseflow_model->check_petition($course_code);
+
+		// create indentifier
 		$petition_unique = $course_code . time();
+
+		// check petition
+		$result = $this->Courseflow_model->check_petition($course_code);
+
+		// if it passes all constraints submit the petition
+		// create petition
+		// echo json_encode($result);
+
+		// if petition exists and still have slots
+		// suggest to sign
+
+		// else throw an error message
+		// error message
+
+
+		// $result = $this->Courseflow_model->check_petition($petition_unique);
 		$petition_details = array(
 			'course_code' => $course_code,
 			'petition_unique' => $petition_unique,
 			'stud_number' => $this->session->acc_number,
 			'date_submitted' => time()
 		);
-
+		// echo json_encode($result);
 		if ($result) {
 			$this->Petition_model->submitPetition($petition_details);
 			redirect('Student/petitions');
 		} else {
-
 			redirect('Student/petitions');
 		}
 	}
 
 	public function petitionView($petitionID, $petition_unique)
 	{
+		$this->load->view('includes_student/student_header');
+		$this->load->view('includes_student/notif_widget');
+		$this->load->view('includes_student/student_topnav');
+		$this->load->view('includes_student/student_sidebar');
+
 		$data['petition'] = $this->Petition_model->fetchPetition($petitionID);
 		$data['petitioners'] = $this->Petition_model->fetchPetitioners($petition_unique);
 		$data['courses'] = $this->Petition_model->fetchCourses();
@@ -601,6 +694,11 @@ class Student extends CI_Controller
 
 	public function notifications()
 	{
+		$this->load->view('includes_student/student_header');
+		$this->load->view('includes_student/notif_widget');
+		$this->load->view('includes_student/student_topnav');
+		$this->load->view('includes_student/student_sidebar');
+
 		$per_page = 10;
 		$end_page = $this->uri->segment(3);
 		$this->load->library('pagination');
@@ -677,6 +775,11 @@ class Student extends CI_Controller
 
 	public function check_units($stud_number)
 	{
+		$this->load->view('includes_student/student_header');
+		$this->load->view('includes_student/notif_widget');
+		$this->load->view('includes_student/student_topnav');
+		$this->load->view('includes_student/student_sidebar');
+
 		$totalunits = 0;
 		$data = $this->CourseCard_model->fetch_course_card_admin($stud_number);
 		$array = json_decode(json_encode($data));
@@ -699,6 +802,11 @@ class Student extends CI_Controller
 
 	public function check_graduating()
 	{
+		$this->load->view('includes_student/student_header');
+		$this->load->view('includes_student/notif_widget');
+		$this->load->view('includes_student/student_topnav');
+		$this->load->view('includes_student/student_sidebar');
+
 		$totalunits = 0.0;
 		$totalunitspassed = 0.0;
 		$course_units = 0.0;

@@ -220,26 +220,63 @@ class Courseflow_model extends CI_Model
 
     public function check_petition($course_code)
     {
+        $this->db->select('petition_unique');
         $this->db->where(array(
             'course_code' => $course_code,
+            'petition_status' => 2
         ));
-        $query = $this->db->get_where('petitions_tbl');
+        $this->db->from('petitions_tbl');
+        $query = $this->db->get();
         $petition_count = $query->num_rows();
-        // $petition = $query->result();
 
         if ($petition_count > 0) {
-            return false;
+
+            $petition_unique = $query->result();
+
+            $available_petitions = $this->check_if_full($petition_unique);
+            //suggest petition
+            if ($available_petitions) {
+                //suggest petition
+                return false;
+            } else {
+                //create petition
+                return true;
+            }
         } else {
             return true;
         }
-
-        // $query = $this->db->get_where('petitions_tbl', array('petition_unique' => $course_code . time()));
-        // $petitioner_count = $query->num_rows();
-        // echo json_encode($petition_exists);
-        // die();
-
-        // return $petitioner_count;
     }
+
+    public function check_if_full($petition_unique)
+    {
+        $available_petitions = array();
+        foreach ($petition_unique as $petition) {
+            $this->db->select('*');
+            $this->db->where(array('petition_unique' => $petition->petition_unique));
+            $this->db->from('petitioners_tbl');
+            $query = $this->db->get();
+            $petitioners = $query->num_rows();
+            if ($petitioners < 40) {
+                array_push($available_petitions, $petition->petition_unique);
+            }
+        }
+        return $available_petitions;
+    }
+
+    // public function check_petition($petition_unique)
+    // {
+    //     $this->db->where(array(
+    //         'petition_unique' => $petition_unique,
+    //     ));
+    //     $query = $this->db->get_where('petitions_tbl');
+    //     $petition_count = $query->num_rows();
+
+    //     if ($petition_count > 0) {
+    //         return false;
+    //     } else {
+    //         return true;
+    //     }
+    // }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     // LOAD REVISION FUNCTIONS
