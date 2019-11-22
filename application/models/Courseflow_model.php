@@ -239,7 +239,7 @@ class Courseflow_model extends CI_Model
                 //suggest petition
                 return false;
             } else {
-                //create petition
+                //create petitions
                 return true;
             }
         } else {

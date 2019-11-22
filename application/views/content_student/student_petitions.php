@@ -30,12 +30,13 @@
           <div class="form-group">
             <label class="col-md-2 control-label">Course Code</label>
             <div class="form-group col-md-6">
-              <select name="course_code" class="form-control js-example-basic-single">
+              <select id="course_code" name="course_code" class="form-control js-example-basic-single">
                 <?php foreach ($petition_suggestions as $petition_suggestion) : ?>
                   <option value="<?= $petition_suggestion->course_code ?>"><?= $petition_suggestion->course_code . " - " . $petition_suggestion->course_title ?></option>
                 <?php endforeach; ?>
               </select>
             </div>
+            <!-- id="submit_petition" -->
             <button type="submit" class="btn btn-success" style="margin-left:10px;">Submit</button>
             <!-- </div> -->
           </div>

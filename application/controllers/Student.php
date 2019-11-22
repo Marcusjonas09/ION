@@ -602,6 +602,11 @@ class Student extends CI_Controller
 		// echo json_encode($result);
 		if ($result) {
 			$this->Petition_model->submitPetition($petition_details);
+			// if($this->Petition_model->submitPetition($petition_details)){
+
+			// }else{
+
+			// }
 			redirect('Student/petitions');
 		} else {
 			redirect('Student/petitions');

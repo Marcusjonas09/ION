@@ -168,6 +168,23 @@
             return formattedDate;
 
         }
+
+
+
+        // $('#submit_petition').click(function() {
+        //     var petition_course_code = $("#course_code").val();
+        //     $.post("<?= base_url() ?>Student/submitPetition", {
+        //         course_code: petition_course_code
+        //     }).done(function() {
+        //         swal('successful');
+        //     }).fail(function() {
+        //         swal('failed');
+        //     });
+        // });
+
+        function show_error(header, message, context) {
+
+        }
         /* initialize the external events
                  -----------------------------------------------------------------*/
         function init_events(ele) {
