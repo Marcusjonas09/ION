@@ -171,8 +171,8 @@ class Mobile_model extends CI_Model
 
     public function get_balance($stud_number)
     {
-        $this->db->order_by('bal_year', 'ASC');
-        $this->db->order_by('bal_term', 'ASC');
+        $this->db->order_by('bal_year', 'DESC');
+        $this->db->order_by('bal_term', 'DESC');
         $query = $this->db->get_where('balance_tbl', array('bal_stud_number' => $stud_number));
         return $query->result();
     }
