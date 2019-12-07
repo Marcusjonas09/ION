@@ -65,6 +65,8 @@ class Courseflow_model extends CI_Model
             array_push($allcourse_array, $all_course->cc_course);
         }
 
+        // fetch courses related to specific curriculum
+
         $this->db->select('course_code');
         $this->db->where(array(
             'courses_tbl.curriculum_code' => $this->session->curriculum,
@@ -80,41 +82,44 @@ class Courseflow_model extends CI_Model
         foreach ($untaken_courses as $untaken_course) {
             array_push($untaken_in_offering, $untaken_course->course_code);
         }
+
         if ($untaken_in_offering) {
+
             //fetch untaken courses in offering table
+
             $this->db->distinct();
             $this->db->select('offering_course_code,offering_course_slot');
             $this->db->where(array(
                 'offering_year' => $this->session->curr_year,
                 'offering_term' => $this->session->curr_term,
-                // 'offering_course_slot >' => 0
             ));
             $this->db->where_in('offering_course_code', $untaken_in_offering);
             $this->db->from('offering_tbl');
+
             $query = $this->db->get();
-
             $suggestions = $query->result();
-
             $suggestion = array();
+
             foreach ($suggestions as $suggest) {
-                $sample = 0;
+                $CourseSuggestions = 0;
                 foreach ($suggestions as $suggest_inner) {
                     if ($suggest_inner->offering_course_code == $suggest->offering_course_code) {
-                        $sample += $suggest_inner->offering_course_slot;
+                        $CourseSuggestions += $suggest_inner->offering_course_slot;
                     }
                 }
-                if ($sample) {
-                    $sample = 0;
+                if ($CourseSuggestions) {
+                    $CourseSuggestions = 0;
                 } else {
                     array_push($suggestion, $suggest->offering_course_code);
                 }
             }
 
+            //fetch course details of suggested courses
+
             $this->db->select('*');
             $this->db->from('courses_tbl');
             $this->db->where_in('course_code', $suggestion);
             $query = $this->db->get();
-
             return $query->result();
         }
         return $query->result();
