@@ -32,13 +32,9 @@
             <div class="form-group col-md-6">
               <select id="course_code" name="course_code" class="form-control js-example-basic-single">
                 <?php foreach ($petition_suggestions as $petition_suggestion) : ?>
-                  <?php foreach ($petitions_available as $petition_available) : ?>
-                    <?php foreach ($petitions as $petition) : ?>
-                      <?php if ($petition_suggestion->course_code != $petition_available->course_code && $petition_suggestion->course_code != $petition->course_code) : ?>
-                        <option value="<?= $petition_suggestion->course_code ?>"><?= $petition_suggestion->course_code . " - " . $petition_suggestion->course_title ?></option>
-                      <?php endif; ?>
-                    <?php endforeach; ?>
-                  <?php endforeach; ?>
+                  <?php if ($petition_suggestion->course_code) : ?>
+                    <option value="<?= $petition_suggestion->course_code ?>"><?= $petition_suggestion->course_code . " - " . $petition_suggestion->course_title ?></option>
+                  <?php endif; ?>
                 <?php endforeach; ?>
               </select>
             </div>
