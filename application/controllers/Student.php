@@ -849,4 +849,9 @@ class Student extends CI_Controller
 			$this->load->view('includes_student/student_footer');
 		}
 	}
+
+	public function maintenance()
+	{
+		$this->load->view('maintenance_page');
+	}
 }
