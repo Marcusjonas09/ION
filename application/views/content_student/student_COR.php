@@ -13,7 +13,7 @@
             <div class="box-header with-border">
                 <form action="<?= base_url() ?>Student/cor" method="POST">
                     <div class="row container">
-                        <h3 class="box-title pull-left"><strong>School Year: </strong></h3>
+                        <h3 class="box-title pull-left"><strong>School Term: </strong></h3>
                         <div class="form-group col-md-2">
                             <select name="school_term" class="form-control">
                                 <?php foreach ($terms as $term) : ?>
@@ -21,7 +21,7 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <h3 class="box-title pull-left"><strong>Term: </strong></h3>
+                        <h3 class="box-title pull-left"><strong>School Year: </strong></h3>
                         <div class="form-group col-md-2">
                             <select name="school_year" class="form-control">
                                 <?php foreach ($years as $year) : ?>
@@ -64,22 +64,22 @@
                                         <td><?= strtoupper($record->cc_course) ?></td>
                                         <td>
                                             <?php if (strtoupper($record->cc_course) == strtoupper($record->course_code)) {
-                                                            echo strtoupper($record->course_title);
-                                                        } else if (strtoupper($record->cc_course) == strtoupper($record->laboratory_code)) {
-                                                            echo strtoupper($record->laboratory_title);
-                                                        } else {
-                                                            echo '';
-                                                        } ?>
+                                                echo strtoupper($record->course_title);
+                                            } else if (strtoupper($record->cc_course) == strtoupper($record->laboratory_code)) {
+                                                echo strtoupper($record->laboratory_title);
+                                            } else {
+                                                echo '';
+                                            } ?>
                                         </td>
                                         <td class="text-center"><?= strtoupper($record->cc_section) ?></td>
                                         <td class="text-center">
                                             <?php if (strtoupper($record->cc_course) == strtoupper($record->course_code)) {
-                                                            echo strtoupper($record->course_units);
-                                                        } else if (strtoupper($record->cc_course) == strtoupper($record->laboratory_code)) {
-                                                            echo strtoupper($record->laboratory_units);
-                                                        } else {
-                                                            echo '';
-                                                        } ?>
+                                                echo strtoupper($record->course_units);
+                                            } else if (strtoupper($record->cc_course) == strtoupper($record->laboratory_code)) {
+                                                echo strtoupper($record->laboratory_units);
+                                            } else {
+                                                echo '';
+                                            } ?>
                                         </td>
                                         <?php foreach ($offerings as $offering) : ?>
                                             <?php if ($record->cc_course == $offering->offering_course_code && $record->cc_section == $offering->offering_course_section) : ?>
