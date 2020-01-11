@@ -580,7 +580,7 @@ class Student extends CI_Controller
 
 		// check petition
 		$result = $this->Courseflow_model->check_petition($course_code);
-
+		
 		// if it passes all constraints submit the petition
 		// create petition
 		// echo json_encode($result);

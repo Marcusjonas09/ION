@@ -47,7 +47,7 @@
                             <td><strong>Year Level: </strong></td>
                         </tr>
                     </table>
-                    <table class="table">
+                    <table class="table table-striped table-bordered">
                         <tr class="bg-success" style="background-color:#00a65a; color:white;">
                             <th class="text-center col-md-1">COURSES</th>
                             <th class="text-center col-md-4">TITLE</th>
@@ -87,6 +87,7 @@
                                                 <td class="text-center"><?= $offering->offering_course_time ?></td>
                                             <?php endif; ?>
                                         <?php endforeach; ?>
+                                        <td></td>
                                     </tr>
                                 <?php endif; ?>
                             <?php endforeach; ?>
