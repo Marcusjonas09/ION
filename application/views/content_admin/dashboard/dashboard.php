@@ -64,22 +64,22 @@
     </div>
     <!-- ./col -->
 
-    <!-- <div class="col-lg-3 col-xs-6"> -->
-    <!-- small box -->
-    <!-- <div class="small-box bg-green">
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-green">
         <div class="inner">
           <h3 id="simul_number">0</h3>
 
           <p>Pending Simul Request/s</p>
         </div>
-        <div class="icon"> -->
-    <!-- <i class="fa fa-shopping-cart"></i> -->
-    <!-- </div>
+        <div class="icon">
+          <!-- <i class="fa fa-shopping-cart"></i> -->
+        </div>
         <a href="<?= base_url() ?>Admin/simul" class="small-box-footer">
           More info <i class="fa fa-arrow-circle-right"></i>
         </a>
       </div>
-    </div> -->
+    </div>
     <!-- ./col -->
 
   </section>

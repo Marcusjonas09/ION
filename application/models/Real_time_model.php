@@ -31,7 +31,9 @@ class Real_time_model extends CI_Model
 
     public function fetchSimul_num_rows()
     {
-        $query = $this->db->get('petitions_tbl');
+        $query = $this->db->get('simul_tbl');
+        // return $query->num_rows();
+        // $query = $this->db->get_where('simul_tbl', array('simul_status' => '2'));
         return $query->num_rows();
     }
 }
