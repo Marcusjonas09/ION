@@ -89,7 +89,8 @@ class API extends CI_Controller
 			$year_level = "4th Year";
 		} else if (($totalunits - $totalunitspassed) <= 18) {
 			$year_level = "GRADUATING";
-		} else { }
+		} else {
+		}
 
 		$result = number_format(($totalunitspassed / $totalunits) * 100, 0);
 
@@ -123,6 +124,12 @@ class API extends CI_Controller
 	{
 		$stud_number = file_get_contents("php://input");
 		$data = $this->Mobile_model->fetch_course_card_year($stud_number);
+		echo json_encode($data);
+	}
+
+	public function fetchCourseCardLatest($stud_number)
+	{
+		$data = $this->Mobile_model->fetch_course_card_latest($stud_number);
 		echo json_encode($data);
 	}
 

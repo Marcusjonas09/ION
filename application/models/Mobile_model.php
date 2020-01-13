@@ -142,6 +142,39 @@ class Mobile_model extends CI_Model
         return $query->result();
     }
 
+    public function fetch_course_card_latest($stud_number)
+    {
+        // $this->db->distinct();
+        $this->db->select('cc_year');
+        $this->db->where(array('cc_stud_number' => $stud_number));
+        $this->db->order_by('cc_year', 'desc');
+        $queryYear = $this->db->get('course_card_tbl');
+        $year = $queryYear->row();
+
+        // $this->db->distinct();
+        $this->db->select('cc_term');
+        $this->db->where(array('cc_stud_number' => $stud_number));
+        $this->db->order_by('cc_term', 'asc');
+        $queryTerm = $this->db->get('course_card_tbl');
+        $term = $queryTerm->row();
+
+        $this->db->select('*');
+        $this->db->where(array(
+            'cc_stud_number' => $stud_number,
+            'cc_year' => $year->cc_year,
+            'cc_term' => $term->cc_term,
+            'cc_status' => "finished",
+        ));
+        $this->db->from('course_card_tbl');
+        $this->db->join('courses_tbl', 'course_card_tbl.cc_course = courses_tbl.course_code', 'LEFT');
+        $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_code = course_card_tbl.cc_course', 'LEFT');
+        $this->db->order_by('course_card_tbl.cc_course', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+        // return $year->cc_year;
+        // return $term->cc_term;
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////
     // END
     ///////////////////////////////////////////////////////////////////////////////////////////
