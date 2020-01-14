@@ -13,23 +13,26 @@
             <div class="box-header with-border">
                 <form action="<?= base_url() ?>Student/cor" method="POST">
                     <div class="row container">
-                        <h3 class="box-title pull-left"><strong>School Term: </strong></h3>
-                        <div class="form-group col-md-2">
-                            <select name="school_term" class="form-control">
-                                <?php foreach ($terms as $term) : ?>
-                                    <option value="<?= $term->cc_term ?>"><?= $term->cc_term ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
                         <h3 class="box-title pull-left"><strong>School Year: </strong></h3>
                         <div class="form-group col-md-2">
                             <select name="school_year" class="form-control">
+                                <option value="--">--</option>
                                 <?php foreach ($years as $year) : ?>
                                     <option value="<?= $year->cc_year ?>"><?= $year->cc_year ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-success" style="margin-left:10px;">Submit</button>
+                        <h3 class="box-title pull-left"><strong>School Term: </strong></h3>
+                        <div class="form-group col-md-2">
+                            <select name="school_term" class="form-control">
+                                <option value="--">--</option>
+                                <?php foreach ($terms as $term) : ?>
+                                    <option value="<?= $term->cc_term ?>"><?= $term->cc_term ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <button type="submit" name="submit" class="btn btn-success" style="margin-left:10px;">Submit</button>
                     </div>
                 </form>
             </div>
@@ -93,6 +96,12 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+                <?php else : ?>
+                    <?php if (isset($_POST['submit'])) : ?>
+                        <div class="alert alert-warning alert-dismissible" role="alert">
+                            <p><?php echo "No records retrieved"; ?></p>
+                        </div>
+                    <?php endif; ?>
                 <?php endif; ?>
             </div>
             <!-- /.box-body -->

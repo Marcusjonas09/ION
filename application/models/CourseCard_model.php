@@ -8,15 +8,17 @@ class CourseCard_model extends CI_Model
         $this->db->distinct();
         $this->db->select('cc_term');
         $this->db->where(array('course_card_tbl.cc_stud_number' => $this->session->acc_number));
+        $this->db->order_by("cc_term", "desc");
         $query = $this->db->get('course_card_tbl');
         return $query->result();
     }
 
     public function fetch_year()
     {
-        $this->db->distinct();
+        $this->db->distinct();  
         $this->db->select('cc_year');
         $this->db->where(array('course_card_tbl.cc_stud_number' => $this->session->acc_number));
+        $this->db->order_by("cc_year", "desc");
         $query = $this->db->get('course_card_tbl');
         return $query->result();
     }

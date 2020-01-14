@@ -49,9 +49,7 @@ class Student extends CI_Controller
 
 	public function index()
 	{
-
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 
@@ -79,7 +77,6 @@ class Student extends CI_Controller
 	public function announcements()
 	{
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 
@@ -103,7 +100,7 @@ class Student extends CI_Controller
 	public function calendar()
 	{
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
+
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 
@@ -179,7 +176,7 @@ class Student extends CI_Controller
 	public function Profile()
 	{
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
+
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 
@@ -208,7 +205,7 @@ class Student extends CI_Controller
 	public function curriculum()
 	{
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
+
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 
@@ -233,7 +230,7 @@ class Student extends CI_Controller
 	public function course_card()
 	{
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
+
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 
@@ -264,7 +261,7 @@ class Student extends CI_Controller
 	public function cor()
 	{
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
+
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 
@@ -296,7 +293,7 @@ class Student extends CI_Controller
 	public function assessment($term, $year)
 	{
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
+
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 
@@ -322,7 +319,7 @@ class Student extends CI_Controller
 	public function parallel()
 	{
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
+
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 
@@ -349,7 +346,7 @@ class Student extends CI_Controller
 	public function offerings()
 	{
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
+
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 
@@ -378,7 +375,7 @@ class Student extends CI_Controller
 	public function revisions()
 	{
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
+
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 
@@ -403,7 +400,7 @@ class Student extends CI_Controller
 	public function underload_request($stud_number)
 	{
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
+
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 
@@ -448,7 +445,7 @@ class Student extends CI_Controller
 	public function overload_request($stud_number)
 	{
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
+
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 
@@ -495,7 +492,7 @@ class Student extends CI_Controller
 	public function simulRequest()
 	{
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
+
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 
@@ -523,7 +520,7 @@ class Student extends CI_Controller
 	public function petitions()
 	{
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
+
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 
@@ -580,7 +577,7 @@ class Student extends CI_Controller
 
 		// check petition
 		$result = $this->Courseflow_model->check_petition($course_code);
-		
+
 		// if it passes all constraints submit the petition
 		// create petition
 		// echo json_encode($result);
@@ -616,7 +613,7 @@ class Student extends CI_Controller
 	public function petitionView($petitionID, $petition_unique)
 	{
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
+
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 
@@ -700,7 +697,7 @@ class Student extends CI_Controller
 	public function notifications()
 	{
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
+
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 
@@ -781,7 +778,7 @@ class Student extends CI_Controller
 	public function check_units($stud_number)
 	{
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
+
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 
@@ -808,7 +805,7 @@ class Student extends CI_Controller
 	public function check_graduating()
 	{
 		$this->load->view('includes_student/student_header');
-		$this->load->view('includes_student/notif_widget');
+
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 

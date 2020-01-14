@@ -5,7 +5,8 @@ if (!$this->session->login) {
 }
 if ($this->session->access == 'admin') {
   redirect('Admin');
-} else if ($this->session->access == 'student') { } else if ($this->session->access == 'superadmin') {
+} else if ($this->session->access == 'student') {
+} else if ($this->session->access == 'superadmin') {
   redirect('SuperAdmin');
 } else {
   redirect('UserAuth');
@@ -22,7 +23,7 @@ if ($this->session->access == 'admin') {
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- jQuery 3 -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
   <!-- <script src="<?= base_url() ?>dist/js/timestamp-tag.js"></script> -->
   <link rel="stylesheet" href="<?= base_url() ?>bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
@@ -33,6 +34,7 @@ if ($this->session->access == 'admin') {
   <link rel="stylesheet" href="<?= base_url() ?>dist/css/AdminLTE.min.css">
   <!-- Select2 -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="<?= base_url() ?>bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 
   <!-- fullCalendar -->
   <link rel="stylesheet" href="<?= base_url() ?>bower_components/fullcalendar/dist/fullcalendar.min.css">
@@ -106,22 +108,3 @@ desired effect
 
   <div class="wrapper">
     <!-- Main Header -->
-    <header class="main-header">
-      <!-- Logo -->
-      <a href="<?= base_url() ?>Student" class="logo">
-        <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>FIT</b></span>
-        <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>FEUTECH</b></span>
-      </a>
-
-      <!-- Header Navbar -->
-      <nav class="navbar navbar-static-top" role="navigation">
-        <!-- Sidebar toggle button-->
-        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-          <span class="sr-only">Toggle navigation</span>
-        </a>
-        <!-- Navbar Right Menu -->
-        <div class="navbar-custom-menu">
-          <ul class="nav navbar-nav">
-            <!-- User Account Menu -->

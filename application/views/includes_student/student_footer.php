@@ -3,6 +3,7 @@
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="<?= base_url() ?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- SlimScroll -->
@@ -24,9 +25,22 @@
 <script src="<?= base_url() ?>bower_components/moment/moment.js"></script>
 <script src="<?= base_url() ?>bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
 
+<!-- DataTables -->
+<script src="<?= base_url() ?>bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="<?= base_url() ?>bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
 
 <script type="text/javascript">
     $(document).ready(function() {
+
+        $('#example2').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': true,
+            'ordering': false,
+            'info': true,
+            'autoWidth': false
+        });
 
         // get last login
         var last_checked;

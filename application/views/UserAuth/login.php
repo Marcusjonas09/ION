@@ -8,7 +8,8 @@ if ($this->session->access == 'admin') {
     redirect('Student');
 } else if ($this->session->access == 'superadmin') {
     redirect('SuperAdmin');
-} else { }
+} else {
+}
 ?>
 
 <!DOCTYPE html>
@@ -27,17 +28,8 @@ if ($this->session->access == 'admin') {
     <link rel="stylesheet" href="<?= base_url() ?>dist/css/skins/skin-green.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>dist/css/override.css?date=577d89ebe25ec3af2b99d89af4ebac57">
 </head>
-<?php if ($error) : ?>
-    <div class="alert alert-warning alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="alert-heading">Login Error!</h4>
-        <p><?php echo $error; ?></p>
-    </div>
-<?php endif; ?>
 
-<body style="overflow:hidden;" class="hold-transition login-page">
+<body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-box-body">
             <p class="text-center"><img src="<?= base_url() ?>dist/img/itamaraws.png" width="220" /></p>
@@ -45,7 +37,11 @@ if ($this->session->access == 'admin') {
                 FEUTECH iON <br /><span class="login-app">
                 </span>
             </p>
-
+            <?php if ($error) : ?>
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                    <p><?php echo $error; ?></p>
+                </div>
+            <?php endif; ?>
             <form action="<?= base_url() ?>UserAuth/login" method="post" accept-charset="utf-8">
                 <div class="form-group has-feedback">
                     <input type="text" class="form-control" name="acc_number" placeholder="Student Number" value="">

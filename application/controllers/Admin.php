@@ -36,7 +36,7 @@ class Admin extends CI_Controller
 	public function index() // | Display Dashboard |
 	{
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -108,7 +108,7 @@ class Admin extends CI_Controller
 		$data['students'] = $this->Account_model->fetch_student_accounts($per_page, $end_page);
 
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -136,7 +136,7 @@ class Admin extends CI_Controller
 		// echo json_encode($data);
 
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -161,7 +161,7 @@ class Admin extends CI_Controller
 		$data['parallelCourse'] = $this->Academics_model->fetchParallelCourse();
 
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -189,7 +189,7 @@ class Admin extends CI_Controller
 		$data['offering'] = $this->Academics_model->fetchOffering($year, $term);
 
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -242,7 +242,7 @@ class Admin extends CI_Controller
 		$data['courses'] = $this->Petition_model->fetchCoursesAdmin();
 
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -319,7 +319,7 @@ class Admin extends CI_Controller
 		$data['my_calendar'] = $this->calendar->generate($year, $month);
 
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -364,7 +364,7 @@ class Admin extends CI_Controller
 	{
 		$data['posts'] = $this->Post_model->fetch_posts();
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -379,7 +379,7 @@ class Admin extends CI_Controller
 	{
 		$data = $this->Post_model->fetch_post($post_id);
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -535,7 +535,7 @@ class Admin extends CI_Controller
 	{
 		$data = $this->Post_model->fetch_post($post_id);
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -557,7 +557,7 @@ class Admin extends CI_Controller
 	public function curricula()
 	{
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -580,7 +580,7 @@ class Admin extends CI_Controller
 	{
 
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -604,7 +604,7 @@ class Admin extends CI_Controller
 		$data['underloads'] = $this->Overload_underload_model->fetch_all_underload();
 
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -624,7 +624,7 @@ class Admin extends CI_Controller
 		$data['underload'] = $this->Overload_underload_model->fetch_underload($stud_number, $term, $year);
 
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -670,7 +670,7 @@ class Admin extends CI_Controller
 		$data['overloads'] = $this->Overload_underload_model->fetch_all_overload();
 
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -691,7 +691,7 @@ class Admin extends CI_Controller
 		$data['overload'] = $this->Overload_underload_model->fetch_overload($stud_number, $term, $year);
 
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -735,7 +735,7 @@ class Admin extends CI_Controller
 	public function simul() // | Display all simul request |
 	{
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -754,7 +754,7 @@ class Admin extends CI_Controller
 	{
 		$data['labs'] = $this->Curriculum_model->fetchLab();
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -773,7 +773,7 @@ class Admin extends CI_Controller
 	{
 		$data['account'] = $this->Account_model->view_user($this->session->acc_number);
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -804,7 +804,7 @@ class Admin extends CI_Controller
 			$data['curr'] = $this->Academics_model->fetch_curriculum_admin($CurriculumCode);
 			$data['currCode'] = $CurriculumCode;
 			$this->load->view('includes_admin/admin_header');
-			$this->load->view('includes_admin/notif_widget');
+
 			$this->load->view('includes_admin/admin_topnav');
 			$this->load->view('includes_admin/admin_sidebar');
 
@@ -896,7 +896,7 @@ class Admin extends CI_Controller
 		$data['petitioners'] = $this->Petition_model->fetchPetitioners($petition_unique);
 		$data['courses'] = $this->Curriculum_model->fetchCoursesAdmin();
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 
@@ -1002,7 +1002,7 @@ class Admin extends CI_Controller
 	{
 		$data['admins'] = $this->Account_model->fetchAdminAccounts();
 		$this->load->view('includes_admin/admin_header');
-		$this->load->view('includes_admin/notif_widget');
+
 		$this->load->view('includes_admin/admin_topnav');
 		$this->load->view('includes_admin/admin_sidebar');
 

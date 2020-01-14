@@ -49,7 +49,7 @@
     <!-- /.box -->
 
     <!-- Table showing all petitions related to this student account -->
-    <div class="container-fluid col-md-6">
+    <div class="col-md-6" style="padding-left:0px;">
       <div class="box box-success">
         <div class="box-header">
           <h3 class="box-title">My Petitions</h3>
@@ -78,21 +78,21 @@
                   <td>
                     <?php $j = 0; ?>
                     <?php foreach ($petitioners as $petitioner) {
-                        if ($petitioner->petition_unique == $petition->petition_unique) {
-                          $j++;
-                        }
-                      } ?>
+                      if ($petitioner->petition_unique == $petition->petition_unique) {
+                        $j++;
+                      }
+                    } ?>
                     <?= $j . '/40' ?>
                   </td>
 
                   <td>
                     <?php if ($petition->petition_status == 1) {
-                        echo "<span class='label label-success col-md-12'>Approved</span>";
-                      } elseif ($petition->petition_status == 2) {
-                        echo "<span class='label label-warning col-md-12'>Pending</span>";
-                      } else {
-                        echo "<span class='label label-danger col-md-12'>Denied</span>";
-                      } ?>
+                      echo "<span class='label label-success col-md-12'>Approved</span>";
+                    } elseif ($petition->petition_status == 2) {
+                      echo "<span class='label label-warning col-md-12'>Pending</span>";
+                    } else {
+                      echo "<span class='label label-danger col-md-12'>Denied</span>";
+                    } ?>
                   </td>
                   <td>
                     <a href="<?= base_url() ?>Student/petitionView/<?= $petition->petition_ID ?>/<?= $petition->petition_unique ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
@@ -107,7 +107,7 @@
       </div>
       <!-- /.box -->
     </div>
-    <div class="container-fluid col-md-6">
+    <div class="container-fluid col-md-6" style="padding-right:0px;">
       <div class="box box-success">
         <div class="box-header">
           <h3 class="box-title">Suggested Petitions</h3>
@@ -137,21 +137,21 @@
                     <td>
                       <?php $j = 0; ?>
                       <?php foreach ($petitioners as $petitioner) {
-                            if ($petitioner->petition_unique == $petition_available->petition_unique) {
-                              $j++;
-                            }
-                          } ?>
+                        if ($petitioner->petition_unique == $petition_available->petition_unique) {
+                          $j++;
+                        }
+                      } ?>
                       <?= $j . '/40' ?>
                     </td>
 
                     <td>
                       <?php if ($petition_available->petition_status == 1) {
-                            echo "<span class='label label-success col-md-12'>Approved</span>";
-                          } elseif ($petition_available->petition_status == 2) {
-                            echo "<span class='label label-warning col-md-12'>Pending</span>";
-                          } else {
-                            echo "<span class='label label-danger col-md-12'>Denied</span>";
-                          } ?>
+                        echo "<span class='label label-success col-md-12'>Approved</span>";
+                      } elseif ($petition_available->petition_status == 2) {
+                        echo "<span class='label label-warning col-md-12'>Pending</span>";
+                      } else {
+                        echo "<span class='label label-danger col-md-12'>Denied</span>";
+                      } ?>
                     </td>
                     <td>
                       <a href="<?= base_url() ?>Student/petitionView/<?= $petition_available->petition_ID ?>/<?= $petition_available->petition_unique ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
