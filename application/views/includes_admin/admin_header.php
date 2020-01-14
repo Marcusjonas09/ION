@@ -3,7 +3,8 @@ if (!$this->session->login) {
       session_destroy();
       redirect('UserAuth');
 }
-if ($this->session->access == 'admin') { } else if ($this->session->access == 'student') {
+if ($this->session->access == 'admin') {
+} else if ($this->session->access == 'student') {
       redirect('Student');
 } else if ($this->session->access == 'superadmin') {
       redirect('SuperAdmin');
@@ -39,7 +40,8 @@ if ($this->session->access == 'admin') { } else if ($this->session->access == 's
       <link rel="stylesheet" href="<?= base_url() ?>bower_components/bootstrap-daterangepicker/daterangepicker.css">
       <!-- bootstrap datepicker -->
       <link rel="stylesheet" href="<?= base_url() ?>bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-
+      <!-- data tables -->
+      <link rel="stylesheet" href="<?= base_url() ?>bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
       <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
@@ -99,4 +101,3 @@ desired effect
 
 <body class="hold-transition skin-green fixed sidebar-mini">
       <div class="wrapper">
-           

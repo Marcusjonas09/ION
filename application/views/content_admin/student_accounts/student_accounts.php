@@ -30,8 +30,8 @@
               </div>
             </div>
             <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-              <table class="table table-hover">
+            <div class="box-body table-responsive">
+              <table class="datatables table table-bordered table-hover table-responsive" data-page-length='20'>
                 <thead>
                   <th>ID</th>
                   <th>Name</th>
@@ -39,31 +39,32 @@
                   <th>Curriculum</th>
                   <th>Action</th>
                 </thead>
-                <?php foreach ($students as $student) : ?>
-                  <tr>
-                    <td><?= $student->acc_number ?></td>
-                    <td><?= $student->acc_lname . ', ' . $student->acc_fname ?></td>
-                    <td><?= $student->acc_username ?></td>
-                    <td><?= $student->curriculum_code ?></td>
-                    <td>
-                      <!-- <a href="<?= base_url() ?>Admin/show_account/<?= $student->acc_number ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
+                <tbody>
+                  <?php foreach ($students as $student) : ?>
+                    <tr>
+                      <td><?= $student->acc_number ?></td>
+                      <td><?= $student->acc_lname . ', ' . $student->acc_fname ?></td>
+                      <td><?= $student->acc_username ?></td>
+                      <td><?= $student->curriculum_code ?></td>
+                      <td>
+                        <!-- <a href="<?= base_url() ?>Admin/show_account/<?= $student->acc_number ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
                       <?php if ($student->acc_status) {
-                          echo '<a href="' . base_url() . 'Admin/block_user/' . $student->acc_number . '" class="btn btn-danger btn-sm rounded"><i class="fa fa-ban"></i></a>';
-                        } else {
-                          echo '<a href="' . base_url() . 'Admin/block_user/' . $student->acc_number . '" class="btn btn-success btn-sm rounded"><i class="fa fa-check"></i></a>';
-                        }; ?> -->
+                        echo '<a href="' . base_url() . 'Admin/block_user/' . $student->acc_number . '" class="btn btn-danger btn-sm rounded"><i class="fa fa-ban"></i></a>';
+                      } else {
+                        echo '<a href="' . base_url() . 'Admin/block_user/' . $student->acc_number . '" class="btn btn-success btn-sm rounded"><i class="fa fa-check"></i></a>';
+                      }; ?> -->
 
 
-                      <a href="<?= base_url() ?>Admin/show_account/<?= $student->acc_number ?>/<?= $student->curriculum_code ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
-                      <?php if ($student->acc_status) {
+                        <a href="<?= base_url() ?>Admin/show_account/<?= $student->acc_number ?>/<?= $student->curriculum_code ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-eye"></i></a>
+                        <?php if ($student->acc_status) {
                           echo '<a href="' . base_url() . 'Admin/block_user/' . $student->acc_number . '" class="btn btn-danger btn-sm rounded"><i class="fa fa-ban"></i></a>';
                         } else {
                           echo '<a href="' . base_url() . 'Admin/block_user/' . $student->acc_number . '" class="btn btn-success btn-sm rounded"><i class="fa fa-check"></i></a>';
                         }; ?>
-                    </td>
-                  </tr>
-                <?php endforeach ?>
-
+                      </td>
+                    </tr>
+                  <?php endforeach ?>
+                </tbody>
               </table>
               <div class="col-md-6"><?= $this->pagination->create_links(); ?></div>
             </div>

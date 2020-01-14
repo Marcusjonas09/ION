@@ -57,4 +57,5 @@ class UserAuth extends CI_Controller
         session_destroy();
         $this->index();
     }
+
 }

@@ -64,4 +64,20 @@ class User_model extends CI_Model
             return false;
         }
     }
+
+    public function check_old_pass($studNumber, $old)
+    {
+        $this->db->select('*');
+        $this->db->where(array('acc_number' => $studNumber, 'acc_password' => $old));
+        $this->db->from('accounts_tbl');
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function changepass($studNumber, $old)
+    {
+        $this->db->set('acc_password', $old);
+        $this->db->where('acc_number', $studNumber);
+        $this->db->update('accounts_tbl');
+    }
 }

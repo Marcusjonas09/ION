@@ -33,7 +33,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
-        $('#example2').DataTable({
+        $('.datatables').DataTable({
             'paging': true,
             'lengthChange': false,
             'searching': true,

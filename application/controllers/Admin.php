@@ -13,6 +13,7 @@ class Admin extends CI_Controller
 		$this->load->library('form_validation');
 
 		$this->load->model('Account_model');
+		$this->load->model('User_model');
 		$this->load->model('Academics_model');
 		$this->load->model('Petition_model');
 		$this->load->model('Curriculum_model');
@@ -782,6 +783,30 @@ class Admin extends CI_Controller
 		$this->load->view('includes_admin/admin_contentFooter');
 		$this->load->view('includes_admin/admin_rightnav');
 		$this->load->view('includes_admin/admin_footer');
+	}
+
+	public function changepass()
+	{
+		$this->form_validation->set_message('matches', 'Please make sure that your passwords match');
+		$this->form_validation->set_rules('oldpassword', 'Old Password', 'trim|required|strip_tags');
+		$this->form_validation->set_rules('newpassword', 'New Password', 'trim|required|strip_tags|min_length[8]|max_length[20]|matches[renewpassword]');
+		$this->form_validation->set_rules('renewpassword', 'Retype Password', 'trim|required|strip_tags|min_length[8]|max_length[20]');
+
+		$old = $this->input->post('oldpassword');
+		$new = $this->input->post('newpassword');
+
+		if ($this->form_validation->run() == FALSE) {
+			$msg = null;
+			$this->Profile($msg);
+		} else {
+			if ($this->User_model->check_old_pass($this->session->acc_number, sha1($old))) {
+				$this->User_model->changepass($this->session->acc_number, sha1($new));
+				redirect('Admin/profile');
+			} else {
+				$msg = "oldpass not match";
+				$this->Profile($msg);
+			}
+		}
 	}
 
 	// =======================================================================================

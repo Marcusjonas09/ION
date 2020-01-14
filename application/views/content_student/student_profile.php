@@ -33,6 +33,11 @@ $totalunitspassed = $coursepassed + $labpassed;
 
     <!-- Main content -->
     <section class="content container-fluid">
+        <?php if (validation_errors()) : ?>
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <p><?php echo validation_errors(); ?></p>
+            </div>
+        <?php endif; ?>
         <div class="col-md-3">
             <!-- Profile Image -->
             <div class="box box-success">
@@ -204,20 +209,23 @@ $totalunitspassed = $coursepassed + $labpassed;
 
                     <div class="tab-pane" id="settings">
                         <div class="container-fluid">
-                            <h3><strong>Change Password</strong></h3>
-                            <div class="form-group col-md-4">
-                                <label>Old password</label>
-                                <input type="password" class="form-control" id="oldpassword" placeholder="Enter old password">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label>New password</label>
-                                <input type="password" class="form-control" id="newpassword" placeholder="Enter new password">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label>Retype new password</label>
-                                <input type="password" class="form-control" id="renewpassword" placeholder="Retype new password">
-                            </div>
-                            <button id="change_pass" class="btn btn-success pull-right col-md-2">Save</button>
+
+                            <form action="<?= base_url() ?>Student/changepass" method="post">
+                                <h3><strong>Change Password</strong></h3>
+                                <div class="form-group col-md-4">
+                                    <label>Old password</label>
+                                    <input type="password" class="form-control" name="oldpassword" placeholder="Enter old password">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>New password</label>
+                                    <input type="password" class="form-control" name="newpassword" placeholder="Enter new password">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Retype new password</label>
+                                    <input type="password" class="form-control" name="renewpassword" placeholder="Retype new password">
+                                </div>
+                                <button id="change_pass" class="btn btn-success pull-right col-md-2">Save</button>
+                            </form>
                         </div>
                     </div>
 

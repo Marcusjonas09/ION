@@ -34,6 +34,7 @@ if ($this->session->access == 'admin') {
   <link rel="stylesheet" href="<?= base_url() ?>dist/css/AdminLTE.min.css">
   <!-- Select2 -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+  <!-- data tables -->
   <link rel="stylesheet" href="<?= base_url() ?>bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 
   <!-- fullCalendar -->
