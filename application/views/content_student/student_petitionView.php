@@ -73,8 +73,11 @@
                                 </div>
                             </div>
                         </div>
-                        <?php if ($number == 0) : ?>
-                            <a class="btn btn-success pull-right" href="<?= base_url() ?>Student/sign/<?= $this->session->acc_number ?>/<?= $petition->course_code ?>/<?= $petition->petition_unique ?>">Sign</a>
+                        <?php if (!$check_if_you_petitioned) : ?>
+                            <a class="btn btn-success pull-right" href="<?= base_url() ?>Student/sign_petition/<?= $this->session->acc_number ?>/<?= $petition->course_code ?>/<?= $petition->petition_unique ?>">Sign</a>
+                        <?php endif; ?>
+                        <?php if ($check_if_you_petitioned && $petition->petition_status == 2) : ?>
+                            <a class="btn btn-danger pull-right" href="<?= base_url() ?>Student/withdraw_petition/<?= $this->session->acc_number ?>/<?= $petition->petition_unique ?>">Withdraw</a>
                         <?php endif; ?>
                     </div>
                 </div>

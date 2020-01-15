@@ -9,6 +9,19 @@
 
   <!-- Main content -->
   <section class="content container-fluid">
+    <?php if (isset($success_msg)) : ?>
+      <div class="alert alert-success alert-dismissible" role="alert">
+        <p><?php echo $success_msg; ?></p>
+        <p><?php echo "Click on this box to dismiss."; ?></p>
+      </div>
+    <?php endif; ?>
+
+    <?php if (isset($error_msg)) : ?>
+      <div class="alert alert-warning alert-dismissible" role="alert">
+        <p><?php echo $error_msg; ?></p>
+        <p><?php echo "Click on this box to dismiss."; ?></p>
+      </div>
+    <?php endif; ?>
     <div id="client" class='alert alert-success alert-dismissible' style='display:none;' role='alert'></div>
     <div class="box box-success col-md-12">
       <div class="box-header with-border">
@@ -76,13 +89,7 @@
                   </td>
 
                   <td>
-                    <?php $j = 0; ?>
-                    <?php foreach ($petitioners as $petitioner) {
-                      if ($petitioner->petition_unique == $petition->petition_unique) {
-                        $j++;
-                      }
-                    } ?>
-                    <?= $j . '/40' ?>
+                    <?= $petition->petitioner_count . '/40' ?>
                   </td>
 
                   <td>
@@ -135,13 +142,7 @@
                     </td>
 
                     <td>
-                      <?php $j = 0; ?>
-                      <?php foreach ($petitioners as $petitioner) {
-                        if ($petitioner->petition_unique == $petition_available->petition_unique) {
-                          $j++;
-                        }
-                      } ?>
-                      <?= $j . '/40' ?>
+                      <?= $petition_available->petitioner_count . '/40' ?>
                     </td>
 
                     <td>

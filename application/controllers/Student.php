@@ -549,7 +549,7 @@ class Student extends CI_Controller
 	// PETITIONING MODULE
 	// =======================================================================================
 
-	public function petitions()
+	public function petitions($success = null, $error = null)
 	{
 		$this->load->view('includes_student/student_header');
 
@@ -589,6 +589,9 @@ class Student extends CI_Controller
 		$data['petitions_available'] = $this->Courseflow_model->suggested_petitions_available();
 		$data['petitioners'] = $this->Petition_model->fetchAllPetitioners();
 
+		$data['success_msg'] = $success;
+		$data['error_msg'] = $error;
+
 		// echo json_encode($data);
 
 		$this->load->view('content_student/student_petitions', $data);
@@ -600,45 +603,38 @@ class Student extends CI_Controller
 
 	public function submitPetition()
 	{
-
-		// get course code
 		$course_code = $this->input->post('course_code');
-
-		// create indentifier
 		$petition_unique = $course_code . time();
 
-		// check petition
-		$result = $this->Courseflow_model->check_petition($course_code);
+		$result = $this->Courseflow_model->check_if_existing_petition($course_code);
 
-		// if it passes all constraints submit the petition
-		// create petition
-		// echo json_encode($result);
+		// if(already petitioned){
+		//     if(course full){
+		//         create new petition
+		//     }else{
+		//         suggest to sign the existing petition
+		//     }
+		// }else{
+		//     create new petition
+		// }
 
-		// if petition exists and still have slots
-		// suggest to sign
-
-		// else throw an error message
-		// error message
-
-
-		// $result = $this->Courseflow_model->check_petition($petition_unique);
 		$petition_details = array(
 			'course_code' => $course_code,
 			'petition_unique' => $petition_unique,
 			'stud_number' => $this->session->acc_number,
 			'date_submitted' => time()
 		);
-		// echo json_encode($result);
 		if ($result) {
-			$this->Petition_model->submitPetition($petition_details);
-			// if($this->Petition_model->submitPetition($petition_details)){
-
-			// }else{
-
-			// }
-			redirect('Student/petitions');
+			if ($this->Petition_model->submitPetition($petition_details)) {
+				$success = "Petition created successfully!";
+				$this->petitions($success, null);
+			} else {
+				$error = "Failed to create petition.";
+				$this->petitions(null, $error);
+			}
 		} else {
-			redirect('Student/petitions');
+			$error = "Failed to create petition.";
+			$this->petitions(null, $error);
 		}
 	}
 
@@ -652,7 +648,7 @@ class Student extends CI_Controller
 		$data['petition'] = $this->Petition_model->fetchPetition($petitionID);
 		$data['petitioners'] = $this->Petition_model->fetchPetitioners($petition_unique);
 		$data['courses'] = $this->Petition_model->fetchCourses();
-		$data['number'] = $this->Petition_model->check_if_you_petitioned($petition_unique);
+		$data['check_if_you_petitioned'] = $this->Petition_model->check_if_you_petitioned($petition_unique);
 
 		$this->load->view('content_student/student_petitionView', $data);
 
@@ -661,30 +657,21 @@ class Student extends CI_Controller
 		$this->load->view('includes_student/student_footer');
 	}
 
-	public function sign($stud_number, $course_code, $petition_unique)
+	public function sign_petition($stud_number, $course_code, $petition_unique)
 	{
 		$this->Petition_model->signPetition($stud_number, $course_code, $petition_unique);
-		redirect('Student/petitions');
+		// $success = "Petition signed successfully!";
+		// $this->petitions($success, null);
 		// $this->petitions();
-		// $this->form_validation->set_rules('stud_number', 'Student Number', 'is_unique[petitioners_tbl.stud_number]|strip_tags|required');
-		// $this->form_validation->set_rules('course_code', 'Course Code', 'strip_tags|required');
-
-		// $course_code = $this->input->post('course_code');
-
-		// $row = $this->Petition_model->fetchNumberOfPetitioners($course_code.time);
-		// if ($row >= 40) {
-		// 	echo "<script>alert('no more space');</script>";
-		// 	redirect('Student/petitions');
-		// } else {
-		// 	if ($this->form_validation->run() == FALSE) {
-		// 		$this->petitions();
-		// 	} else {
-		// 		$this->Petition_model->signPetition();
-		// 		redirect('Student/petitions');
-		// 	}
-		// }
+		redirect('Student/petitions');
 	}
 
+	public function withdraw_petition($stud_number, $petition_unique)
+	{
+		$this->Petition_model->withdrawPetition($stud_number, $petition_unique);
+		$success = "Petition withdrawn succesfully!";
+		$this->petitions($success, null);
+	}
 	// =======================================================================================
 	// END OF PETITIONING MODULE
 	// =======================================================================================

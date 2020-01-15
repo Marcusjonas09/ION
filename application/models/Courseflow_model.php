@@ -223,7 +223,7 @@ class Courseflow_model extends CI_Model
         return $query->result();
     }
 
-    public function check_petition($course_code)
+    public function check_if_existing_petition($course_code)
     {
         $this->db->select('petition_unique');
         $this->db->where(array(
