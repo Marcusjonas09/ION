@@ -770,9 +770,11 @@ class Admin extends CI_Controller
 	// ADMIN PROFILE MODULE
 	// =======================================================================================
 
-	public function profile() // | Display Admin Profile |
+	public function profile($error = null, $success = null) // | Display Admin Profile |
 	{
 		$data['account'] = $this->Account_model->view_user($this->session->acc_number);
+		$data['success'] = $success;
+		$data['error'] = $error;
 		$this->load->view('includes_admin/admin_header');
 
 		$this->load->view('includes_admin/admin_topnav');
@@ -795,16 +797,16 @@ class Admin extends CI_Controller
 		$old = $this->input->post('oldpassword');
 		$new = $this->input->post('newpassword');
 
-		if ($this->form_validation->run() == FALSE) {
-			$msg = null;
-			$this->Profile($msg);
+		if ($this->User_model->check_old_pass($this->session->acc_number, sha1($old))) {
+			$this->User_model->changepass($this->session->acc_number, sha1($new));
+			$success = "Password changed successfully!";
+			$this->Profile(null, $success);
 		} else {
-			if ($this->User_model->check_old_pass($this->session->acc_number, sha1($old))) {
-				$this->User_model->changepass($this->session->acc_number, sha1($new));
-				redirect('Admin/profile');
+			$error = "That was not your old password.";
+			if ($this->form_validation->run() == FALSE) {
+				$this->Profile($error, null);
 			} else {
-				$msg = "oldpass not match";
-				$this->Profile($msg);
+				$this->Profile($error, null);
 			}
 		}
 	}

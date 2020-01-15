@@ -174,7 +174,7 @@ class Student extends CI_Controller
 	// PROFILE MODULE
 	// =======================================================================================
 
-	public function Profile()
+	public function Profile($error = null, $success = null)
 	{
 		$this->load->view('includes_student/student_header');
 
@@ -187,6 +187,8 @@ class Student extends CI_Controller
 		$data['courses'] = $this->CourseCard_model->fetch_courses();
 		$data['offerings'] = $this->Dashboard_model->fetchOffering();
 		$data['cor'] = $this->CourseCard_model->fetch_current_COR();
+		$data['success'] = $success;
+		$data['error'] = $error;
 
 		$this->load->view('content_student/student_profile', $data);
 
@@ -206,10 +208,21 @@ class Student extends CI_Controller
 		$new = $this->input->post('newpassword');
 
 		if ($this->form_validation->run() == FALSE) {
-			$this->Profile();
+			if ($this->User_model->check_old_pass($this->session->acc_number, sha1($old))) {
+				$this->Profile(null, null);
+			} else {
+				$error = "That was not your old password.";
+				$this->Profile($error, null);
+			}
 		} else {
-			$this->User_model->changepass($this->session->acc_number, sha1($new));
-			redirect('Student/profile');
+			if ($this->User_model->check_old_pass($this->session->acc_number, sha1($old))) {
+				$this->User_model->changepass($this->session->acc_number, sha1($new));
+				$success = "Password changed successfully!";
+				$this->Profile(null, $success);
+			} else {
+				$error = "That was not your old password.";
+				$this->Profile($error, null);
+			}
 		}
 	}
 

@@ -42,6 +42,10 @@
             'autoWidth': false
         });
 
+        $(".alert").click(function() {
+            $(".alert").fadeOut(1000);
+        });
+
         // get last login
         var last_checked;
 

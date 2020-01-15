@@ -11,7 +11,17 @@
       <section class="content container-fluid">
           <?php if (validation_errors()) : ?>
               <div class="alert alert-warning alert-dismissible" role="alert">
+                  <?php if (isset($error)) : ?>
+                      <p><?php echo $error; ?></p>
+                  <?php endif; ?>
                   <p><?php echo validation_errors(); ?></p>
+                  <p><?php echo "Click on this box to dismiss."; ?></p>
+              </div>
+          <?php endif; ?>
+          <?php if (isset($success)) : ?>
+              <div class="alert alert-success alert-dismissible" role="alert">
+                  <p><?php echo $success; ?></p>
+                  <p><?php echo "Click on this box to dismiss."; ?></p>
               </div>
           <?php endif; ?>
           <div class="col-md-4">

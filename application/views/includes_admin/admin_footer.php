@@ -41,6 +41,10 @@
             'autoWidth': false
         });
 
+        $(".alert").click(function() {
+            $(".alert").fadeOut(1000);
+        });
+
         var last_checked;
 
         $.get("<?= base_url() ?>Notification/get_last_login", function(data) {
