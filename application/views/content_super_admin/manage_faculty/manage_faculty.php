@@ -3,7 +3,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <strong>Account Management</strong>
+            <strong>Faculty List</strong>
         </h1>
     </section>
 

@@ -15,8 +15,68 @@ class SuperAdmin extends CI_Controller
     }
 
     // =======================================================================================
-    // SIDEBAR LINKS
+    // DATABASE FUNCTIONALITIES
     // =======================================================================================
+
+    public function index()
+    {
+        $error['error'] = "";
+        $this->load->view('UserAuth/login-admin', $error);
+    }
+
+    public function login()
+    {
+        $data = array(
+            'acc_number' => strip_tags($this->input->post('acc_number')), //$_POST['username]
+            'acc_password' => sha1(strip_tags($this->input->post('acc_password')))
+        );
+
+        $this->User_model->login_admin($data);
+        $error['error'] = "";
+
+        if ($this->session->login) {
+            if ($this->session->acc_status) {
+                if ($this->session->access == 'admin') {
+                    redirect('Admin/dashboard');
+                } else if ($this->session->access == 'superadmin') {
+                    redirect('SuperAdmin');
+                } else {
+                    redirect('Admin');
+                }
+            } else {
+                $error['error'] = "Your Account has been blocked. Please contact your administrator for details";
+                $this->load->view('UserAuth/login-admin', $error);
+            }
+        } else {
+            $error['error'] = "Invalid login credentials";
+            $this->load->view('UserAuth/login-admin', $error);
+        }
+    }
+
+    public function logout()
+    {
+        $log_details = array(
+            'log_user' => $this->session->acc_number,
+            'log_type' => 'logout',
+            'log_time' => time()
+        );
+        $this->db->insert('account_logs', $log_details);
+        session_destroy();
+        $this->index();
+    }
+
+    public function database()
+    {
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/database_management/database_management');
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
 
     public function empty_petitions()
     {
@@ -36,8 +96,15 @@ class SuperAdmin extends CI_Controller
         redirect('SuperAdmin/database');
     }
 
+    // =======================================================================================
+    // END FOF DATABASE FUNCTIONALITIES
+    // =======================================================================================
 
-    public function index()
+    // =======================================================================================
+    // DASHBOARD
+    // =======================================================================================
+
+    public function dashboard()
     {
         $this->load->view('includes_super_admin/superadmin_header');
         $this->load->view('includes_super_admin/superadmin_topnav');
@@ -50,39 +117,22 @@ class SuperAdmin extends CI_Controller
         $this->load->view('includes_super_admin/superadmin_footer');
     }
 
-    public function manage_accounts()
-    {
-        $this->load->view('includes_super_admin/superadmin_header');
-        $this->load->view('includes_super_admin/superadmin_topnav');
-        $this->load->view('includes_super_admin/superadmin_sidebar');
+    // =======================================================================================
+    // END OF DASHBOARD
+    // =======================================================================================
 
-        $this->load->view('content_super_admin/manage_accounts/manage_accounts');
 
-        $this->load->view('includes_super_admin/superadmin_contentFooter');
-        $this->load->view('includes_super_admin/superadmin_rightnav');
-        $this->load->view('includes_super_admin/superadmin_footer');
-    }
+    // =======================================================================================
+    // STUDENTS FUNCTIONALITIES
+    // =======================================================================================
 
-    public function manage_students()
+    public function students()
     {
         $this->load->view('includes_super_admin/superadmin_header');
         $this->load->view('includes_super_admin/superadmin_topnav');
         $this->load->view('includes_super_admin/superadmin_sidebar');
 
         $this->load->view('content_super_admin/manage_students/manage_students');
-
-        $this->load->view('includes_super_admin/superadmin_contentFooter');
-        $this->load->view('includes_super_admin/superadmin_rightnav');
-        $this->load->view('includes_super_admin/superadmin_footer');
-    }
-
-    public function database()
-    {
-        $this->load->view('includes_super_admin/superadmin_header');
-        $this->load->view('includes_super_admin/superadmin_topnav');
-        $this->load->view('includes_super_admin/superadmin_sidebar');
-
-        $this->load->view('content_super_admin/database_management/database_management');
 
         $this->load->view('includes_super_admin/superadmin_contentFooter');
         $this->load->view('includes_super_admin/superadmin_rightnav');
@@ -140,10 +190,6 @@ class SuperAdmin extends CI_Controller
         $this->load->view('includes_super_admin/superadmin_rightnav');
         $this->load->view('includes_super_admin/superadmin_footer');
     }
-
-    // =======================================================================================
-    // STUDENT MANAGEMENT FUNCTIONS
-    // =======================================================================================
 
     public function create_student()
     {
@@ -270,17 +316,43 @@ class SuperAdmin extends CI_Controller
     }
 
     // =======================================================================================
-    // ACCOUNT MANAGEMENT FUNCTIONS
+    // END OF STUDENT FUNCTIONALITIES
     // =======================================================================================
 
-    public function view_all_admin()
+
+    // =======================================================================================
+    // FACULTY FUNCTIONAITIES
+    // =======================================================================================
+
+    public function faculty()
+    {
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_faculty/manage_faculty');
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    // =======================================================================================
+    // END OF FACULTY FUNCTIONALITIES
+    // =======================================================================================
+
+    // =======================================================================================
+    // ADMIN FUNCTIONALITIES
+    // =======================================================================================
+
+    public function admin()
     {
 
         $per_page = 10;
         $end_page = $this->uri->segment(3);
         $this->load->library('pagination');
         $config = [
-            'base_url' => base_url('SuperAdmin/view_all_admin'),
+            'base_url' => base_url('SuperAdmin/manage_admins/manage_admins'),
             'per_page' => $per_page,
             'total_rows' => $this->SuperAdmin_model->admin_num_rows(),
         ];
@@ -309,7 +381,7 @@ class SuperAdmin extends CI_Controller
         $this->load->view('includes_super_admin/superadmin_topnav');
         $this->load->view('includes_super_admin/superadmin_sidebar');
 
-        $this->load->view('content_super_admin/manage_accounts/view_all_admin', $data);
+        $this->load->view('content_super_admin/manage_admins/manage_admins', $data);
 
         $this->load->view('includes_super_admin/superadmin_contentFooter');
         $this->load->view('includes_super_admin/superadmin_rightnav');
@@ -386,4 +458,29 @@ class SuperAdmin extends CI_Controller
         $this->load->view('includes_super_admin/superadmin_rightnav');
         $this->load->view('includes_super_admin/superadmin_footer');
     }
+
+    // =======================================================================================
+    // END OF ADMIN FUNCTIONALITIES
+    // =======================================================================================
+
+    // =======================================================================================
+    // SCHOOL PARAMETERS
+    // =======================================================================================
+
+    public function school_parameters()
+    {
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/school-parameters/school-parameters');
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    // =======================================================================================
+    // END OF SCHOOL PARAMETERS
+    // =======================================================================================
 }

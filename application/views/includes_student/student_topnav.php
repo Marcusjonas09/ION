@@ -50,7 +50,7 @@
 
                 <li>
                     <!-- Menu Toggle Button -->
-                    <a href="<?= base_url() ?>UserAuth/logout"><span class="fa fa-sign-out"></span></a>
+                    <a href="<?= base_url() ?>Student/logout"><span class="fa fa-sign-out"></span></a>
                 </li>
 
                 <!-- Control Sidebar Toggle Button -->

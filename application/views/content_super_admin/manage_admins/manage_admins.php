@@ -35,10 +35,10 @@
                                         <a href="<?= base_url() ?>SuperAdmin/edit_admin/<?= $admin->acc_number ?>" class="btn btn-warning btn-sm rounded"><i class="fa fa-pencil"></i></a>
                                         <a href="<?= base_url() ?>SuperAdmin/view_admin/<?= $admin->acc_number ?>" class="btn btn-primary btn-sm rounded"><i class="fa fa-eye"></i></a>
                                         <?php if ($admin->acc_status) {
-                                                echo '<a href="' . base_url() . 'SuperAdmin/block_admin/' . $admin->acc_number . '" class="btn btn-danger btn-sm rounded"><i class="fa fa-ban"></i></a>';
-                                            } else {
-                                                echo '<a href="' . base_url() . 'SuperAdmin/block_admin/' . $admin->acc_number . '" class="btn btn-success btn-sm rounded"><i class="fa fa-check"></i></a>';
-                                            }; ?>
+                                            echo '<a href="' . base_url() . 'SuperAdmin/block_admin/' . $admin->acc_number . '" class="btn btn-danger btn-sm rounded"><i class="fa fa-ban"></i></a>';
+                                        } else {
+                                            echo '<a href="' . base_url() . 'SuperAdmin/block_admin/' . $admin->acc_number . '" class="btn btn-success btn-sm rounded"><i class="fa fa-check"></i></a>';
+                                        }; ?>
                                     </td>
                                 </tr>
                             <?php endforeach ?>
@@ -49,8 +49,6 @@
                     <div class="box-footer">
                         <a class="btn btn-success pull-right" href="<?= base_url() ?>SuperAdmin/create_admin">Add Account</a>
                     </div>
-
-
                 </div>
                 <!-- /.box -->
 

@@ -1,15 +1,15 @@
 <?php
 if (!$this->session->login) {
   session_destroy();
-  redirect('UserAuth');
+  redirect('Student');
 }
 if ($this->session->access == 'admin') {
-  redirect('Admin');
+  redirect('Admin/dashboard');
 } else if ($this->session->access == 'student') {
 } else if ($this->session->access == 'superadmin') {
   redirect('SuperAdmin');
 } else {
-  redirect('UserAuth');
+  redirect('Student/dashboard');
 }
 ?>
 

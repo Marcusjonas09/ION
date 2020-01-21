@@ -33,6 +33,51 @@ class Student extends CI_Controller
 		$this->load->helper('text');
 	}
 
+	public function index()
+	{
+		$error['error'] = "";
+		$this->load->view('UserAuth/login-student', $error);
+	}
+
+	public function login()
+	{
+		$data = array(
+			'acc_number' => strip_tags($this->input->post('acc_number')), //$_POST['username]
+			'acc_password' => sha1(strip_tags($this->input->post('acc_password')))
+		);
+
+		$this->User_model->login_student($data);
+		$error['error'] = "";
+
+		if ($this->session->login) {
+			if ($this->session->acc_status) {
+				if ($this->session->access == 'student') {
+					redirect('Student/dashboard');
+				} else {
+					redirect('Student');
+				}
+			} else {
+				$error['error'] = "Your Account has been blocked. Please contact your administrator for details";
+				$this->load->view('UserAuth/login-student', $error);
+			}
+		} else {
+			$error['error'] = "Invalid login credentials";
+			$this->load->view('UserAuth/login-student', $error);
+		}
+	}
+
+	public function logout()
+	{
+		$log_details = array(
+			'log_user' => $this->session->acc_number,
+			'log_type' => 'logout',
+			'log_time' => time()
+		);
+		$this->db->insert('account_logs', $log_details);
+		session_destroy();
+		$this->index();
+	}
+
 	public function user_data_submit()
 	{
 		$data = array(
@@ -48,7 +93,7 @@ class Student extends CI_Controller
 	// DASHBOARD MODULE
 	// =======================================================================================
 
-	public function index()
+	public function dashboard()
 	{
 		$this->load->view('includes_student/student_header');
 		$this->load->view('includes_student/student_topnav');
@@ -672,6 +717,7 @@ class Student extends CI_Controller
 		$success = "Petition withdrawn succesfully!";
 		$this->petitions($success, null);
 	}
+
 	// =======================================================================================
 	// END OF PETITIONING MODULE
 	// =======================================================================================

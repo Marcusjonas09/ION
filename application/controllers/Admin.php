@@ -30,11 +30,58 @@ class Admin extends CI_Controller
 		$this->load->helper('text');
 	}
 
+	public function index()
+	{
+		$error['error'] = "";
+		$this->load->view('UserAuth/login-admin', $error);
+	}
+
+	public function login()
+	{
+		$data = array(
+			'acc_number' => strip_tags($this->input->post('acc_number')), //$_POST['username]
+			'acc_password' => sha1(strip_tags($this->input->post('acc_password')))
+		);
+
+		$this->User_model->login_admin($data);
+		$error['error'] = "";
+
+		if ($this->session->login) {
+			if ($this->session->acc_status) {
+				if ($this->session->access == 'admin') {
+					redirect('Admin/dashboard');
+				} else if ($this->session->access == 'superadmin') {
+					redirect('SuperAdmin/dashboard');
+				} else {
+					redirect('Admin');
+				}
+			} else {
+				$error['error'] = "Your Account has been blocked. Please contact your administrator for details";
+				$this->load->view('UserAuth/login-admin', $error);
+			}
+		} else {
+			$error['error'] = "Invalid login credentials";
+			$this->load->view('UserAuth/login-admin', $error);
+		}
+	}
+
+	public function logout()
+	{
+		$log_details = array(
+			'log_user' => $this->session->acc_number,
+			'log_type' => 'logout',
+			'log_time' => time()
+		);
+		$this->db->insert('account_logs', $log_details);
+		session_destroy();
+		$this->index();
+	}
+
 	// =======================================================================================
 	// DASHBOARD MODULE
 	// =======================================================================================
 
-	public function index() // | Display Dashboard |
+	public function dashboard() // | Display Dashboard |
 	{
 		$this->load->view('includes_admin/admin_header');
 

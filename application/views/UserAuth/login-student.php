@@ -3,11 +3,11 @@ if (!$this->session->login) {
     session_destroy();
 }
 if ($this->session->access == 'admin') {
-    redirect('Admin');
+    redirect('Admin/dashboard');
 } else if ($this->session->access == 'student') {
-    redirect('Student');
+    redirect('Student/dashboard');
 } else if ($this->session->access == 'superadmin') {
-    redirect('SuperAdmin');
+    redirect('SuperAdmin/dashboard');
 } else {
 }
 ?>
@@ -34,15 +34,15 @@ if ($this->session->access == 'admin') {
         <div class="login-box-body">
             <p class="text-center"><img src="<?= base_url() ?>dist/img/itamaraws.png" width="220" /></p>
             <p class="login-box-msg">
-                FEUTECH iON <br /><span class="login-app">
-                </span>
+                FEUTECH iON <br />
+                (Student Portal)
             </p>
             <?php if ($error) : ?>
                 <div class="alert alert-warning alert-dismissible" role="alert">
                     <p><?php echo $error; ?></p>
                 </div>
             <?php endif; ?>
-            <form action="<?= base_url() ?>UserAuth/login" method="post" accept-charset="utf-8">
+            <form action="<?= base_url() ?>Student/login" method="post" accept-charset="utf-8">
                 <div class="form-group has-feedback">
                     <input type="text" class="form-control" name="acc_number" placeholder="Student Number" value="">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>

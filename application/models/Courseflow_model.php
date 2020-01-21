@@ -125,6 +125,8 @@ class Courseflow_model extends CI_Model
         return $query->result();
     }
 
+    //FETCH SUGGESTED PETITIONS AVAILABLE
+
     public function suggested_petitions_available()
     {
         //fetch untaken courses
@@ -267,21 +269,6 @@ class Courseflow_model extends CI_Model
         }
         return $available_petitions;
     }
-
-    // public function check_petition($petition_unique)
-    // {
-    //     $this->db->where(array(
-    //         'petition_unique' => $petition_unique,
-    //     ));
-    //     $query = $this->db->get_where('petitions_tbl');
-    //     $petition_count = $query->num_rows();
-
-    //     if ($petition_count > 0) {
-    //         return false;
-    //     } else {
-    //         return true;
-    //     }
-    // }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     // LOAD REVISION FUNCTIONS
