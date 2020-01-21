@@ -19,8 +19,22 @@
 <script src="<?= base_url() ?>dist/js/adminlte.min.js"></script>
 <!-- Pusher JS -->
 
+<!-- DataTables -->
+<script src="<?= base_url() ?>bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="<?= base_url() ?>bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function() {
+
+        $('.datatables').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': true,
+            'ordering': false,
+            'info': true,
+            'autoWidth': false
+        });
+
         // Initialize variables
         var schedule_entry, sched_table = [],
             inner_sched = [];

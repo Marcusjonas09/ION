@@ -35,11 +35,10 @@
             <!-- /.box-body -->
         </div>
 
-
         <div class="box box-success">
 
             <div class="box-header with-border">
-                <h3 class="box-title"><strong>Set Parameters</strong></h3>
+                <h3 class="box-title"><strong>Update Parameters</strong></h3>
             </div>
             <!-- /.box-header -->
 
@@ -55,9 +54,6 @@
                         <input type="text" class="form-control" name="schoolterm" placeholder="School Term">
                     </div>
 
-                </div>
-                <div class="box-footer">
-                    <button id="change_pass" class="btn btn-success pull-right col-md-2">Save</button>
                 </div>
             </form>
 
