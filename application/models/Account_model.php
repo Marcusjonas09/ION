@@ -11,6 +11,20 @@ class Account_model extends CI_Model
         return $students;
     }
 
+    public function fetchStudents()
+    {
+        $query = $this->db->get_where('accounts_tbl', array('acc_access_level' => 3));
+        $students = $query->result();
+        return $students;
+    }
+
+    public function fetchFaculty()
+    {
+        $query = $this->db->get_where('accounts_tbl', array('acc_access_level' => 4));
+        $faculty = $query->result();
+        return $faculty;
+    }
+
     public function fetchAdminAccounts()
     {
         $query = $this->db->get_where('accounts_tbl', array('acc_access_level' => 2));

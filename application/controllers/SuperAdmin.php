@@ -7,6 +7,7 @@ class SuperAdmin extends CI_Controller
     {
         parent::__construct();
         $this->load->model('SuperAdmin_model');
+        $this->load->model('Account_model');
         $this->load->library('form_validation');
         $this->load->helper('date');
         $this->load->helper('text');
@@ -65,13 +66,19 @@ class SuperAdmin extends CI_Controller
         $this->index();
     }
 
+    // =======================================================================================
+    // DATABASE FUNCTIONALITIES
+    // =======================================================================================
+
     public function database()
     {
+        $data['faculty'] = $this->Account_model->fetchFaculty();
+
         $this->load->view('includes_super_admin/superadmin_header');
         $this->load->view('includes_super_admin/superadmin_topnav');
         $this->load->view('includes_super_admin/superadmin_sidebar');
 
-        $this->load->view('content_super_admin/database_management/database_management');
+        $this->load->view('content_super_admin/database_management/database_management', $data);
 
         $this->load->view('includes_super_admin/superadmin_contentFooter');
         $this->load->view('includes_super_admin/superadmin_rightnav');
@@ -98,6 +105,115 @@ class SuperAdmin extends CI_Controller
 
     // =======================================================================================
     // END FOF DATABASE FUNCTIONALITIES
+    // =======================================================================================
+
+    // =======================================================================================
+    // STUDENT FUNCTIONALITIES
+    // =======================================================================================
+
+    public function student()
+    {
+        $data['students'] = $this->Account_model->fetchStudents();
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_student/all_students', $data);
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function add_student()
+    {
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_student/add_student');
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function view_student()
+    {
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_students/view_student');
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function edit_student()
+    {
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_students/edit_student');
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    // =======================================================================================
+    // END OF STUDENT FUNCTIONALITIES
+    // =======================================================================================
+
+    // =======================================================================================
+    // CURRICULUM
+    // =======================================================================================
+
+    public function curriculum()
+    {
+        // $data['curriculum'] = $this->Account_model->fetchStudents();
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_curriculum/all_curriculum');
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function view_curriculum()
+    {
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_students/view_student');
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function edit_curriculum()
+    {
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_students/edit_student');
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    // =======================================================================================
+    // END OF CURRICULUM
     // =======================================================================================
 
     // =======================================================================================
@@ -139,18 +255,18 @@ class SuperAdmin extends CI_Controller
         $this->load->view('includes_super_admin/superadmin_footer');
     }
 
-    public function add_student()
-    {
-        $this->load->view('includes_super_admin/superadmin_header');
-        $this->load->view('includes_super_admin/superadmin_topnav');
-        $this->load->view('includes_super_admin/superadmin_sidebar');
+    // public function add_student()
+    // {
+    //     $this->load->view('includes_super_admin/superadmin_header');
+    //     $this->load->view('includes_super_admin/superadmin_topnav');
+    //     $this->load->view('includes_super_admin/superadmin_sidebar');
 
-        $this->load->view('content_super_admin/manage_students/add_student');
+    //     $this->load->view('content_super_admin/manage_students/add_student');
 
-        $this->load->view('includes_super_admin/superadmin_contentFooter');
-        $this->load->view('includes_super_admin/superadmin_rightnav');
-        $this->load->view('includes_super_admin/superadmin_footer');
-    }
+    //     $this->load->view('includes_super_admin/superadmin_contentFooter');
+    //     $this->load->view('includes_super_admin/superadmin_rightnav');
+    //     $this->load->view('includes_super_admin/superadmin_footer');
+    // }
 
     public function course_card()
     {
@@ -222,12 +338,6 @@ class SuperAdmin extends CI_Controller
             $this->SuperAdmin_model->create_student($data);
             redirect('SuperAdmin/add_student');
         }
-    }
-
-    public function edit_student($id, $data)
-    {
-        $this->SuperAdmin_model->edit_student($id, $data);
-        redirect('SuperAdmin/manage_students');
     }
 
     public function submit_course_card()
