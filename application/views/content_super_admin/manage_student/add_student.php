@@ -58,7 +58,6 @@
                     <h3 class="box-title"><strong>Upload CSV file</strong></h3>
                 </div>
                 <div class="box-body">
-
                     <form action="" method="post" enctype="multipart/form-data">
                         <input class="btn btn-default" type="file" name="facultycsv" />
                     </form>
