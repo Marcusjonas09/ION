@@ -48,7 +48,7 @@
                                     </td>
                                     <td class="text-center">
                                         <a id="edit_college" href="<?= base_url() ?>SuperAdmin/edit_college/<?= $college->college_id ?>" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                        <button class="btn btn-danger" onclick="sample(<?= $college->college_id ?>)"><i class="fa fa-trash"></i></button>
+                                        <button class="btn btn-danger" onclick="delete_college(<?= $college->college_id ?>)"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

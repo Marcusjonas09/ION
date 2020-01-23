@@ -298,6 +298,7 @@ class SuperAdmin extends CI_Controller
 
     public function add_department($success_msg = null)
     {
+        $data['colleges'] = $this->SuperAdmin_model->fetch_all_college();
         $data['success_msg'] = $success_msg;
         $this->load->view('includes_super_admin/superadmin_header');
         $this->load->view('includes_super_admin/superadmin_topnav');
@@ -312,6 +313,7 @@ class SuperAdmin extends CI_Controller
 
     public function edit_department($id, $success_msg = null, $fail_msg = null)
     {
+        $data['colleges'] = $this->SuperAdmin_model->fetch_all_college();
         $data['department'] = $this->SuperAdmin_model->fetch_department($id);
         $data['success_msg'] = $success_msg;
         $data['fail_msg'] = $fail_msg;
@@ -356,13 +358,14 @@ class SuperAdmin extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->add_department();
         } else {
-            $college = array(
+            $department = array(
                 'department_code' => $this->input->post('department_code'),
-                'department_description' => $this->input->post('department_description')
+                'department_description' => $this->input->post('department_description'),
+                'assigned_college' => $this->input->post('assigned_college'),
             );
 
-            $this->SuperAdmin_model->create_college($college);
-            $this->add_college("Record successfully added!");
+            $this->SuperAdmin_model->create_department($department);
+            $this->add_department("Record successfully added!");
         }
     }
 
@@ -792,7 +795,7 @@ class SuperAdmin extends CI_Controller
     public function school_parameters()
     {
         $data['college_count'] = $this->SuperAdmin_model->fetch_college_count();
-        // $data['department_count'] = $this->SuperAdmin_model->fetch_department_count();
+        $data['department_count'] = $this->SuperAdmin_model->fetch_department_count();
         // $data['program_count'] = $this->SuperAdmin_model->fetch_program_count();
         // $data['curriculum_count'] = $this->SuperAdmin_model->fetch_curriculum_count();
 

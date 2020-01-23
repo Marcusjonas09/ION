@@ -30,11 +30,22 @@
                         <h3 class="box-title"><strong>Create department</strong></h3>
                     </div>
                     <div class="box-body">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label for="curr_code">Code:</label>
                             <input class="form-control" type="text" name="department_code" id="department_code" placeholder="Enter code" required />
                         </div>
-                        <div class="form-group col-md-8">
+
+                        <div class="form-group col-md-6">
+                            <label for="curr_code">College:</label>
+                            <!-- <input class="form-control" type="text" name="department_description" id="department_description" placeholder="Enter description" required /> -->
+                            <select class="form-control" name="assigned_college" id="assigned_college">
+                                <?php foreach ($colleges as $college) : ?>
+                                    <option value="<?= $college->college_code ?>"><?= $college->college_code . ' - ' . $college->college_description ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-12">
                             <label for="curr_code">Description:</label>
                             <input class="form-control" type="text" name="department_description" id="department_description" placeholder="Enter description" required />
                         </div>

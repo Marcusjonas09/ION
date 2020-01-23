@@ -56,7 +56,7 @@
                     <!-- small box -->
                     <div class="small-box bg-green">
                         <div class="inner">
-                            <h3 id="simul_number">0</h3>
+                            <h3 id="simul_number"><?= $department_count ?></h3>
 
                             <p>Department/s</p>
                         </div>

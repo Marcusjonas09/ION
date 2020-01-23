@@ -35,7 +35,8 @@
                     <table class="datatables table table-striped" data-page-length='10'>
                         <thead class="bg-success text-center" style="background-color:#00a65a; color:white;">
                             <th class="text-center col-md-2">Code</th>
-                            <th class="text-center col-md-8">Description</th>
+                            <th class="text-center col-md-4">Description</th>
+                            <th class="text-center col-md-4">College</th>
                             <th class="text-center col-md-2">Action</th>
                         </thead>
                         <tbody>
@@ -47,9 +48,12 @@
                                     <td>
                                         <?= $department->department_description ?>
                                     </td>
+                                    <td>
+                                        <?= $department->assigned_college ?>
+                                    </td>
                                     <td class="text-center">
                                         <a id="edit_college" href="<?= base_url() ?>SuperAdmin/edit_department/<?= $department->department_id ?>" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                        <button class="btn btn-danger" onclick="sample(<?= $department->department_id ?>)"><i class="fa fa-trash"></i></button>
+                                        <button class="btn btn-danger" onclick="delete_department(<?= $department->department_id ?>)"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
