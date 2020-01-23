@@ -39,14 +39,14 @@
                     <!-- small box -->
                     <div class="small-box bg-green">
                         <div class="inner">
-                            <h3 id="simul_number">0</h3>
+                            <h3 id="simul_number"><?= $college_count ?></h3>
 
                             <p>College/s</p>
                         </div>
                         <div class="icon">
                             <!-- <i class="fa fa-shopping-cart"></i> -->
                         </div>
-                        <a href="<?= base_url() ?>Superadmin/college" class="small-box-footer">
+                        <a href="<?= base_url() ?>SuperAdmin/college" class="small-box-footer">
                             More info <i class="fa fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -63,7 +63,7 @@
                         <div class="icon">
                             <!-- <i class="fa fa-shopping-cart"></i> -->
                         </div>
-                        <a href="<?= base_url() ?>Superadmin/department" class="small-box-footer">
+                        <a href="<?= base_url() ?>SuperAdmin/department" class="small-box-footer">
                             More info <i class="fa fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -80,7 +80,7 @@
                         <div class="icon">
                             <!-- <i class="fa fa-shopping-cart"></i> -->
                         </div>
-                        <a href="<?= base_url() ?>Superadmin/programs" class="small-box-footer">
+                        <a href="<?= base_url() ?>SuperAdmin/programs" class="small-box-footer">
                             More info <i class="fa fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -97,7 +97,7 @@
                         <div class="icon">
                             <!-- <i class="fa fa-shopping-cart"></i> -->
                         </div>
-                        <a href="<?= base_url() ?>Superadmin/curriculum" class="small-box-footer">
+                        <a href="<?= base_url() ?>SuperAdmin/curriculum" class="small-box-footer">
                             More info <i class="fa fa-arrow-circle-right"></i>
                         </a>
                     </div>

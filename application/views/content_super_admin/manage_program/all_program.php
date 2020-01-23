@@ -1,11 +1,6 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <!-- <section class="content-header">
-        <h1>
-            <strong>College</strong>
-        </h1>
-    </section> -->
     <section class="content-header">
         <h1>
             <a class="navi" href="<?= base_url() ?>SuperAdmin/school_parameters"><span class="fa fa-chevron-left"></span>&nbsp&nbsp<strong>Back</strong></a>
@@ -18,7 +13,7 @@
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">
-                        <strong>Curriculum</strong>
+                        <strong>Program</strong>
                     </h3>
                 </div>
                 <div class="box-body">
@@ -36,7 +31,7 @@
                     </table>
                 </div>
                 <div class="box-footer">
-                    <a class="btn btn-success pull-right" href="<?= base_url() ?>Superadmin/add_student">Add New Entry</a>
+                    <a class="btn btn-success pull-right" href="<?= base_url() ?>SuperAdmin/add_student">Add New Entry</a>
                 </div>
             </div>
         </div>

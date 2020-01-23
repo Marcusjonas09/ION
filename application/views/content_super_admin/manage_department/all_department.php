@@ -1,5 +1,6 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
             <a class="navi" href="<?= base_url() ?>SuperAdmin/school_parameters"><span class="fa fa-chevron-left"></span>&nbsp&nbsp<strong>Back</strong></a>
@@ -27,7 +28,7 @@
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">
-                        <strong>College</strong>
+                        <strong>Department</strong>
                     </h3>
                 </div>
                 <div class="box-body">
@@ -38,17 +39,17 @@
                             <th class="text-center col-md-2">Action</th>
                         </thead>
                         <tbody>
-                            <?php foreach ($colleges as $college) : ?>
+                            <?php foreach ($departments as $department) : ?>
                                 <tr>
                                     <td>
-                                        <?= $college->college_code ?>
+                                        <?= $department->department_code ?>
                                     </td>
                                     <td>
-                                        <?= $college->college_description ?>
+                                        <?= $department->department_description ?>
                                     </td>
                                     <td class="text-center">
-                                        <a id="edit_college" href="<?= base_url() ?>SuperAdmin/edit_college/<?= $college->college_id ?>" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                        <button class="btn btn-danger" onclick="sample(<?= $college->college_id ?>)"><i class="fa fa-trash"></i></button>
+                                        <a id="edit_college" href="<?= base_url() ?>SuperAdmin/edit_department/<?= $department->department_id ?>" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                                        <button class="btn btn-danger" onclick="sample(<?= $department->department_id ?>)"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -56,7 +57,7 @@
                     </table>
                 </div>
                 <div class="box-footer">
-                    <a class="btn btn-success pull-right" href="<?= base_url() ?>SuperAdmin/add_college">Add New Entry</a>
+                    <a class="btn btn-success pull-right" href="<?= base_url() ?>SuperAdmin/add_department">Add New Entry</a>
                 </div>
             </div>
         </div>

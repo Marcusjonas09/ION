@@ -23,8 +23,29 @@
 <script src="<?= base_url() ?>bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url() ?>bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
 <script type="text/javascript">
+    function sample(id) {
+        var baselink = "<?= base_url() ?>";
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                window.location.replace(baselink + "SuperAdmin/delete_college/" + id)
+            }
+        })
+    }
+
     $(document).ready(function() {
+
+
 
         $('.datatables').DataTable({
             'paging': true,

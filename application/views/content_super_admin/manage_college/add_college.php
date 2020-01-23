@@ -3,62 +3,40 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <strong><a class="navi" href="<?= base_url() ?>Superadmin/student"><span class="fa fa-chevron-left"></span>&nbsp&nbsp</a>Add Student Entry</strong>
+            <strong><a class="navi" href="<?= base_url() ?>SuperAdmin/college"><span class="fa fa-chevron-left"></span>&nbsp&nbspBack</a></strong>
         </h1>
     </section>
 
     <!-- Main content -->
     <section class="content container-fluid">
+        <?php if (validation_errors()) : ?>
+            <div class="alert alert-warning alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+                <?php echo validation_errors(); ?>
+            </div>
+        <?php endif; ?>
+        <?php if (isset($success_msg)) : ?>
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-warning"></i>Success!</h4>
+                <?php echo $success_msg; ?>
+            </div>
+        <?php endif; ?>
         <div class="container-fluid col-md-9" style="padding-right:0px;">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="<?= base_url() ?>SuperAdmin/create_college" method="post">
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title"><strong>Insert Single Entry</strong></h3>
+                        <h3 class="box-title"><strong>Create college</strong></h3>
                     </div>
                     <div class="box-body">
-                        <div class="form-group col-md-6">
-                            <label for="curr_code">Student Number:</label>
-                            <input class="form-control" type="number" name="stud_number" id="stud_number" placeholder="Enter student Number">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="curr_code">Program:</label>
-                            <!-- <input class="form-control" type="text" name="program" id="program" placeholder="Enter program"> -->
-                            <select class="form-control" name="program" id="program">
-                                <option value="--">--</option>
-                                <option value="BSITWMA">BSITWMA</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="curr_code">College:</label>
-                            <!-- <input class="form-control" type="text" name="college" id="college" placeholder="Enter college"> -->
-                            <select class="form-control" name="college" id="college">
-                                <option value="--">--</option>
-                                <option value="Computer Studies">Computer Studies</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="curr_code">Curriculum:</label>
-                            <!-- <input class="form-control" type="text" name="curr_code" id="curr_code" placeholder="Enter curriculum code"> -->
-                            <select class="form-control" name="curr_code" id="curr_code">
-                                <option value="--">--</option>
-                                <option value="BSITWMA2015">BSITWMA2015</option>
-                            </select>
-                        </div>
                         <div class="form-group col-md-4">
-                            <label for="curr_code">First Name:</label>
-                            <input class="form-control" type="text" name="fname" id="fname" placeholder="Enter first name">
+                            <label for="curr_code">Code:</label>
+                            <input class="form-control" type="text" name="college_code" id="college_code" placeholder="Enter code" required />
                         </div>
-                        <div class="form-group col-md-4">
-                            <label for="curr_code">Middle Name:</label>
-                            <input class="form-control" type="text" name="mname" id="mname" placeholder="Enter middle Name">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="curr_code">Last Name:</label>
-                            <input class="form-control" type="text" name="lname" id="lname" placeholder="Enter last name">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="curr_code">Citizenship:</label>
-                            <input class="form-control" type="text" name="citizenship" id="citizenship" placeholder="Enter citizenship">
+                        <div class="form-group col-md-8">
+                            <label for="curr_code">Description:</label>
+                            <input class="form-control" type="text" name="college_description" id="college_description" placeholder="Enter description" required />
                         </div>
                     </div>
                     <div class="box-footer">

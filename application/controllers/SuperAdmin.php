@@ -172,10 +172,234 @@ class SuperAdmin extends CI_Controller
     // COLLEGE
     // =======================================================================================
 
+    public function college($success_msg = null, $fail_msg = null)
+    {
+        $data['colleges'] = $this->SuperAdmin_model->fetch_all_college();
+        $data['success_msg'] = $success_msg;
+        $data['fail_msg'] = $fail_msg;
 
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_college/all_college', $data);
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function add_college($success_msg = null)
+    {
+        $data['success_msg'] = $success_msg;
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_college/add_college', $data);
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function edit_college($id, $success_msg = null, $fail_msg = null)
+    {
+        // $id = $this->input->post('college_id');
+        $data['college'] = $this->SuperAdmin_model->fetch_college($id);
+        $data['success_msg'] = $success_msg;
+        $data['fail_msg'] = $fail_msg;
+
+        // print_r($data);
+        // die();
+
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_college/edit_college', $data);
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function edit_college_function()
+    {
+        $this->form_validation->set_rules('college_code', 'College Code', 'required|strip_tags');
+        $this->form_validation->set_rules('college_description', 'College Description', 'required|strip_tags');
+        $id = $this->input->post('college_id');
+        if ($this->form_validation->run() == FALSE) {
+            $this->edit_college($id);
+        } else {
+            $college = array(
+                'college_code' => $this->input->post('college_code'),
+                'college_description' => $this->input->post('college_description')
+            );
+
+            $this->SuperAdmin_model->edit_college($id, $college);
+            $this->edit_college($id, "Record successfully edited!");
+        }
+    }
+
+    public function create_college()
+    {
+        $this->form_validation->set_rules('college_code', 'College Code', 'required|strip_tags|is_unique[college_tbl.college_code]');
+        $this->form_validation->set_rules('college_description', 'College Description', 'required|strip_tags');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->add_college();
+        } else {
+            $college = array(
+                'college_code' => $this->input->post('college_code'),
+                'college_description' => $this->input->post('college_description')
+            );
+
+            $this->SuperAdmin_model->create_college($college);
+            $this->add_college("Record successfully added!");
+        }
+    }
+
+    public function delete_college($id)
+    {
+
+        if (!$this->SuperAdmin_model->delete_college($id)) {
+            $this->SuperAdmin_model->delete_college($id);
+            $this->college("Record successfully deleted!", null);
+        } else {
+            $this->college(null, "Failed to delete Record!");
+        }
+    }
 
     // =======================================================================================
     // END OF COLLEGE
+    // =======================================================================================
+
+    // =======================================================================================
+    // DEPARTMENT
+    // =======================================================================================
+
+    public function department($success_msg = null, $fail_msg = null)
+    {
+        $data['departments'] = $this->SuperAdmin_model->fetch_all_department();
+        $data['success_msg'] = $success_msg;
+        $data['fail_msg'] = $fail_msg;
+
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_department/all_department', $data);
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function add_department($success_msg = null)
+    {
+        $data['success_msg'] = $success_msg;
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_department/add_department', $data);
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function edit_department($id, $success_msg = null, $fail_msg = null)
+    {
+        $data['department'] = $this->SuperAdmin_model->fetch_department($id);
+        $data['success_msg'] = $success_msg;
+        $data['fail_msg'] = $fail_msg;
+
+        // print_r($data);
+        // die();
+
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_department/edit_department', $data);
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function edit_department_function()
+    {
+        $this->form_validation->set_rules('department_code', 'Department Code', 'required|strip_tags');
+        $this->form_validation->set_rules('department_description', 'Department Description', 'required|strip_tags');
+        $id = $this->input->post('department_id');
+        if ($this->form_validation->run() == FALSE) {
+            $this->edit_department($id);
+        } else {
+            $department = array(
+                'department_code' => $this->input->post('department_code'),
+                'department_description' => $this->input->post('department_description')
+            );
+
+            $this->SuperAdmin_model->edit_college($id, $department);
+            $this->edit_department($id, "Record successfully edited!");
+        }
+    }
+
+    public function create_department()
+    {
+        $this->form_validation->set_rules('department_code', 'Department Code', 'required|strip_tags|is_unique[department_tbl.department_code]');
+        $this->form_validation->set_rules('department_description', 'Department Description', 'required|strip_tags');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->add_department();
+        } else {
+            $college = array(
+                'department_code' => $this->input->post('department_code'),
+                'department_description' => $this->input->post('department_description')
+            );
+
+            $this->SuperAdmin_model->create_college($college);
+            $this->add_college("Record successfully added!");
+        }
+    }
+
+    public function delete_department($id)
+    {
+
+        if (!$this->SuperAdmin_model->delete_department($id)) {
+            $this->SuperAdmin_model->delete_department($id);
+            $this->department("Record successfully deleted!", null);
+        } else {
+            $this->department(null, "Failed to delete Record!");
+        }
+    }
+
+    // =======================================================================================
+    // END OF DEPARTMENT
+    // =======================================================================================
+
+    // =======================================================================================
+    // PROGRAM
+    // =======================================================================================
+
+    public function programs()
+    {
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_program/all_program');
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    // =======================================================================================
+    // END OF PROGRAM
     // =======================================================================================
 
     // =======================================================================================
@@ -567,11 +791,16 @@ class SuperAdmin extends CI_Controller
 
     public function school_parameters()
     {
+        $data['college_count'] = $this->SuperAdmin_model->fetch_college_count();
+        // $data['department_count'] = $this->SuperAdmin_model->fetch_department_count();
+        // $data['program_count'] = $this->SuperAdmin_model->fetch_program_count();
+        // $data['curriculum_count'] = $this->SuperAdmin_model->fetch_curriculum_count();
+
         $this->load->view('includes_super_admin/superadmin_header');
         $this->load->view('includes_super_admin/superadmin_topnav');
         $this->load->view('includes_super_admin/superadmin_sidebar');
 
-        $this->load->view('content_super_admin/school-parameters/school-parameters');
+        $this->load->view('content_super_admin/school-parameters/school-parameters', $data);
 
         $this->load->view('includes_super_admin/superadmin_contentFooter');
         $this->load->view('includes_super_admin/superadmin_rightnav');
