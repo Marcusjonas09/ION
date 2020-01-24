@@ -30,26 +30,14 @@
                         <h3 class="box-title"><strong>Edit department</strong></h3>
                     </div>
                     <div class="box-body">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label for="curr_code">Code:</label>
-                            <input class="form-control" type="text" name="department_code" id="department_code" value="<?= $department->department_code ?>" placeholder="Enter code" required />
+                            <input class="form-control" type="text" name="department_code" id="department_code" value="<?= $department->department_code ?>" required />
                         </div>
-
-                        <div class="form-group col-md-6">
-                            <label for="curr_code">College:</label>
-                            <!-- <input class="form-control" type="text" name="department_description" id="department_description" placeholder="Enter description" required /> -->
-                            <select class="form-control" name="assigned_college" id="assigned_college">
-                                <?php foreach ($colleges as $college) : ?>
-                                    <option <?php if ($college->college_code == $department->assigned_college) {
-                                                echo "selected";
-                                            } ?> value="<?= $college->college_code ?>"><?= $college->college_code . ' - ' . $college->college_description ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-8">
                             <label for="curr_code">Description:</label>
-                            <input class="form-control" type="text" name="department_description" id="department_description" value="<?= $department->department_description ?>" placeholder="Enter description" required />
+                            <input class="form-control" type="text" name="department_description" id="department_description" value="<?= $department->department_description ?>" required />
+                            <input type="hidden" type="text" name="department_id" id="department_id" value="<?= $department->department_id ?>" />
                         </div>
                     </div>
                     <div class="box-footer">

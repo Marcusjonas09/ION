@@ -277,6 +277,115 @@ class SuperAdmin extends CI_Controller
     // =======================================================================================
 
     // =======================================================================================
+    // PROGRAM
+    // =======================================================================================
+
+    public function program($success_msg = null, $fail_msg = null)
+    {
+        $data['programs'] = $this->SuperAdmin_model->fetch_all_program();
+        $data['success_msg'] = $success_msg;
+        $data['fail_msg'] = $fail_msg;
+
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_program/all_program', $data);
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function add_program($success_msg = null)
+    {
+        $data['colleges'] = $this->SuperAdmin_model->fetch_all_college();
+        $data['success_msg'] = $success_msg;
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_program/add_program', $data);
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function edit_program($id, $success_msg = null, $fail_msg = null)
+    {
+        $data['colleges'] = $this->SuperAdmin_model->fetch_all_college();
+        $data['program'] = $this->SuperAdmin_model->fetch_program($id);
+        $data['success_msg'] = $success_msg;
+        $data['fail_msg'] = $fail_msg;
+
+        // print_r($data);
+        // die();
+
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_program/edit_program', $data);
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function edit_program_function()
+    {
+        $this->form_validation->set_rules('program_code', 'Program Code', 'required|strip_tags');
+        $this->form_validation->set_rules('program_description', 'Program Description', 'required|strip_tags');
+        $id = $this->input->post('program_id');
+        if ($this->form_validation->run() == FALSE) {
+            $this->edit_program($id);
+        } else {
+            $program = array(
+                'program_code' => $this->input->post('program_code'),
+                'program_description' => $this->input->post('program_description')
+            );
+
+            $this->SuperAdmin_model->edit_program($id, $program);
+            $this->edit_program($id, "Record successfully edited!");
+        }
+    }
+
+    public function create_program()
+    {
+        $this->form_validation->set_rules('program_code', 'Program Code', 'required|strip_tags|is_unique[programs_tbl.program_code]');
+        $this->form_validation->set_rules('program_description', 'Program Description', 'required|strip_tags');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->add_program();
+        } else {
+            $program = array(
+                'program_code' => $this->input->post('program_code'),
+                'program_description' => $this->input->post('program_description'),
+                'assigned_college' => $this->input->post('assigned_college'),
+            );
+
+            $this->SuperAdmin_model->create_program($program);
+            $this->add_program("Record successfully added!");
+        }
+    }
+
+    public function delete_program($id)
+    {
+
+        if (!$this->SuperAdmin_model->delete_program($id)) {
+            $this->SuperAdmin_model->delete_program($id);
+            $this->program("Record successfully deleted!", null);
+        } else {
+            $this->program(null, "Failed to delete Record!");
+        }
+    }
+
+    // =======================================================================================
+    // END OF PROGRAM
+    // =======================================================================================
+
+    // =======================================================================================
     // DEPARTMENT
     // =======================================================================================
 
@@ -299,7 +408,6 @@ class SuperAdmin extends CI_Controller
 
     public function add_department($success_msg = null)
     {
-        $data['colleges'] = $this->SuperAdmin_model->fetch_all_college();
         $data['success_msg'] = $success_msg;
         $this->load->view('includes_super_admin/superadmin_header');
         $this->load->view('includes_super_admin/superadmin_topnav');
@@ -314,7 +422,7 @@ class SuperAdmin extends CI_Controller
 
     public function edit_department($id, $success_msg = null, $fail_msg = null)
     {
-        $data['colleges'] = $this->SuperAdmin_model->fetch_all_college();
+        // $id = $this->input->post('college_id');
         $data['department'] = $this->SuperAdmin_model->fetch_department($id);
         $data['success_msg'] = $success_msg;
         $data['fail_msg'] = $fail_msg;
@@ -361,8 +469,7 @@ class SuperAdmin extends CI_Controller
         } else {
             $department = array(
                 'department_code' => $this->input->post('department_code'),
-                'department_description' => $this->input->post('department_description'),
-                'assigned_college' => $this->input->post('assigned_college'),
+                'department_description' => $this->input->post('department_description')
             );
 
             $this->SuperAdmin_model->create_department($department);
@@ -408,7 +515,7 @@ class SuperAdmin extends CI_Controller
 
     public function add_specialization($success_msg = null)
     {
-        $data['departments'] = $this->SuperAdmin_model->fetch_all_department();
+        $data['programs'] = $this->SuperAdmin_model->fetch_all_program();
         $data['success_msg'] = $success_msg;
         $this->load->view('includes_super_admin/superadmin_header');
         $this->load->view('includes_super_admin/superadmin_topnav');
@@ -423,13 +530,10 @@ class SuperAdmin extends CI_Controller
 
     public function edit_specialization($id, $success_msg = null, $fail_msg = null)
     {
-        $data['departments'] = $this->SuperAdmin_model->fetch_all_department();
+        $data['programs'] = $this->SuperAdmin_model->fetch_all_program();
         $data['specialization'] = $this->SuperAdmin_model->fetch_specialization($id);
         $data['success_msg'] = $success_msg;
         $data['fail_msg'] = $fail_msg;
-
-        // print_r($data);
-        // die();
 
         $this->load->view('includes_super_admin/superadmin_header');
         $this->load->view('includes_super_admin/superadmin_topnav');
@@ -471,7 +575,7 @@ class SuperAdmin extends CI_Controller
             $specialization = array(
                 'specialization_code' => $this->input->post('specialization_code'),
                 'specialization_description' => $this->input->post('specialization_description'),
-                'assigned_department' => $this->input->post('assigned_department'),
+                'assigned_program' => $this->input->post('assigned_program'),
             );
 
             $this->SuperAdmin_model->create_specialization($specialization);
@@ -993,9 +1097,10 @@ class SuperAdmin extends CI_Controller
     public function school_parameters()
     {
         $data['college_count'] = $this->SuperAdmin_model->fetch_college_count();
-        $data['department_count'] = $this->SuperAdmin_model->fetch_department_count();
+        $data['program_count'] = $this->SuperAdmin_model->fetch_program_count();
         $data['specialization_count'] = $this->SuperAdmin_model->fetch_specialization_count();
         $data['curriculum_count'] = $this->SuperAdmin_model->fetch_curriculum_count();
+        $data['department_count'] = $this->SuperAdmin_model->fetch_department_count();
 
         $this->load->view('includes_super_admin/superadmin_header');
         $this->load->view('includes_super_admin/superadmin_topnav');

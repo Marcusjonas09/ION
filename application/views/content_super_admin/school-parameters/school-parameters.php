@@ -102,6 +102,23 @@
                         <!-- small box -->
                         <div class="small-box bg-green">
                             <div class="inner">
+                                <h3 id="simul_number"><?= $program_count ?></h3>
+
+                                <p>Program/s</p>
+                            </div>
+                            <div class="icon">
+                                <!-- <i class="fa fa-shopping-cart"></i> -->
+                            </div>
+                            <a href="<?= base_url() ?>SuperAdmin/program" class="small-box-footer">
+                                More info <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-green">
+                            <div class="inner">
                                 <h3 id="simul_number"><?= $specialization_count ?></h3>
 
                                 <p>Specialization/s</p>
@@ -138,23 +155,6 @@
                             <div class="inner">
                                 <h3 id="simul_number">0</h3>
 
-                                <p>Faculty</p>
-                            </div>
-                            <div class="icon">
-                                <!-- <i class="fa fa-shopping-cart"></i> -->
-                            </div>
-                            <a href="<?= base_url() ?>SuperAdmin/curriculum" class="small-box-footer">
-                                More info <i class="fa fa-arrow-circle-right"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-xs-6">
-                        <!-- small box -->
-                        <div class="small-box bg-green">
-                            <div class="inner">
-                                <h3 id="simul_number">0</h3>
-
                                 <p>Course/s</p>
                             </div>
                             <div class="icon">
@@ -173,6 +173,23 @@
                                 <h3 id="simul_number">0</h3>
 
                                 <p>Laboratory</p>
+                            </div>
+                            <div class="icon">
+                                <!-- <i class="fa fa-shopping-cart"></i> -->
+                            </div>
+                            <a href="<?= base_url() ?>SuperAdmin/curriculum" class="small-box-footer">
+                                More info <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-green">
+                            <div class="inner">
+                                <h3 id="simul_number">0</h3>
+
+                                <p>Faculty</p>
                             </div>
                             <div class="icon">
                                 <!-- <i class="fa fa-shopping-cart"></i> -->

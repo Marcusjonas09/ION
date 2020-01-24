@@ -36,11 +36,10 @@
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label for="curr_code">College:</label>
-                            <!-- <input class="form-control" type="text" name="department_description" id="department_description" placeholder="Enter description" required /> -->
-                            <select class="form-control" name="assigned_department" id="assigned_department">
-                                <?php foreach ($departments as $department) : ?>
-                                    <option value="<?= $department->department_code ?>"><?= $department->department_code . ' - ' . $department->department_description ?></option>
+                            <label for="curr_code">Program:</label>
+                            <select class="form-control" name="assigned_program" id="assigned_program">
+                                <?php foreach ($programs as $program) : ?>
+                                    <option value="<?= $program->program_code ?>"><?= $program->program_code . ' - ' . $program->program_description ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>

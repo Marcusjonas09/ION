@@ -49,7 +49,7 @@
                                         <?= $specialization->specialization_description ?>
                                     </td>
                                     <td>
-                                        <?= $specialization->assigned_department ?>
+                                        <?= $specialization->assigned_program ?>
                                     </td>
                                     <td class="text-center">
                                         <a id="edit_college" href="<?= base_url() ?>SuperAdmin/edit_specialization/<?= $specialization->specialization_id ?>" class="btn btn-warning"><i class="fa fa-pencil"></i></a>

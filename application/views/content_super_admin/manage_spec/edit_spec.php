@@ -24,7 +24,7 @@
             </div>
         <?php endif; ?>
         <div class="container-fluid col-md-9" style="padding-right:0px;">
-            <form action="<?= base_url() ?>SuperAdmin/edit_specialization" method="post">
+            <form action="<?= base_url() ?>SuperAdmin/edit_specialization_function" method="post">
                 <div class="box box-success">
                     <div class="box-header with-border">
                         <h3 class="box-title"><strong>Edit specialization</strong></h3>
@@ -37,12 +37,11 @@
 
                         <div class="form-group col-md-6">
                             <label for="curr_code">College:</label>
-                            <!-- <input class="form-control" type="text" name="department_description" id="department_description" placeholder="Enter description" required /> -->
-                            <select class="form-control" name="assigned_department" id="assigned_department">
-                                <?php foreach ($departments as $department) : ?>
-                                    <option <?php if ($department->department_code == $specialization->assigned_department) {
+                            <select class="form-control" name="assigned_program" id="assigned_program">
+                                <?php foreach ($programs as $program) : ?>
+                                    <option <?php if ($program->program_code == $specialization->assigned_program) {
                                                 echo "selected";
-                                            } ?> value="<?= $department->department_code ?>"><?= $department->department_code . ' - ' . $department->department_description ?></option>
+                                            } ?> value="<?= $program->program_code ?>"><?= $program->program_code . ' - ' . $program->program_description ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -50,6 +49,7 @@
                         <div class="form-group col-md-12">
                             <label for="curr_code">Description:</label>
                             <input class="form-control" type="text" name="specialization_description" id="specialization_description" value="<?= $specialization->specialization_description ?>" placeholder="Enter description" required />
+                            <input type="hidden" name="specialization_id" value="<?= $specialization->specialization_id ?>">
                         </div>
                     </div>
                     <div class="box-footer">

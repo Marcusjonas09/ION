@@ -3,7 +3,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <strong><a class="navi" href="<?= base_url() ?>SuperAdmin/department"><span class="fa fa-chevron-left"></span>&nbsp&nbspBack</a></strong>
+            <strong><a class="navi" href="<?= base_url() ?>SuperAdmin/program"><span class="fa fa-chevron-left"></span>&nbsp&nbspBack</a></strong>
         </h1>
     </section>
 
@@ -24,20 +24,33 @@
             </div>
         <?php endif; ?>
         <div class="container-fluid col-md-9" style="padding-right:0px;">
-            <form action="<?= base_url() ?>SuperAdmin/create_department" method="post">
+            <form action="<?= base_url() ?>SuperAdmin/edit_program_function" method="post">
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title"><strong>Create department</strong></h3>
+                        <h3 class="box-title"><strong>Edit program</strong></h3>
                     </div>
                     <div class="box-body">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label for="curr_code">Code:</label>
-                            <input class="form-control" type="text" name="department_code" id="department_code" placeholder="Enter code" required />
+                            <input class="form-control" type="text" name="program_code" id="program_code" value="<?= $program->program_code ?>" placeholder="Enter code" required />
                         </div>
-                        <div class="form-group col-md-8">
+
+                        <div class="form-group col-md-6">
+                            <label for="curr_code">College:</label>
+                            <select class="form-control" name="assigned_college" id="assigned_college">
+                                <?php foreach ($colleges as $college) : ?>
+                                    <option <?php if ($college->college_code == $program->assigned_college) {
+                                                echo "selected";
+                                            } ?> value="<?= $college->college_code ?>"><?= $college->college_code . ' - ' . $college->college_description ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-12">
                             <label for="curr_code">Description:</label>
-                            <input class="form-control" type="text" name="department_description" id="department_description" placeholder="Enter description" required />
+                            <input class="form-control" type="text" name="program_description" id="program_description" value="<?= $program->program_description ?>" placeholder="Enter description" required />
                         </div>
+                        <input type="hidden" type="text" name="program_id" id="program_id" value="<?= $program->program_id ?>" />
                     </div>
                     <div class="box-footer">
                         <input class="btn btn-success pull-right" type="submit" value="Submit" />

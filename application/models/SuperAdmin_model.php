@@ -105,6 +105,56 @@ class SuperAdmin_model extends CI_Model
     // =======================================================================================
 
     // =======================================================================================
+    // PROGRAM
+    // =======================================================================================
+
+    public function fetch_all_program()
+    {
+        $this->db->select('*');
+        $this->db->from('programs_tbl');
+        $this->db->order_by('program_id', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function fetch_program_count()
+    {
+        $this->db->select('*');
+        $this->db->from('programs_tbl');
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function fetch_program($id)
+    {
+        $this->db->select('*');
+        $this->db->where(array('program_id' => $id));
+        $this->db->from('programs_tbl');
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+    public function create_program($program)
+    {
+        $this->db->insert('programs_tbl', $program);
+    }
+
+    public function edit_program($id, $content)
+    {
+        $this->db->where('program_id', $id);
+        $this->db->update('programs_tbl', $content);
+    }
+
+    public function delete_program($id)
+    {
+        $this->db->delete('programs_tbl', array('program_id' => $id));
+    }
+
+    // =======================================================================================
+    // END OF DEPARTMENT
+    // =======================================================================================
+
+    // =======================================================================================
     // SPECIALIZATION
     // =======================================================================================
 
