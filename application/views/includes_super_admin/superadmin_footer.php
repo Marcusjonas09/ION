@@ -60,9 +60,58 @@
         })
     }
 
+    function delete_specialization(id) {
+        var baselink = "<?= base_url() ?>";
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                window.location.replace(baselink + "SuperAdmin/delete_specialization/" + id)
+            }
+        })
+    }
+
+    function delete_curriculum(id) {
+        var baselink = "<?= base_url() ?>";
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                window.location.replace(baselink + "SuperAdmin/delete_curriculum/" + id)
+            }
+        })
+    }
+
+    function delete_course_from_curriculum(id, curr_id) {
+        var baselink = "<?= base_url() ?>";
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                window.location.replace(baselink + "SuperAdmin/delete_course_from_curriculum/" + id + "/" + curr_id)
+            }
+        })
+    }
+
     $(document).ready(function() {
-
-
 
         $('.datatables').DataTable({
             'paging': true,

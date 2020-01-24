@@ -8,6 +8,7 @@ class SuperAdmin extends CI_Controller
         parent::__construct();
         $this->load->model('SuperAdmin_model');
         $this->load->model('Account_model');
+        $this->load->model('Academics_model');
         $this->load->library('form_validation');
         $this->load->helper('date');
         $this->load->helper('text');
@@ -345,7 +346,7 @@ class SuperAdmin extends CI_Controller
                 'department_description' => $this->input->post('department_description')
             );
 
-            $this->SuperAdmin_model->edit_college($id, $department);
+            $this->SuperAdmin_model->edit_department($id, $department);
             $this->edit_department($id, "Record successfully edited!");
         }
     }
@@ -385,68 +386,265 @@ class SuperAdmin extends CI_Controller
     // =======================================================================================
 
     // =======================================================================================
-    // PROGRAM
+    // SPECIALIZATION
     // =======================================================================================
 
-    public function programs()
+    public function specialization($success_msg = null, $fail_msg = null)
     {
+        $data['specializations'] = $this->SuperAdmin_model->fetch_all_specializations();
+        $data['success_msg'] = $success_msg;
+        $data['fail_msg'] = $fail_msg;
+
         $this->load->view('includes_super_admin/superadmin_header');
         $this->load->view('includes_super_admin/superadmin_topnav');
         $this->load->view('includes_super_admin/superadmin_sidebar');
 
-        $this->load->view('content_super_admin/manage_program/all_program');
+        $this->load->view('content_super_admin/manage_spec/all_spec', $data);
 
         $this->load->view('includes_super_admin/superadmin_contentFooter');
         $this->load->view('includes_super_admin/superadmin_rightnav');
         $this->load->view('includes_super_admin/superadmin_footer');
     }
 
+    public function add_specialization($success_msg = null)
+    {
+        $data['departments'] = $this->SuperAdmin_model->fetch_all_department();
+        $data['success_msg'] = $success_msg;
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_spec/add_spec', $data);
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function edit_specialization($id, $success_msg = null, $fail_msg = null)
+    {
+        $data['departments'] = $this->SuperAdmin_model->fetch_all_department();
+        $data['specialization'] = $this->SuperAdmin_model->fetch_specialization($id);
+        $data['success_msg'] = $success_msg;
+        $data['fail_msg'] = $fail_msg;
+
+        // print_r($data);
+        // die();
+
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_spec/edit_spec', $data);
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function edit_specialization_function()
+    {
+        $this->form_validation->set_rules('specialization_code', 'Specialization Code', 'required|strip_tags');
+        $this->form_validation->set_rules('specialization_description', 'specialization Description', 'required|strip_tags');
+        $id = $this->input->post('specialization_id');
+        if ($this->form_validation->run() == FALSE) {
+            $this->edit_specialization($id);
+        } else {
+            $specialization = array(
+                'specialization_code' => $this->input->post('specialization_code'),
+                'specialization_description' => $this->input->post('specialization_description')
+            );
+
+            $this->SuperAdmin_model->edit_specialization($id, $specialization);
+            $this->edit_specialization($id, "Record successfully edited!");
+        }
+    }
+
+    public function create_specialization()
+    {
+        $this->form_validation->set_rules('specialization_code', 'Specialization Code', 'required|strip_tags|is_unique[specialization_tbl.specialization_code]');
+        $this->form_validation->set_rules('specialization_description', 'Specialization Description', 'required|strip_tags');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->add_specialization();
+        } else {
+            $specialization = array(
+                'specialization_code' => $this->input->post('specialization_code'),
+                'specialization_description' => $this->input->post('specialization_description'),
+                'assigned_department' => $this->input->post('assigned_department'),
+            );
+
+            $this->SuperAdmin_model->create_specialization($specialization);
+            $this->add_specialization("Record successfully added!");
+        }
+    }
+
+    public function delete_specialization($id)
+    {
+
+        if (!$this->SuperAdmin_model->delete_specialization($id)) {
+            $this->SuperAdmin_model->delete_specialization($id);
+            $this->specialization("Record successfully deleted!", null);
+        } else {
+            $this->specialization(null, "Failed to delete Record!");
+        }
+    }
+
     // =======================================================================================
-    // END OF PROGRAM
+    // END OF SPECIALIZATION
     // =======================================================================================
 
     // =======================================================================================
     // CURRICULUM
     // =======================================================================================
 
-    public function curriculum()
+    public function curriculum($success_msg = null, $fail_msg = null)
     {
-        // $data['curriculum'] = $this->Account_model->fetchStudents();
+        $data['curricula'] = $this->SuperAdmin_model->fetch_all_curricula();
+        $data['success_msg'] = $success_msg;
+        $data['fail_msg'] = $fail_msg;
+
         $this->load->view('includes_super_admin/superadmin_header');
         $this->load->view('includes_super_admin/superadmin_topnav');
         $this->load->view('includes_super_admin/superadmin_sidebar');
 
-        $this->load->view('content_super_admin/manage_curriculum/all_curriculum');
+        $this->load->view('content_super_admin/manage_curriculum/all_curriculum', $data);
 
         $this->load->view('includes_super_admin/superadmin_contentFooter');
         $this->load->view('includes_super_admin/superadmin_rightnav');
         $this->load->view('includes_super_admin/superadmin_footer');
     }
 
-    public function view_curriculum()
+    public function add_course_curriculum($id, $success_msg = null, $fail_msg = null)
     {
+        $data['success_msg'] = $success_msg;
+        $data['fail_msg'] = $fail_msg;
+        $data['curriculum_code'] = $this->SuperAdmin_model->fetch_curriculum($id);
+        $data['courses'] = $this->Academics_model->fetch_all_courses();
+        $data['laboratories'] = $this->Academics_model->fetch_all_laboratories();
+        $data['curriculum'] = $this->SuperAdmin_model->fetch_single_curriculum($data['curriculum_code']->curriculum_code);
+
         $this->load->view('includes_super_admin/superadmin_header');
         $this->load->view('includes_super_admin/superadmin_topnav');
         $this->load->view('includes_super_admin/superadmin_sidebar');
 
-        $this->load->view('content_super_admin/manage_students/view_student');
+        $this->load->view('content_super_admin/manage_curriculum/add_course_curriculum', $data);
 
         $this->load->view('includes_super_admin/superadmin_contentFooter');
         $this->load->view('includes_super_admin/superadmin_rightnav');
         $this->load->view('includes_super_admin/superadmin_footer');
     }
 
-    public function edit_curriculum()
+    public function add_curriculum($success_msg = null)
     {
+        $data['success_msg'] = $success_msg;
         $this->load->view('includes_super_admin/superadmin_header');
         $this->load->view('includes_super_admin/superadmin_topnav');
         $this->load->view('includes_super_admin/superadmin_sidebar');
 
-        $this->load->view('content_super_admin/manage_students/edit_student');
+        $this->load->view('content_super_admin/manage_curriculum/add_curriculum', $data);
 
         $this->load->view('includes_super_admin/superadmin_contentFooter');
         $this->load->view('includes_super_admin/superadmin_rightnav');
         $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function add_course_to_curriculum()
+    {
+        $this->form_validation->set_rules('course_id', 'Course Code', 'required|strip_tags');
+        $this->form_validation->set_rules('laboratory_id', 'Laboratory Code', 'required|strip_tags');
+        $this->form_validation->set_rules('curriculum_code_id', 'Curriculum Code', 'required|strip_tags');
+        $this->form_validation->set_rules('year', 'Year', 'required|strip_tags');
+        $this->form_validation->set_rules('term', 'Term', 'required|strip_tags');
+        $id = $this->input->post('curriculum_code_id');
+        if ($this->form_validation->run() == FALSE) {
+            $this->add_course_curriculum($id);
+        } else {
+            $curriculum = array(
+                'course_id' => $this->input->post('course_id'),
+                'laboratory_id' => $this->input->post('laboratory_id'),
+                'curriculum_code_id' => $this->input->post('curriculum_code_id'),
+                'year' => $this->input->post('year'),
+                'term' => $this->input->post('term')
+            );
+
+            $this->SuperAdmin_model->add_course_to_curriculum($curriculum);
+            $this->add_course_curriculum($id, "Record successfully edited!");
+        }
+    }
+
+    public function edit_curriculum($id, $success_msg = null, $fail_msg = null)
+    {
+        // $id = $this->input->post('college_id');
+        $data['curriculum'] = $this->SuperAdmin_model->fetch_curriculum($id);
+        $data['success_msg'] = $success_msg;
+        $data['fail_msg'] = $fail_msg;
+
+        // print_r($data);
+        // die();
+
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_curriculum/edit_curriculum', $data);
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function edit_curriculum_function()
+    {
+        $this->form_validation->set_rules('curriculum_code', 'Curriculum Code', 'required|strip_tags');
+        $id = $this->input->post('curriculum_id');
+        if ($this->form_validation->run() == FALSE) {
+            $this->edit_curriculum($id);
+        } else {
+            $curriculum = array(
+                'curriculum_code' => $this->input->post('curriculum_code'),
+            );
+
+            $this->SuperAdmin_model->edit_curriculum($id, $curriculum);
+            $this->edit_curriculum($id, "Record successfully edited!");
+        }
+    }
+
+    public function delete_course_from_curriculum($id, $curr_id)
+    {
+        if (!$this->SuperAdmin_model->delete_course_from_curriculum($id)) {
+            $this->SuperAdmin_model->delete_course_from_curriculum($id);
+            $this->add_course_curriculum($curr_id, "Record successfully deleted!");
+        } else {
+            $this->add_course_curriculum($curr_id, null, "Failed to delete Record!");
+        }
+    }
+
+    public function create_curriculum()
+    {
+        $this->form_validation->set_rules('curriculum_code', 'Curriculum Code', 'required|strip_tags|is_unique[curriculum_code_tbl.curriculum_code]');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->add_curriculum();
+        } else {
+            $curriculum = array(
+                'curriculum_code' => $this->input->post('curriculum_code'),
+            );
+
+            $this->SuperAdmin_model->create_curriculum($curriculum);
+            $this->add_curriculum("Record successfully added!");
+        }
+    }
+
+    public function delete_curriculum($id)
+    {
+
+        if (!$this->SuperAdmin_model->delete_curriculum($id)) {
+            $this->SuperAdmin_model->delete_curriculum($id);
+            $this->curriculum("Record successfully deleted!", null);
+        } else {
+            $this->curriculum(null, "Failed to delete Record!");
+        }
     }
 
     // =======================================================================================
@@ -796,8 +994,8 @@ class SuperAdmin extends CI_Controller
     {
         $data['college_count'] = $this->SuperAdmin_model->fetch_college_count();
         $data['department_count'] = $this->SuperAdmin_model->fetch_department_count();
-        // $data['program_count'] = $this->SuperAdmin_model->fetch_program_count();
-        // $data['curriculum_count'] = $this->SuperAdmin_model->fetch_curriculum_count();
+        $data['specialization_count'] = $this->SuperAdmin_model->fetch_specialization_count();
+        $data['curriculum_count'] = $this->SuperAdmin_model->fetch_curriculum_count();
 
         $this->load->view('includes_super_admin/superadmin_header');
         $this->load->view('includes_super_admin/superadmin_topnav');

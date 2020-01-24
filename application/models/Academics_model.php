@@ -88,6 +88,18 @@ class Academics_model extends CI_Model
         return $query->result();
     }
 
+    // public function fetch_sample()
+    // {
+    //     $this->db->select('*');
+    //     // $this->db->where(array('courses_tbl.curriculum_code' => $curriculum_code));
+    //     $this->db->from('curriculum_tbl');
+    //     $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_id = curriculum_tbl.laboratory_id');
+    //     $this->db->join('courses_tbl', 'courses_tbl.course_id = curriculum_tbl.course_id');
+    //     $this->db->order_by('courses_tbl.course_code', 'ASC');
+    //     $query = $this->db->get();
+    //     return $query->result();
+    // }
+
     public function fetch_progress_student()
     {
         $this->db->select('cc_status,cc_course,cc_final');
@@ -134,6 +146,22 @@ class Academics_model extends CI_Model
         $this->db->select('*');
         $this->db->where(array('curriculum_code' => $curriculum_code));
         $this->db->from('courses_tbl');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function fetch_all_courses()
+    {
+        $this->db->select('*');
+        $this->db->from('courses_tbl');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function fetch_all_laboratories()
+    {
+        $this->db->select('*');
+        $this->db->from('laboratory_tbl');
         $query = $this->db->get();
         return $query->result();
     }

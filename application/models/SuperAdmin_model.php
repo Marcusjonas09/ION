@@ -105,23 +105,121 @@ class SuperAdmin_model extends CI_Model
     // =======================================================================================
 
     // =======================================================================================
-    // PROGRAM
+    // SPECIALIZATION
     // =======================================================================================
 
-    public function create_program()
+    public function fetch_all_specializations()
     {
+        $this->db->select('*');
+        $this->db->from('specialization_tbl');
+        $this->db->order_by('specialization_id', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function fetch_specialization_count()
+    {
+        $this->db->select('*');
+        $this->db->from('specialization_tbl');
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function fetch_specialization($id)
+    {
+        $this->db->select('*');
+        $this->db->where(array('specialization_id' => $id));
+        $this->db->from('specialization_tbl');
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+    public function create_specialization($specialization)
+    {
+        $this->db->insert('specialization_tbl', $specialization);
+    }
+
+    public function edit_specialization($id, $content)
+    {
+        $this->db->where('specialization_id', $id);
+        $this->db->update('specialization_tbl', $content);
+    }
+
+    public function delete_specialization($id)
+    {
+        $this->db->delete('specialization_tbl', array('specialization_id' => $id));
     }
 
     // =======================================================================================
-    // END OF PROGRAM
+    // END OF SPECIALIZATION
     // =======================================================================================
 
     // =======================================================================================
     // CURRICULUM
     // =======================================================================================
 
-    public function create_curriculum()
+    public function fetch_all_curricula()
     {
+        $this->db->select('*');
+        $this->db->from('curriculum_code_tbl');
+        $this->db->order_by('curriculum_code_id', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function fetch_curriculum_count()
+    {
+        $this->db->select('*');
+        $this->db->from('curriculum_code_tbl');
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function fetch_curriculum($id)
+    {
+        $this->db->select('*');
+        $this->db->where(array('curriculum_code_id' => $id));
+        $this->db->from('curriculum_code_tbl');
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+    public function create_curriculum($curriculum)
+    {
+        $this->db->insert('curriculum_code_tbl', $curriculum);
+    }
+
+    public function add_course_to_curriculum($curriculum)
+    {
+        $this->db->insert('curriculum_tbl', $curriculum);
+    }
+
+    public function edit_curriculum($id, $content)
+    {
+        $this->db->where('curriculum_code_id', $id);
+        $this->db->update('curriculum_code_tbl', $content);
+    }
+
+    public function delete_curriculum($id)
+    {
+        $this->db->delete('curriculum_code_tbl', array('curriculum_code_id' => $id));
+    }
+
+    public function delete_course_from_curriculum($id)
+    {
+        $this->db->delete('curriculum_tbl', array('curriculum_id' => $id));
+    }
+
+    public function fetch_single_curriculum($curriculum_code)
+    {
+        $this->db->select('*');
+        $this->db->where(array('courses_tbl.curriculum_code' => $curriculum_code));
+        $this->db->from('curriculum_tbl');
+        $this->db->join('laboratory_tbl', 'laboratory_tbl.laboratory_id = curriculum_tbl.laboratory_id');
+        $this->db->join('courses_tbl', 'courses_tbl.course_id = curriculum_tbl.course_id');
+        $this->db->order_by('courses_tbl.course_code', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
     }
 
     // =======================================================================================

@@ -22,7 +22,6 @@ class Student extends CI_Controller
 		$this->load->model('Notification_model');
 		$this->load->model('CourseCard_model');
 		$this->load->model('COR_model');
-		$this->load->model('Enrollment_model');
 		$this->load->model('Academics_model');
 		$this->load->model('Student_model');
 		$this->load->model('Revision_model');
@@ -282,11 +281,11 @@ class Student extends CI_Controller
 	public function curriculum()
 	{
 		$this->load->view('includes_student/student_header');
-
 		$this->load->view('includes_student/student_topnav');
 		$this->load->view('includes_student/student_sidebar');
 
 		$data['curr'] = $this->Academics_model->fetch_curriculum_student();
+		// $data['curr'] = $this->Academics_model->fetch_sample();
 		$data['grades'] = $this->Academics_model->fetch_progress_student();
 
 		$this->load->view('content_student/student_curriculum', $data);
@@ -294,6 +293,14 @@ class Student extends CI_Controller
 		$this->load->view('includes_student/student_contentFooter');
 		$this->load->view('includes_student/student_rightnav');
 		$this->load->view('includes_student/student_footer');
+	}
+
+	public function sample()
+	{
+		echo "<pre>";
+		print_r($this->Academics_model->fetch_sample());
+		echo "</pre>";
+		die();
 	}
 
 	// =======================================================================================

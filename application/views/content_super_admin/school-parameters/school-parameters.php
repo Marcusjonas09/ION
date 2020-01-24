@@ -73,14 +73,14 @@
                     <!-- small box -->
                     <div class="small-box bg-green">
                         <div class="inner">
-                            <h3 id="simul_number">0</h3>
+                            <h3 id="simul_number"><?= $specialization_count ?></h3>
 
-                            <p>Program/s</p>
+                            <p>Specialization/s</p>
                         </div>
                         <div class="icon">
                             <!-- <i class="fa fa-shopping-cart"></i> -->
                         </div>
-                        <a href="<?= base_url() ?>SuperAdmin/programs" class="small-box-footer">
+                        <a href="<?= base_url() ?>SuperAdmin/specialization" class="small-box-footer">
                             More info <i class="fa fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -90,7 +90,7 @@
                     <!-- small box -->
                     <div class="small-box bg-green">
                         <div class="inner">
-                            <h3 id="simul_number">0</h3>
+                            <h3 id="simul_number"><?= $curriculum_count ?></h3>
 
                             <p>Curriculum</p>
                         </div>

@@ -3,7 +3,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <strong><a class="navi" href="<?= base_url() ?>SuperAdmin/curriculum"><span class="fa fa-chevron-left"></span>&nbsp&nbspBack</a></strong>
+            <strong><a class="navi" href="<?= base_url() ?>SuperAdmin/specialization"><span class="fa fa-chevron-left"></span>&nbsp&nbspBack</a></strong>
         </h1>
     </section>
 
@@ -24,15 +24,30 @@
             </div>
         <?php endif; ?>
         <div class="container-fluid col-md-9" style="padding-right:0px;">
-            <form action="<?= base_url() ?>SuperAdmin/edit_curriculum_function" method="post">
+            <form action="<?= base_url() ?>SuperAdmin/create_specialization" method="post">
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title"><strong>Edit curriculum</strong></h3>
+                        <h3 class="box-title"><strong>Create specialization</strong></h3>
                     </div>
                     <div class="box-body">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label for="curr_code">Code:</label>
-                            <input class="form-control" type="text" name="curriculum_code" id="curriculum_code" value="<?= $curriculum->curriculum_code ?>" required />
+                            <input class="form-control" type="text" name="specialization_code" id="specialization_code" placeholder="Enter code" required />
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="curr_code">College:</label>
+                            <!-- <input class="form-control" type="text" name="department_description" id="department_description" placeholder="Enter description" required /> -->
+                            <select class="form-control" name="assigned_department" id="assigned_department">
+                                <?php foreach ($departments as $department) : ?>
+                                    <option value="<?= $department->department_code ?>"><?= $department->department_code . ' - ' . $department->department_description ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="curr_code">Description:</label>
+                            <input class="form-control" type="text" name="specialization_description" id="specialization_description" placeholder="Enter description" required />
                         </div>
                     </div>
                     <div class="box-footer">
