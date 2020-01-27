@@ -1091,6 +1091,27 @@ class SuperAdmin extends CI_Controller
     // =======================================================================================
 
     // =======================================================================================
+    // COURSES
+    // =======================================================================================
+
+    public function courses()
+    {
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_courses/all_courses');
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    // =======================================================================================
+    // END OF COURSES
+    // =======================================================================================
+
+    // =======================================================================================
     // SCHOOL PARAMETERS
     // =======================================================================================
 
