@@ -55,7 +55,9 @@
                                     <td>
                                         <?= $course->laboratory_code ?>
                                     </td>
-                                    <td></td>
+                                    <td>
+                                        <?= $course->department_code ?>
+                                    </td>
                                     <td class="text-center">
                                         <a id="edit_department" href="<?= base_url() ?>SuperAdmin/edit_course/<?= $course->course_id ?>" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
                                         <button class="btn btn-danger" onclick="delete_course(<?= $course->course_id ?>)"><i class="fa fa-trash"></i></button>

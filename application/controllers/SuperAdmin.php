@@ -1202,6 +1202,8 @@ class SuperAdmin extends CI_Controller
     {
         // $id = $this->input->post('college_id');
         $data['course'] = $this->SuperAdmin_model->fetch_course($id);
+        $data['laboratories'] = $this->SuperAdmin_model->fetch_all_laboratories();
+        $data['departments'] = $this->SuperAdmin_model->fetch_all_department();
         $data['success_msg'] = $success_msg;
         $data['fail_msg'] = $fail_msg;
 
@@ -1225,7 +1227,7 @@ class SuperAdmin extends CI_Controller
         $this->form_validation->set_rules('course_title', 'Course Title', 'required|strip_tags');
         $this->form_validation->set_rules('course_units', 'Course Units', 'required|strip_tags');
         $this->form_validation->set_rules('laboratory_code', 'Laboratory Code', 'required|strip_tags');
-        $this->form_validation->set_rules('pr_requisite', 'Pre Requisite', 'required|strip_tags');
+        $this->form_validation->set_rules('department_code', 'Department Designation', 'required|strip_tags');
         $this->form_validation->set_rules('curriculum_code', 'Curriculum Code', 'required|strip_tags');
         $id = $this->input->post('course_id');
         if ($this->form_validation->run() == FALSE) {
@@ -1236,7 +1238,7 @@ class SuperAdmin extends CI_Controller
                 'course_title' => $this->input->post('course_title'),
                 'course_units' => $this->input->post('course_units'),
                 'laboratory_code' => $this->input->post('laboratory_code'),
-                'pr_requisite' => $this->input->post('pr_requisite'),
+                'department_code' => $this->input->post('department_code'),
                 'curriculum_code' => $this->input->post('curriculum_code')
             );
 
@@ -1267,8 +1269,7 @@ class SuperAdmin extends CI_Controller
         $this->form_validation->set_rules('course_title', 'Course Title', 'required|strip_tags');
         $this->form_validation->set_rules('course_units', 'Course Units', 'required|strip_tags');
         $this->form_validation->set_rules('laboratory_code', 'Laboratory Code', 'required|strip_tags');
-        $this->form_validation->set_rules('pr_requisite', 'Pre Requisite', 'required|strip_tags');
-        $this->form_validation->set_rules('curriculum_code', 'Curriculum Code', 'required|strip_tags');
+        $this->form_validation->set_rules('department_code', 'Department Designation', 'required|strip_tags');
 
         if ($this->form_validation->run() == FALSE) {
             $this->add_course();
@@ -1278,11 +1279,10 @@ class SuperAdmin extends CI_Controller
                 'course_title' => $this->input->post('course_title'),
                 'course_units' => $this->input->post('course_units'),
                 'laboratory_code' => $this->input->post('laboratory_code'),
-                'pr_requisite' => $this->input->post('pr_requisite'),
-                'curriculum_code' => $this->input->post('curriculum_code')
+                'department_code' => $this->input->post('department_code')
             );
 
-            $this->SuperAdmin_model->create_college($course);
+            $this->SuperAdmin_model->create_course($course);
             $message = '
         <div class="alert alert-success alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

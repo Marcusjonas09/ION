@@ -468,7 +468,7 @@ class SuperAdmin_model extends CI_Model
     public function fetch_all_courses()
     {
         $this->db->select('*');
-        $this->db->from('courses_tbl');
+        $this->db->from('courses_tbl_v2');
         $query = $this->db->get();
         return $query->result();
     }
@@ -484,7 +484,7 @@ class SuperAdmin_model extends CI_Model
     public function fetch_course_count()
     {
         $this->db->select('*');
-        $this->db->from('courses_tbl');
+        $this->db->from('courses_tbl_v2');
         $query = $this->db->get();
         return $query->num_rows();
     }
@@ -493,7 +493,7 @@ class SuperAdmin_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->where(array('course_id' => $id));
-        $this->db->from('courses_tbl');
+        $this->db->from('courses_tbl_v2');
         $query = $this->db->get();
         return $query->row();
     }
@@ -520,7 +520,7 @@ class SuperAdmin_model extends CI_Model
                         'curriculum_code' => $curriculum_code
                     );
 
-                    $this->db->insert('courses_tbl', $data);
+                    $this->db->insert('courses_tbl_v2', $data);
                 }
                 fclose($handle);
                 $message = '
@@ -555,18 +555,18 @@ class SuperAdmin_model extends CI_Model
 
     public function create_course($college)
     {
-        $this->db->insert('courses_tbl', $college);
+        $this->db->insert('courses_tbl_v2', $college);
     }
 
     public function edit_course($id, $content)
     {
         $this->db->where('course_id', $id);
-        $this->db->update('courses_tbl', $content);
+        $this->db->update('courses_tbl_v2', $content);
     }
 
     public function delete_course($id)
     {
-        $this->db->delete('courses_tbl', array('course_id' => $id));
+        $this->db->delete('courses_tbl_v2', array('course_id' => $id));
     }
 
     // =======================================================================================
