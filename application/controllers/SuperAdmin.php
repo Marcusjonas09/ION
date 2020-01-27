@@ -1221,14 +1221,13 @@ class SuperAdmin extends CI_Controller
         $this->load->view('includes_super_admin/superadmin_footer');
     }
 
-    public function edit_courses_function()
+    public function edit_course_function()
     {
         $this->form_validation->set_rules('course_code', 'Course Code', 'required|strip_tags');
         $this->form_validation->set_rules('course_title', 'Course Title', 'required|strip_tags');
         $this->form_validation->set_rules('course_units', 'Course Units', 'required|strip_tags');
         $this->form_validation->set_rules('laboratory_code', 'Laboratory Code', 'required|strip_tags');
         $this->form_validation->set_rules('department_code', 'Department Designation', 'required|strip_tags');
-        $this->form_validation->set_rules('curriculum_code', 'Curriculum Code', 'required|strip_tags');
         $id = $this->input->post('course_id');
         if ($this->form_validation->run() == FALSE) {
             $this->edit_course($id);
@@ -1238,8 +1237,7 @@ class SuperAdmin extends CI_Controller
                 'course_title' => $this->input->post('course_title'),
                 'course_units' => $this->input->post('course_units'),
                 'laboratory_code' => $this->input->post('laboratory_code'),
-                'department_code' => $this->input->post('department_code'),
-                'curriculum_code' => $this->input->post('curriculum_code')
+                'department_code' => $this->input->post('department_code')
             );
 
             $this->SuperAdmin_model->edit_course($id, $course);
@@ -1307,6 +1305,132 @@ class SuperAdmin extends CI_Controller
 
     // =======================================================================================
     // END OF COURSES
+    // =======================================================================================
+
+    // =======================================================================================
+    // SECTIONS
+    // =======================================================================================
+
+    public function section($success_msg = null, $fail_msg = null)
+    {
+        $data['sections'] = $this->SuperAdmin_model->fetch_all_sections();
+        $data['success_msg'] = $success_msg;
+        $data['fail_msg'] = $fail_msg;
+
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_sections/all_sections', $data);
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function add_section($message = null)
+    {
+        $data['message'] = $message;
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_sections/add_section', $data);
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function edit_section($id, $success_msg = null, $fail_msg = null)
+    {
+        // $id = $this->input->post('college_id');
+        $data['section'] = $this->SuperAdmin_model->fetch_section($id);
+        $data['success_msg'] = $success_msg;
+        $data['fail_msg'] = $fail_msg;
+
+        // print_r($data);
+        // die();
+
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_sections/edit_section', $data);
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function edit_section_function()
+    {
+        $this->form_validation->set_rules('section_code', 'Section Code', 'required|strip_tags');
+        $id = $this->input->post('section_id');
+        if ($this->form_validation->run() == FALSE) {
+            $this->edit_section($id);
+        } else {
+            $section = array(
+                'section_code' => $this->input->post('section_code'),
+            );
+
+            $this->SuperAdmin_model->edit_section($id, $section);
+            $this->edit_section($id, "Record successfully edited!");
+        }
+    }
+
+    public function add_section_csv()
+    {
+        if (isset($_POST["import"])) {
+            $message = $this->SuperAdmin_model->add_section_csv($_FILES['csv_file']);
+        } else {
+            $message = '
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Warning!</h4>
+            <p>Please select a file!</p>
+        </div>
+        ';
+        }
+        $this->add_section($message);
+    }
+
+    public function create_section()
+    {
+        $this->form_validation->set_rules('section_code', 'Section Code', 'required|strip_tags|is_unique[sections_tbl.section_code]');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->add_section();
+        } else {
+            $section = array(
+                'section_code' => $this->input->post('section_code'),
+            );
+
+            $this->SuperAdmin_model->create_section($section);
+            $message = '
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Success!</h4>
+            <p>Record successfully added!</p>
+        </div>
+        ';
+            $this->add_section($message);
+        }
+    }
+
+    public function delete_section($id)
+    {
+
+        if (!$this->SuperAdmin_model->delete_section($id)) {
+            $this->SuperAdmin_model->delete_section($id);
+            $this->section("Record successfully deleted!", null);
+        } else {
+            $this->section(null, "Failed to delete Record!");
+        }
+    }
+
+    // =======================================================================================
+    // END OF SECTIONS
     // =======================================================================================
 
     // =======================================================================================

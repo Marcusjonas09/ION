@@ -16,11 +16,15 @@
                 <?php echo validation_errors(); ?>
             </div>
         <?php endif; ?>
-        <?php if (isset($message)) : ?>
-            <?php echo $message; ?>
+        <?php if (isset($success_msg)) : ?>
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-warning"></i>Success!</h4>
+                <?php echo $success_msg; ?>
+            </div>
         <?php endif; ?>
         <div class="container-fluid col-md-9" style="padding-right:0px;">
-            <form action="<?= base_url() ?>SuperAdmin/course_course" method="post">
+            <form action="<?= base_url() ?>SuperAdmin/edit_course_function" method="post">
                 <div class="box box-success">
                     <div class="box-header with-border">
                         <h3 class="box-title"><strong>Edit course</strong></h3>
@@ -60,6 +64,7 @@
                                                 } ?> value="<?= $department->department_code ?>"><?= $department->department_code . ' - ' . $department->department_description ?></option>
                                     <?php endforeach; ?>
                                 </select>
+                                <input type="hidden" name="course_id" value="<?= $course->course_id ?>">
                             </div>
                         </div>
                     </div>

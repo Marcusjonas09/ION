@@ -27,31 +27,27 @@
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">
-                        <strong>College</strong>
+                        <strong>Section</strong>
                     </h3>
                 </div>
                 <div class="box-body">
                     <table class="datatables table table-striped text-center" data-page-length='10'>
                         <thead class="bg-success text-center" style="background-color:#00a65a; color:white;">
                             <th class="text-center col-md-1">#</th>
-                            <th class="text-center col-md-2">Code</th>
-                            <th class="text-center col-md-7">Description</th>
-                            <th class="text-center col-md-2">Action</th>
+                            <th class="text-center col-md-6">Code</th>
+                            <th class="text-center col-md-5">Action</th>
                         </thead>
                         <tbody>
                             <?php $i = 1;
-                            foreach ($colleges as $college) : ?>
+                            foreach ($sections as $section) : ?>
                                 <tr>
                                     <td><?= $i++ ?></td>
                                     <td>
-                                        <?= $college->college_code ?>
-                                    </td>
-                                    <td>
-                                        <?= $college->college_description ?>
+                                        <?= $section->section_code ?>
                                     </td>
                                     <td class="text-center">
-                                        <a id="edit_college" href="<?= base_url() ?>SuperAdmin/edit_college/<?= $college->college_id ?>" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                        <button class="btn btn-danger" onclick="delete_college(<?= $college->college_id ?>)"><i class="fa fa-trash"></i></button>
+                                        <a id="edit_section" href="<?= base_url() ?>SuperAdmin/edit_section/<?= $section->section_id ?>" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                                        <button class="btn btn-danger" onclick="delete_section(<?= $section->section_id ?>)"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -59,7 +55,7 @@
                     </table>
                 </div>
                 <div class="box-footer">
-                    <a class="btn btn-success pull-right" href="<?= base_url() ?>SuperAdmin/add_college">Add New Entry</a>
+                    <a class="btn btn-success pull-right" href="<?= base_url() ?>SuperAdmin/add_section">Add New Entry</a>
                 </div>
             </div>
         </div>

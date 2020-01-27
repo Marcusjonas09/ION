@@ -509,15 +509,13 @@ class SuperAdmin_model extends CI_Model
                     $title = strip_tags($data[1]);
                     $units = strip_tags($data[2]);
                     $lab = strip_tags($data[3]);
-                    $requisite = strip_tags($data[4]);
-                    $curriculum_code = strip_tags($data[5]);
+                    $department = strip_tags($data[4]);
                     $data = array(
                         'course_code' => $code,
                         'course_title' => $title,
                         'course_units' => $units,
                         'laboratory_code' => $lab,
-                        'pr_requisite' => $requisite,
-                        'curriculum_code' => $curriculum_code
+                        'department_code' => $department
                     );
 
                     $this->db->insert('courses_tbl_v2', $data);
@@ -571,6 +569,100 @@ class SuperAdmin_model extends CI_Model
 
     // =======================================================================================
     // END OF COURSES
+    // =======================================================================================
+
+    // =======================================================================================
+    // SECTIONS
+    // =======================================================================================
+
+    public function fetch_all_sections()
+    {
+        $this->db->select('*');
+        $this->db->from('sections_tbl');
+        $this->db->order_by('section_code', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function fetch_section_count()
+    {
+        $this->db->select('*');
+        $this->db->from('sections_tbl');
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function fetch_section($id)
+    {
+        $this->db->select('*');
+        $this->db->where(array('section_id' => $id));
+        $this->db->from('sections_tbl');
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+    public function add_section_csv($data)
+    {
+        if ($data['name']) {
+            $filename = explode(".", $data['name']);
+            if (end($filename) == "csv") {
+                $handle = fopen($data['tmp_name'], "r");
+                while ($data = fgetcsv($handle)) {
+                    $code = strip_tags($data[0]);
+                    // mysqli_query($connect, $query);
+                    $data = array(
+                        'section_code' => $code,
+                    );
+
+                    $this->db->insert('sections_tbl', $data);
+                }
+                fclose($handle);
+                $message = '
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Success!</h4>
+            <p>Import complete!</p>
+        </div>
+        ';
+            } else {
+                $message = '
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Warning!</h4>
+            <p>Please Select CSV File only</p>
+        </div>
+        ';
+            }
+        } else {
+            $message = '
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Warning!</h4>
+            <p>Please Select File</p>
+        </div>
+        ';
+        }
+        return $message;
+    }
+
+    public function create_section($section)
+    {
+        $this->db->insert('sections_tbl', $section);
+    }
+
+    public function edit_section($id, $content)
+    {
+        $this->db->where('section_id', $id);
+        $this->db->update('sections_tbl', $content);
+    }
+
+    public function delete_section($id)
+    {
+        $this->db->delete('sections_tbl', array('section_id' => $id));
+    }
+
+    // =======================================================================================
+    // END OF SECTIONS
     // =======================================================================================
 
     // =======================================================================================
