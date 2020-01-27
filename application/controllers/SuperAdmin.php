@@ -1445,7 +1445,7 @@ class SuperAdmin extends CI_Controller
         $data['specialization_count'] = $this->SuperAdmin_model->fetch_specialization_count();
         $data['course_count'] = $this->SuperAdmin_model->fetch_course_count();
         // $data['lab_count'] = $this->SuperAdmin_model->fetch_program_count();
-        // $data['section_count'] = $this->SuperAdmin_model->fetch_program_count();
+        $data['section_count'] = $this->SuperAdmin_model->fetch_section_count();
         $data['curriculum_count'] = $this->SuperAdmin_model->fetch_curriculum_count();
 
 

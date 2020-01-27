@@ -151,7 +151,7 @@
 
                     <div class="col-lg-3 col-xs-6">
                         <!-- small box -->
-                        <div class="small-box bg-green">
+                        <div class="small-box bg-yellow">
                             <div class="inner">
                                 <h3 id="simul_number">0</h3>
 
@@ -170,7 +170,7 @@
                         <!-- small box -->
                         <div class="small-box bg-green">
                             <div class="inner">
-                                <h3 id="simul_number">0</h3>
+                                <h3 id="simul_number"><?= $section_count ?></h3>
 
                                 <p>Section/s</p>
                             </div>
@@ -202,7 +202,7 @@
 
                     <div class="col-lg-3 col-xs-6">
                         <!-- small box -->
-                        <div class="small-box bg-green">
+                        <div class="small-box bg-yellow">
                             <div class="inner">
                                 <h3 id="simul_number">0</h3>
 
@@ -219,7 +219,7 @@
 
                     <div class="col-lg-3 col-xs-6">
                         <!-- small box -->
-                        <div class="small-box bg-green">
+                        <div class="small-box bg-yellow">
                             <div class="inner">
                                 <h3 id="simul_number">0</h3>
 
