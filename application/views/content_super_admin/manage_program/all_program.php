@@ -9,7 +9,7 @@
 
     <!-- Main content -->
     <section class="content container-fluid">
-        <div class="container-fluid col-md-8" style="padding:0px;">
+        <div class="container-fluid col-md-12" style="padding:0px;">
             <?php if (isset($success_msg)) : ?>
                 <div class="alert alert-success alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -32,7 +32,7 @@
                     </h3>
                 </div>
                 <div class="box-body">
-                    <table class="datatables table table-striped" data-page-length='10'>
+                    <table class="datatables table table-striped text-center" data-page-length='10'>
                         <thead class="bg-success text-center" style="background-color:#00a65a; color:white;">
                             <th class="text-center col-md-2">Code</th>
                             <th class="text-center col-md-4">Description</th>

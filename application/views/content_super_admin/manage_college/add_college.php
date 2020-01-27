@@ -16,12 +16,8 @@
                 <?php echo validation_errors(); ?>
             </div>
         <?php endif; ?>
-        <?php if (isset($success_msg)) : ?>
-            <div class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-warning"></i>Success!</h4>
-                <?php echo $success_msg; ?>
-            </div>
+        <?php if (isset($message)) : ?>
+            <?php echo $message; ?>
         <?php endif; ?>
         <div class="container-fluid col-md-9" style="padding-right:0px;">
             <form action="<?= base_url() ?>SuperAdmin/create_college" method="post">
@@ -50,17 +46,17 @@
                 <div class="box-header with-border">
                     <h3 class="box-title"><strong>Insert Multiple Entry</strong></h3>
                 </div>
-                <div class="box-body">
-                    <form action="" method="post" enctype="multipart/form-data">
+                <form action="<?= base_url() ?>SuperAdmin/add_college_csv" method="post" enctype="multipart/form-data">
+                    <div class="box-body">
                         <div class="form-group">
                             <label>Upload CSV file</label>
-                            <input class="form-control btn btn-default" type="file" name="facultycsv" />
+                            <input class="form-control btn btn-default" type="file" name="csv_file" />
                         </div>
-                    </form>
-                </div>
-                <div class="box-footer">
-                    <input class="btn btn-success pull-right" type="submit" value="Import" />
-                </div>
+                    </div>
+                    <div class="box-footer">
+                        <input class="btn btn-success pull-right" type="submit" name="import" value="Import" />
+                    </div>
+                </form>
             </div>
         </div>
 

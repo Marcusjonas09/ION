@@ -34,6 +34,52 @@ class SuperAdmin_model extends CI_Model
         return $query->row();
     }
 
+    public function add_college_csv($data)
+    {
+        if ($data['name']) {
+            $filename = explode(".", $data['name']);
+            if (end($filename) == "csv") {
+                $handle = fopen($data['tmp_name'], "r");
+                while ($data = fgetcsv($handle)) {
+                    $code = strip_tags($data[0]);
+                    $description = strip_tags($data[1]);
+                    // mysqli_query($connect, $query);
+                    $data = array(
+                        'college_code' => $code,
+                        'college_description' => $description
+                    );
+
+                    $this->db->insert('college_tbl', $data);
+                }
+                fclose($handle);
+                $message = '
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Success!</h4>
+            <p>Import complete!</p>
+        </div>
+        ';
+            } else {
+                $message = '
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Warning!</h4>
+            <p>Please Select CSV File only</p>
+        </div>
+        ';
+            }
+        } else {
+            $message = '
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Warning!</h4>
+            <p>Please Select File</p>
+        </div>
+        ';
+        }
+        return $message;
+    }
+
     public function create_college($college)
     {
         $this->db->insert('college_tbl', $college);
@@ -82,6 +128,51 @@ class SuperAdmin_model extends CI_Model
         $this->db->from('department_tbl');
         $query = $this->db->get();
         return $query->row();
+    }
+
+    public function add_department_csv($data)
+    {
+        if ($data['name']) {
+            $filename = explode(".", $data['name']);
+            if (end($filename) == "csv") {
+                $handle = fopen($data['tmp_name'], "r");
+                while ($data = fgetcsv($handle)) {
+                    $code = strip_tags($data[0]);
+                    $description = strip_tags($data[1]);
+                    $data = array(
+                        'department_code' => $code,
+                        'department_description' => $description
+                    );
+
+                    $this->db->insert('department_tbl', $data);
+                }
+                fclose($handle);
+                $message = '
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Success!</h4>
+            <p>Import complete!</p>
+        </div>
+        ';
+            } else {
+                $message = '
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Warning!</h4>
+            <p>Please Select CSV File only</p>
+        </div>
+        ';
+            }
+        } else {
+            $message = '
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Warning!</h4>
+            <p>Please Select File</p>
+        </div>
+        ';
+        }
+        return $message;
     }
 
     public function create_department($department)
@@ -134,6 +225,53 @@ class SuperAdmin_model extends CI_Model
         return $query->row();
     }
 
+    public function add_program_csv($data)
+    {
+        if ($data['name']) {
+            $filename = explode(".", $data['name']);
+            if (end($filename) == "csv") {
+                $handle = fopen($data['tmp_name'], "r");
+                while ($data = fgetcsv($handle)) {
+                    $code = strip_tags($data[0]);
+                    $description = strip_tags($data[1]);
+                    $assigned_college = strip_tags($data[2]);
+                    $data = array(
+                        'program_code' => $code,
+                        'program_description' => $description,
+                        'assigned_college' => $assigned_college
+                    );
+
+                    $this->db->insert('programs_tbl', $data);
+                }
+                fclose($handle);
+                $message = '
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Success!</h4>
+            <p>Import complete!</p>
+        </div>
+        ';
+            } else {
+                $message = '
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Warning!</h4>
+            <p>Please Select CSV File only</p>
+        </div>
+        ';
+            }
+        } else {
+            $message = '
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Warning!</h4>
+            <p>Please Select File</p>
+        </div>
+        ';
+        }
+        return $message;
+    }
+
     public function create_program($program)
     {
         $this->db->insert('programs_tbl', $program);
@@ -182,6 +320,53 @@ class SuperAdmin_model extends CI_Model
         $this->db->from('specialization_tbl');
         $query = $this->db->get();
         return $query->row();
+    }
+
+    public function add_specialization_csv($data)
+    {
+        if ($data['name']) {
+            $filename = explode(".", $data['name']);
+            if (end($filename) == "csv") {
+                $handle = fopen($data['tmp_name'], "r");
+                while ($data = fgetcsv($handle)) {
+                    $code = strip_tags($data[0]);
+                    $description = strip_tags($data[1]);
+                    $assigned_program = strip_tags($data[2]);
+                    $data = array(
+                        'specialization_code' => $code,
+                        'specialization_description' => $description,
+                        'assigned_program' => $assigned_program
+                    );
+
+                    $this->db->insert('specialization_tbl', $data);
+                }
+                fclose($handle);
+                $message = '
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Success!</h4>
+            <p>Import complete!</p>
+        </div>
+        ';
+            } else {
+                $message = '
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Warning!</h4>
+            <p>Please Select CSV File only</p>
+        </div>
+        ';
+            }
+        } else {
+            $message = '
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Warning!</h4>
+            <p>Please Select File</p>
+        </div>
+        ';
+        }
+        return $message;
     }
 
     public function create_specialization($specialization)
@@ -279,6 +464,110 @@ class SuperAdmin_model extends CI_Model
     // =======================================================================================
     // COURSES
     // =======================================================================================
+
+    public function fetch_all_courses()
+    {
+        $this->db->select('*');
+        $this->db->from('courses_tbl');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function fetch_all_laboratories()
+    {
+        $this->db->select('*');
+        $this->db->from('laboratory_tbl');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function fetch_course_count()
+    {
+        $this->db->select('*');
+        $this->db->from('courses_tbl');
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function fetch_course($id)
+    {
+        $this->db->select('*');
+        $this->db->where(array('course_id' => $id));
+        $this->db->from('courses_tbl');
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+    public function add_course_csv($data)
+    {
+        if ($data['name']) {
+            $filename = explode(".", $data['name']);
+            if (end($filename) == "csv") {
+                $handle = fopen($data['tmp_name'], "r");
+                while ($data = fgetcsv($handle)) {
+                    $code = strip_tags($data[0]);
+                    $title = strip_tags($data[1]);
+                    $units = strip_tags($data[2]);
+                    $lab = strip_tags($data[3]);
+                    $requisite = strip_tags($data[4]);
+                    $curriculum_code = strip_tags($data[5]);
+                    $data = array(
+                        'course_code' => $code,
+                        'course_title' => $title,
+                        'course_units' => $units,
+                        'laboratory_code' => $lab,
+                        'pr_requisite' => $requisite,
+                        'curriculum_code' => $curriculum_code
+                    );
+
+                    $this->db->insert('courses_tbl', $data);
+                }
+                fclose($handle);
+                $message = '
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Success!</h4>
+            <p>Import complete!</p>
+        </div>
+        ';
+            } else {
+                $message = '
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Warning!</h4>
+            <p>Please Select CSV File only</p>
+        </div>
+        ';
+            }
+        } else {
+            $message = '
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Warning!</h4>
+            <p>Please Select File</p>
+        </div>
+        ';
+        }
+        return $message;
+    }
+
+
+
+    public function create_course($college)
+    {
+        $this->db->insert('courses_tbl', $college);
+    }
+
+    public function edit_course($id, $content)
+    {
+        $this->db->where('course_id', $id);
+        $this->db->update('courses_tbl', $content);
+    }
+
+    public function delete_course($id)
+    {
+        $this->db->delete('courses_tbl', array('course_id' => $id));
+    }
 
     // =======================================================================================
     // END OF COURSES

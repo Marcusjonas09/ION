@@ -46,28 +46,6 @@
                 </div>
             </form>
         </div>
-        <div class="container-fluid col-md-3">
-            <div class="box box-success">
-                <div class="box-header with-border">
-                    <h3 class="box-title"><strong>Insert Multiple Entry</strong></h3>
-                </div>
-                <div class="box-body">
-                    <form action="" method="post" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label>Upload CSV file</label>
-                            <input class="form-control btn btn-default" type="file" name="facultycsv" />
-                        </div>
-                    </form>
-                </div>
-                <div class="box-footer">
-                    <input class="btn btn-success pull-right" type="submit" value="Import" />
-                </div>
-            </div>
-        </div>
-
-
-
-
     </section>
 </div>
 <!-- /.content-wrapper -->

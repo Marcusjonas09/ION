@@ -136,31 +136,14 @@
                         <!-- small box -->
                         <div class="small-box bg-green">
                             <div class="inner">
-                                <h3 id="simul_number"><?= $curriculum_count ?></h3>
-
-                                <p>Curriculum</p>
-                            </div>
-                            <div class="icon">
-                                <!-- <i class="fa fa-shopping-cart"></i> -->
-                            </div>
-                            <a href="<?= base_url() ?>SuperAdmin/curriculum" class="small-box-footer">
-                                More info <i class="fa fa-arrow-circle-right"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-xs-6">
-                        <!-- small box -->
-                        <div class="small-box bg-green">
-                            <div class="inner">
-                                <h3 id="simul_number">0</h3>
+                                <h3 id="simul_number"><?= $course_count ?></h3>
 
                                 <p>Course/s</p>
                             </div>
                             <div class="icon">
                                 <!-- <i class="fa fa-shopping-cart"></i> -->
                             </div>
-                            <a href="<?= base_url() ?>SuperAdmin/curriculum" class="small-box-footer">
+                            <a href="<?= base_url() ?>SuperAdmin/courses" class="small-box-footer">
                                 More info <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
@@ -173,6 +156,40 @@
                                 <h3 id="simul_number">0</h3>
 
                                 <p>Laboratory</p>
+                            </div>
+                            <div class="icon">
+                                <!-- <i class="fa fa-shopping-cart"></i> -->
+                            </div>
+                            <a href="<?= base_url() ?>SuperAdmin/curriculum" class="small-box-footer">
+                                More info <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-green">
+                            <div class="inner">
+                                <h3 id="simul_number">0</h3>
+
+                                <p>Section/s</p>
+                            </div>
+                            <div class="icon">
+                                <!-- <i class="fa fa-shopping-cart"></i> -->
+                            </div>
+                            <a href="<?= base_url() ?>SuperAdmin/section" class="small-box-footer">
+                                More info <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-green">
+                            <div class="inner">
+                                <h3 id="simul_number"><?= $curriculum_count ?></h3>
+
+                                <p>Curriculum</p>
                             </div>
                             <div class="icon">
                                 <!-- <i class="fa fa-shopping-cart"></i> -->

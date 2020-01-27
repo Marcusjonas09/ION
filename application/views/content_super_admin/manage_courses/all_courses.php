@@ -8,7 +8,7 @@
 
     <!-- Main content -->
     <section class="content container-fluid">
-        <div class="container-fluid col-md-8" style="padding:0px;">
+        <div class="container-fluid col-md-12" style="padding:0px;">
             <?php if (isset($success_msg)) : ?>
                 <div class="alert alert-success alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -27,36 +27,46 @@
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">
-                        <strong>Department</strong>
+                        <strong>Courses</strong>
                     </h3>
                 </div>
                 <div class="box-body">
-                    <table class="datatables table table-striped" data-page-length='10'>
-                        <thead class="bg-success text-center" style="background-color:#00a65a; color:white;">
-                            <th class="text-center col-md-2">Code</th>
-                            <th class="text-center col-md-8">Description</th>
+                    <table class="datatables table table-striped text-center" data-page-length='10'>
+                        <thead class="bg-success" style="background-color:#00a65a; color:white;">
+                            <th class="text-center col-md-1">Course Code</th>
+                            <th class="text-center col-md-2">Description</th>
+                            <th class="text-center col-md-1">Units</th>
+                            <th class="text-center col-md-2">Laboratory</th>
+                            <th class="text-center col-md-2">Department</th>
                             <th class="text-center col-md-2">Action</th>
                         </thead>
                         <tbody>
-                            <!-- <?php foreach ($departments as $department) : ?>
+                            <?php foreach ($courses as $course) : ?>
                                 <tr>
                                     <td>
-                                        <?= $department->department_code ?>
+                                        <?= $course->course_code ?>
                                     </td>
                                     <td>
-                                        <?= $department->department_description ?>
+                                        <?= $course->course_title ?>
                                     </td>
+                                    <td>
+                                        <?= $course->course_units ?>
+                                    </td>
+                                    <td>
+                                        <?= $course->laboratory_code ?>
+                                    </td>
+                                    <td></td>
                                     <td class="text-center">
-                                        <a id="edit_department" href="<?= base_url() ?>SuperAdmin/edit_department/<?= $department->department_id ?>" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                        <button class="btn btn-danger" onclick="delete_department(<?= $department->department_id ?>)"><i class="fa fa-trash"></i></button>
+                                        <a id="edit_department" href="<?= base_url() ?>SuperAdmin/edit_course/<?= $course->course_id ?>" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                                        <button class="btn btn-danger" onclick="delete_course(<?= $course->course_id ?>)"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
-                            <?php endforeach; ?> -->
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
                 <div class="box-footer">
-                    <a class="btn btn-success pull-right" href="<?= base_url() ?>SuperAdmin/add_department">Add New Entry</a>
+                    <a class="btn btn-success pull-right" href="<?= base_url() ?>SuperAdmin/add_course">Add New Entry</a>
                 </div>
             </div>
         </div>
