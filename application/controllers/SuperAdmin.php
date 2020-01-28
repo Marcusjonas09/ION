@@ -1434,6 +1434,139 @@ class SuperAdmin extends CI_Controller
     // =======================================================================================
 
     // =======================================================================================
+    // LABORATORY
+    // =======================================================================================
+
+    public function laboratories($success_msg = null, $fail_msg = null)
+    {
+        $data['laboratories'] = $this->SuperAdmin_model->fetch_all_laboratories();
+        $data['success_msg'] = $success_msg;
+        $data['fail_msg'] = $fail_msg;
+
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_laboratories/all_laboratories', $data);
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function add_laboratory($message = null)
+    {
+        $data['message'] = $message;
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_laboratories/add_laboratory', $data);
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function edit_laboratory($id, $success_msg = null, $fail_msg = null)
+    {
+        // $id = $this->input->post('college_id');
+        $data['laboratory'] = $this->SuperAdmin_model->fetch_laboratory($id);
+        $data['success_msg'] = $success_msg;
+        $data['fail_msg'] = $fail_msg;
+
+        // print_r($data);
+        // die();
+
+        $this->load->view('includes_super_admin/superadmin_header');
+        $this->load->view('includes_super_admin/superadmin_topnav');
+        $this->load->view('includes_super_admin/superadmin_sidebar');
+
+        $this->load->view('content_super_admin/manage_laboratories/edit_laboratory', $data);
+
+        $this->load->view('includes_super_admin/superadmin_contentFooter');
+        $this->load->view('includes_super_admin/superadmin_rightnav');
+        $this->load->view('includes_super_admin/superadmin_footer');
+    }
+
+    public function edit_laboratory_function()
+    {
+        $this->form_validation->set_rules('laboratory_code', 'Laboratory Code', 'required|strip_tags');
+        $this->form_validation->set_rules('laboratory_title', 'Laboratory Title', 'required|strip_tags');
+        $this->form_validation->set_rules('laboratory_units', 'Laboratory Units', 'required|strip_tags');
+        $id = $this->input->post('laboratory_id');
+        if ($this->form_validation->run() == FALSE) {
+            $this->edit_laboratory($id);
+        } else {
+            $laboratory = array(
+                'laboratory_code' => $this->input->post('laboratory_code'),
+                'laboratory_title' => $this->input->post('laboratory_title'),
+                'laboratory_units' => $this->input->post('laboratory_units')
+            );
+
+            $this->SuperAdmin_model->edit_laboratory($id, $laboratory);
+            $this->edit_laboratory($id, "Record successfully edited!");
+        }
+    }
+
+    public function add_laboratory_csv()
+    {
+        if (isset($_POST["import"])) {
+            $message = $this->SuperAdmin_model->add_laboratory_csv($_FILES['csv_file']);
+        } else {
+            $message = '
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Warning!</h4>
+            <p>Please select a file!</p>
+        </div>
+        ';
+        }
+        $this->add_laboratory($message);
+    }
+
+    public function create_laboratory()
+    {
+        $this->form_validation->set_rules('laboratory_code', 'Laboratory Code', 'required|strip_tags|is_unique[laboratory_tbl.laboratory_code]');
+        $this->form_validation->set_rules('laboratory_title', 'Laboratory Title', 'required|strip_tags');
+        $this->form_validation->set_rules('laboratory_units', 'Laboratory Units', 'required|strip_tags');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->add_laboratory();
+        } else {
+            $laboratory = array(
+                'laboratory_code' => $this->input->post('laboratory_code'),
+                'laboratory_title' => $this->input->post('laboratory_title'),
+                'laboratory_units' => $this->input->post('laboratory_units')
+            );
+
+            $this->SuperAdmin_model->create_laboratory($laboratory);
+            $message = '
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Success!</h4>
+            <p>Record successfully added!</p>
+        </div>
+        ';
+            $this->add_laboratory($message);
+        }
+    }
+
+    public function delete_laboratory($id)
+    {
+        if (!$this->SuperAdmin_model->delete_laboratory($id)) {
+            $this->SuperAdmin_model->delete_laboratory($id);
+            $this->laboratories("Record successfully deleted!", null);
+        } else {
+            $this->laboratories(null, "Failed to delete Record!");
+        }
+    }
+
+    // =======================================================================================
+    // END OF LABORATORY
+    // =======================================================================================
+
+    // =======================================================================================
     // SCHOOL PARAMETERS
     // =======================================================================================
 
@@ -1444,7 +1577,7 @@ class SuperAdmin extends CI_Controller
         $data['program_count'] = $this->SuperAdmin_model->fetch_program_count();
         $data['specialization_count'] = $this->SuperAdmin_model->fetch_specialization_count();
         $data['course_count'] = $this->SuperAdmin_model->fetch_course_count();
-        // $data['lab_count'] = $this->SuperAdmin_model->fetch_program_count();
+        $data['lab_count'] = $this->SuperAdmin_model->fetch_laboratory_count();
         $data['section_count'] = $this->SuperAdmin_model->fetch_section_count();
         $data['curriculum_count'] = $this->SuperAdmin_model->fetch_curriculum_count();
 

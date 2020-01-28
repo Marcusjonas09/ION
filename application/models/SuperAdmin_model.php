@@ -666,6 +666,102 @@ class SuperAdmin_model extends CI_Model
     // =======================================================================================
 
     // =======================================================================================
+    // LABORATORY
+    // =======================================================================================
+
+    // public function fetch_all_laboratories()
+    // {
+    //     $this->db->select('*');
+    //     $this->db->from('laboratory_tbl');
+    //     $query = $this->db->get();
+    //     return $query->result();
+    // }
+
+    public function fetch_laboratory_count()
+    {
+        $this->db->select('*');
+        $this->db->from('laboratory_tbl');
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function fetch_laboratory($id)
+    {
+        $this->db->select('*');
+        $this->db->where(array('laboratory_id' => $id));
+        $this->db->from('laboratory_tbl');
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+    public function add_laboratory_csv($data)
+    {
+        if ($data['name']) {
+            $filename = explode(".", $data['name']);
+            if (end($filename) == "csv") {
+                $handle = fopen($data['tmp_name'], "r");
+                while ($data = fgetcsv($handle)) {
+                    $code = strip_tags($data[0]);
+                    $title = strip_tags($data[1]);
+                    $units = strip_tags($data[2]);
+                    $data = array(
+                        'laboratory_code' => $code,
+                        'laboratory_title' => $title,
+                        'laboratory_units' => $units
+                    );
+
+                    $this->db->insert('laboratory_tbl', $data);
+                }
+                fclose($handle);
+                $message = '
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Success!</h4>
+            <p>Import complete!</p>
+        </div>
+        ';
+            } else {
+                $message = '
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Warning!</h4>
+            <p>Please Select CSV File only</p>
+        </div>
+        ';
+            }
+        } else {
+            $message = '
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i>Warning!</h4>
+            <p>Please Select File</p>
+        </div>
+        ';
+        }
+        return $message;
+    }
+
+    public function create_laboratory($laboratory)
+    {
+        $this->db->insert('laboratory_tbl', $laboratory);
+    }
+
+    public function edit_laboratory($id, $content)
+    {
+        $this->db->where('laboratory_id', $id);
+        $this->db->update('laboratory_tbl', $content);
+    }
+
+    public function delete_laboratory($id)
+    {
+        $this->db->delete('laboratory_tbl', array('laboratory_id' => $id));
+    }
+
+    // =======================================================================================
+    // END OF LABORATORY
+    // =======================================================================================
+
+    // =======================================================================================
     // ADMIN MANAGEMENT FUNCTIONS
     // =======================================================================================
 
