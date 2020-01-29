@@ -168,6 +168,23 @@
 
                     <div class="col-lg-3 col-xs-6">
                         <!-- small box -->
+                        <div class="small-box bg-yellow">
+                            <div class="inner">
+                                <h3 id="simul_number">0</h3>
+
+                                <p>Pre Requisite</p>
+                            </div>
+                            <div class="icon">
+                                <!-- <i class="fa fa-shopping-cart"></i> -->
+                            </div>
+                            <a href="<?= base_url() ?>SuperAdmin/laboratories" class="small-box-footer">
+                                More info <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
                         <div class="small-box bg-green">
                             <div class="inner">
                                 <h3 id="simul_number"><?= $section_count ?></h3>
@@ -206,6 +223,42 @@
                             <div class="inner">
                                 <h3 id="simul_number">0</h3>
 
+                                <p>Course Offering</p>
+                            </div>
+                            <div class="icon">
+                                <!-- <i class="fa fa-shopping-cart"></i> -->
+                            </div>
+                            <a href="<?= base_url() ?>SuperAdmin/laboratories" class="small-box-footer">
+                                More info <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-yellow">
+                            <div class="inner">
+                                <h3 id="simul_number">0</h3>
+
+                                <p>Parallel Courses</p>
+                            </div>
+                            <div class="icon">
+                                <!-- <i class="fa fa-shopping-cart"></i> -->
+                            </div>
+                            <a href="<?= base_url() ?>SuperAdmin/laboratories" class="small-box-footer">
+                                More info <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-yellow">
+                            <div class="inner">
+                                <h3 id="simul_number">0</h3>
+
                                 <p>Faculty</p>
                             </div>
                             <div class="icon">
@@ -236,6 +289,51 @@
 
                 </div>
                 <!-- /.box-body -->
+            </div>
+
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><strong>Added modules</strong></h3>
+                </div>
+
+
+                <div class="box-body">
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-yellow">
+                            <div class="inner">
+                                <h3 id="simul_number">0</h3>
+
+                                <p>Class Schedule</p>
+                            </div>
+                            <div class="icon">
+                                <!-- <i class="fa fa-shopping-cart"></i> -->
+                            </div>
+                            <a href="<?= base_url() ?>SuperAdmin/curriculum" class="small-box-footer">
+                                More info <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-yellow">
+                            <div class="inner">
+                                <h3 id="simul_number">0</h3>
+
+                                <p>Finance</p>
+                            </div>
+                            <div class="icon">
+                                <!-- <i class="fa fa-shopping-cart"></i> -->
+                            </div>
+                            <a href="<?= base_url() ?>SuperAdmin/curriculum" class="small-box-footer">
+                                More info <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
         </div>
 

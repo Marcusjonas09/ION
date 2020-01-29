@@ -16,7 +16,7 @@
                 <?php echo validation_errors(); ?>
             </div>
         <?php endif; ?>
-        
+
         <?php if (isset($success_msg)) : ?>
             <div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -61,7 +61,7 @@
                         <div class="form-group col-md-6">
                             <label for="">Year</label>
                             <select id="year" name="year" class="form-control js-example-basic-single">
-                                <option value="--">--</option>
+                                <option value="">--</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -72,7 +72,7 @@
                         <div class="form-group col-md-6">
                             <label for="">Term</label>
                             <select id="term" name="term" class="form-control js-example-basic-single">
-                                <option value="--">--</option>
+                                <option value="">--</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -82,7 +82,7 @@
                         <input type="hidden" name="curriculum_code_id" id="curriculum_code_id" value="<?= $curriculum_code->curriculum_code_id ?>" />
                     </div>
                     <div class="box-footer">
-                        <input class="btn btn-success pull-right" type="submit" value="Submit" />
+                        <input class="btn btn-success pull-right" type="submit" value="Add Course" />
                     </div>
                 </div>
             </form>

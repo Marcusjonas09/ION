@@ -29,6 +29,7 @@
                     <h3 class="box-title">
                         <strong>Laboratories</strong>
                     </h3>
+                    <a class="btn btn-success pull-right" href="<?= base_url() ?>SuperAdmin/add_laboratory">Add New Entry</a>
                 </div>
                 <div class="box-body">
                     <table class="datatables table table-striped text-center" data-page-length='10'>
@@ -58,9 +59,6 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                </div>
-                <div class="box-footer">
-                    <a class="btn btn-success pull-right" href="<?= base_url() ?>SuperAdmin/add_laboratory">Add New Entry</a>
                 </div>
             </div>
         </div>

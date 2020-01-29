@@ -12,7 +12,7 @@ class SuperAdmin_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('college_tbl');
-        $this->db->order_by('college_id', 'ASC');
+        $this->db->order_by('college_code', 'ASC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -108,7 +108,7 @@ class SuperAdmin_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('department_tbl');
-        $this->db->order_by('department_id', 'ASC');
+        $this->db->order_by('department_code', 'ASC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -203,7 +203,7 @@ class SuperAdmin_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('programs_tbl');
-        $this->db->order_by('program_id', 'ASC');
+        $this->db->order_by('program_code', 'ASC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -300,7 +300,7 @@ class SuperAdmin_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('specialization_tbl');
-        $this->db->order_by('specialization_id', 'ASC');
+        $this->db->order_by('specialization_code', 'ASC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -397,7 +397,7 @@ class SuperAdmin_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('curriculum_code_tbl');
-        $this->db->order_by('curriculum_code_id', 'ASC');
+        $this->db->order_by('curriculum_code', 'ASC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -469,6 +469,7 @@ class SuperAdmin_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('courses_tbl_v2');
+        $this->db->order_by('course_code', 'ASC');
         $query = $this->db->get();
         return $query->result();
     }
@@ -477,6 +478,7 @@ class SuperAdmin_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('laboratory_tbl');
+        $this->db->order_by('laboratory_code', 'ASC');
         $query = $this->db->get();
         return $query->result();
     }

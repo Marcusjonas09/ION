@@ -29,6 +29,7 @@
                     <h3 class="box-title">
                         <strong>Curriculum</strong>
                     </h3>
+                    <a class="btn btn-success pull-right" href="<?= base_url() ?>SuperAdmin/add_curriculum">Add New Entry</a>
                 </div>
                 <div class="box-body">
                     <table class="datatables table table-striped text-center" data-page-length='10'>
@@ -43,7 +44,7 @@
                                         <?= $curriculum->curriculum_code ?>
                                     </td>
                                     <td class="text-center">
-                                        <a href="<?= base_url() ?>SuperAdmin/add_course_curriculum/<?= $curriculum->curriculum_code_id ?>" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+                                        <a href="<?= base_url() ?>SuperAdmin/add_course_curriculum/<?= $curriculum->curriculum_code_id ?>" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                                         <a href="<?= base_url() ?>SuperAdmin/edit_curriculum/<?= $curriculum->curriculum_code_id ?>" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
                                         <button class="btn btn-danger" onclick="delete_curriculum(<?= $curriculum->curriculum_code_id ?>)"><i class="fa fa-trash"></i></button>
                                     </td>
@@ -51,9 +52,6 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                </div>
-                <div class="box-footer">
-                    <a class="btn btn-success pull-right" href="<?= base_url() ?>SuperAdmin/add_curriculum">Add New Entry</a>
                 </div>
             </div>
         </div>
